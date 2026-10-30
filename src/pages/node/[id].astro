@@ -13,11 +13,17 @@ const position = pathPosition(node.id);
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
 const related = byIds([...node.related, ...node.part_of, ...node.led_to]);
+// "ai" means the ai-reviewer agent approved it; say plainly that no human has checked it yet.
+const reviewed = !node.reviewed_by
+  ? undefined
+  : node.reviewed_by === "ai"
+    ? "Reviewed by AI · Not yet checked by a human"
+    : `Reviewed by ${node.reviewed_by}`;
 const byline =
   node.author === "ai"
-    ? `Written with AI${node.reviewed_by ? ` · Reviewed by ${node.reviewed_by}` : " · Not reviewed yet"}`
+    ? `Written with AI · ${reviewed ?? "Not reviewed yet"}`
     : node.author
-      ? `Written by ${node.author}${node.reviewed_by ? ` · Reviewed by ${node.reviewed_by}` : ""}`
+      ? `Written by ${node.author}${reviewed ? ` · ${reviewed}` : ""}`
       : undefined;
 ---
 
