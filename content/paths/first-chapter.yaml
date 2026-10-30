@@ -1,0 +1,70 @@
+id: first-chapter
+title: "First Chapter: From Zero to Your Own Website"
+description: "From knowing how to use a browser to understanding how it all works, ending with your own website live on your own domain."
+sections:
+  - title: "Part 1: The Machine"
+    nodes:
+      - what-is-a-computer
+      - before-computers
+      - what-is-information
+      - counting-systems
+      - binary
+      - bit
+      - byte
+      - data-size-units
+      - text-as-numbers
+      - images-as-numbers
+      - sound-as-numbers
+      - babbage-and-lovelace
+      - turing-universal-machine
+      - electricity-basics
+      - eniac
+      - transistor
+      - logic-gates
+      - integrated-circuit
+      - cpu
+      - microprocessor
+      - ram
+      - storage
+      - input-output
+      - how-computer-parts-work-together
+      - personal-computer
+      - machine-code
+      - programming-languages
+      - software
+      - operating-system
+      - files-and-folders
+      - smartphone
+  - title: "Part 2: The Network"
+    nodes:
+      - what-is-a-network
+      - telegraph-and-telephone
+      - packets
+      - protocols
+      - arpanet
+      - tcp-ip
+      - ip-address
+      - router
+      - isp
+      - wifi-and-mobile-networks
+      - physical-internet
+      - client-and-server
+      - server
+      - domain-name
+      - dns
+      - world-wide-web
+      - url
+      - http
+      - https
+      - web-browser
+      - cookies-and-privacy
+      - what-happens-when-you-type-a-url
+  - title: "Part 3: The Web"
+    nodes:
+      - browser-devtools
+      - html
+      - css
+      - javascript
+      - web-hosting
+      - cloud-computing
+      - first-website
