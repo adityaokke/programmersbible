@@ -1,0 +1,44 @@
+---
+import Base from "../../layouts/Base.astro";
+import { allPaths, isReadable, nodeById, nodeUrl } from "../../lib/content.ts";
+import type { PathFile } from "../../../schema/node.ts";
+
+export function getStaticPaths() {
+  return allPaths.map((path) => ({ params: { id: path.id }, props: { path } }));
+}
+
+const { path } = Astro.props as { path: PathFile };
+let number = 0;
+---
+
+<Base title={path.title} description={path.description}>
+  <div class="narrow">
+    <h1>{path.title}</h1>
+    {path.description && <p class="muted">{path.description}</p>}
+
+    {
+      path.sections.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          <ol class="node-list">
+            {section.nodes.map((id) => {
+              const node = nodeById.get(id)!;
+              number++;
+              return (
+                <li>
+                  <span class="num">{number}</span>
+                  <span>
+                    {node.type === "event" && <span class="event-mark">🕰 </span>}
+                    {node.type === "project" && "🏁 "}
+                    <a href={nodeUrl(id)}>{node.title}</a>{" "}
+                    {!isReadable(node) && <span class="small muted">· coming soon</span>}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ))
+    }
+  </div>
+</Base>
