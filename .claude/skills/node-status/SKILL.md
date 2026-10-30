@@ -8,6 +8,7 @@ description: Show Programmer's Bible content progress (planned / draft / review 
 1. Run `npm run status` and `npm run validate`.
 2. Report briefly:
    - Totals per path and per section.
-   - Nodes in `review` (waiting for the human reviewer) and any open content PRs (`gh pr list --search "content:"`).
+   - Nodes in `review` (projects, or nodes the ai-reviewer did not approve: waiting for the human reviewer) and any open content PRs (`gh pr list --search "content:"`).
+   - Published nodes reviewed by AI only (`✓ᵃⁱ`): candidates for a human check, project-related and most-read first.
    - Validation errors, if any.
 3. Suggest the **next 3–5 nodes to write**: the first `planned` nodes in path order whose `requires` are all at least `draft`. Present them as a ready command, e.g. `/write-node byte data-size-units text-as-numbers`.

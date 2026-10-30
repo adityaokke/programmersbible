@@ -32,6 +32,9 @@ They make a confused reader feel stupid. The validator rejects them in `review` 
 - **Simplify, but never say something false.** When you leave something out, say so: *"(This is simplified. The full story is in [[dns|DNS]].)"*
 - Use real numbers: "about 4 billion", not "a lot".
 - **Every fact, date, name and number must be supported by a source.** No source → the claim does not go in.
+- **Background terms: one general reference is enough.** Basic textbook facts that a node explains along the way (what a conductor is, what a pixel is) still need a source, but one general reference per node can cover all of them: an encyclopedia, a museum or prize-committee education page, or a university course page. It must actually say each fact used. Key claims (dates, names, numbers, "first", and how the node's own topic works) still need their own specific source.
+- **Names exactly as the source writes them.** If the source says "P. Mockapetris" or "W. Buchholz", write that, or add a source that shows the full name. The same goes for job titles ("engineer", "chemist") and words like "popular" or "very large": if the source does not say it, leave it out.
+- **No made-up reasons.** If a source gives a name or a date but not *why*, do not add a "because". Write "This period is often called…", not "Because they discovered so much, people called it…".
 
 ### Structure and length
 
@@ -105,7 +108,7 @@ sources:
   - title: "RFC 1034, Domain Names: Concepts and Facilities"
     url: https://www.rfc-editor.org/rfc/rfc1034
 author: ai                      # "ai" or the human writer's name
-reviewed_by: adityaokke         # set by the reviewer, required to publish
+reviewed_by: ai                 # "ai" (ai-reviewer agent approved) or the human reviewer's name; required to publish
 reviewed_at: 2026-10-30
 updated: 2026-10-30
 ---
@@ -188,14 +191,16 @@ Links back to the nodes used.
 
 ## Review checklist
 
-Before a node moves to `published`:
+Before a node moves to `published`, the `ai-reviewer` agent (or a human reviewer) confirms:
 
 - [ ] Every technical term is defined or linked on first use
 - [ ] Nothing depends on a node that is not in `requires`
 - [ ] No banned words
 - [ ] The analogy says where it breaks down
 - [ ] Every fact, date and number is checked against a source (claims table)
-- [ ] "Try it" steps were done in a real browser and work
+- [ ] "Try it" steps work: checked against official docs by the AI reviewer, and in a real browser by a human reviewer
 - [ ] Diagrams have alt text
 - [ ] 600–1,200 words
 - [ ] Read as a real beginner, or by one
+
+Project nodes always need a human reviewer before they are published (`reviewed_by: ai` is rejected for `type: project`).

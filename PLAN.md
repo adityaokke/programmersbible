@@ -180,20 +180,29 @@ updated: 2026-10-30
 - [ ] 600–1,200 words
 - [ ] Read by a real beginner, or read aloud as one
 
-## 5. Content workflow: AI writes, a human reviews
+## 5. Content workflow: AI writes, AI approves, a human checks later
 
 ```
-1. Research ─▶ 2. Draft ─▶ 3. Auto-checks ─▶ 4. Fact-check ─▶ 5. Human review ─▶ 6. Published
-   (AI)          (AI)        (CI)              (separate AI)     (reviewer)
+1. Research ─▶ 2. Draft ─▶ 3. Auto-checks ─▶ 4. Fact-check + ─▶ 5. AI review ─▶ 6. Merge ─▶ 7. Published ─▶ 8. Human check
+   (AI)          (AI)        (CI)              beginner read     (ai-reviewer)    (human)     "Reviewed by AI"    (when there is time)
+                                               (separate AIs)                                                  "Reviewed by <name>"
 ```
+
+**Review levels (decided for the MVP):** to publish faster than about 4 nodes per week, an `ai-reviewer` agent approves nodes, and the human only merges the PR. Readers always see the level in the byline. Later, with real readers, the human checks nodes one by one (starting with the most-read and the 👎 ones), which upgrades the byline.
+
+| `reviewed_by` | Byline | Allowed for |
+|---|---|---|
+| `ai` | "Written with AI · Reviewed by AI · Not yet checked by a human" | concepts and events |
+| `<name>` | "Written with AI · Reviewed by <name>" | all node types; required for projects |
 
 - **Writer:** Claude Code in this repo, in batches of 3–5 nodes triggered by the reviewer.
 - **Each PR includes a claims table:** claim | source | quote from source | fact-check result.
 - **Fact-check** is done by a separate AI pass that has not seen the writer's reasoning.
 - **Beginner read** is done by a separate AI pass that reads the node as someone who only knows how to use a browser. It does not replace real beginner testers; it catches obvious problems first.
-- **Rules:** no source → the claim does not go in. Nothing is published without human approval; CI blocks `status: published` without `reviewed_by`.
-- **Byline on every node:** "Written with AI · Reviewed by {reviewer}" or "Written by {writer} · Reviewed by {reviewer}".
-- **Reviewer budget:** about 3 hours/week, about 45 minutes per node, at most 3–4 nodes per session.
+- **AI review** is done by a third separate agent, `ai-reviewer`, after the writer fixes the fact-check and beginner-read findings. It re-opens the riskiest sources itself, checks the whole review checklist, and returns APPROVE or REQUEST CHANGES. Only an APPROVE lets the writer set `status: published` with `reviewed_by: ai`.
+- **Rules:** no source → the claim does not go in. CI blocks `status: published` without `reviewed_by`, and blocks `reviewed_by: ai` on project nodes. Nothing reaches `main` without the human merging the PR.
+- **Byline on every node:** see the table above; for human writers, "Written by {writer} · Reviewed by {reviewer}".
+- **Reviewer budget:** about 3 hours/week: merging PRs (minutes each), human checks of project nodes, then upgrading AI-reviewed nodes, most-read first.
 - **Writing order:** 5 pilot nodes first (Byte, DNS, The transistor, the capstone, the milestone) to validate the template, then path order, one Part at a time.
 
 ### Writer setup in Claude Code
@@ -207,17 +216,19 @@ programmersbible/
 └── .claude/
     ├── skills/
     │   ├── write-node/SKILL.md      # research → draft to template → auto-checks →
-    │   │                            # fact-checker → PR with claims table
+    │   │                            # fact-checker → ai-reviewer → PR with claims table
     │   ├── revise-node/SKILL.md     # apply reviewer comments or 👎 feedback
     │   └── node-status/SKILL.md     # progress dashboard (draft / review / published)
     └── agents/
         ├── fact-checker.md          # separate, skeptical agent: checks every claim
         │                            # against its source; never sees the writer's reasoning
-        └── beginner-reader.md       # reads as a zero-knowledge beginner: flags unexplained
-                                     # terms, logic jumps, concepts used before their `requires`
+        ├── beginner-reader.md       # reads as a zero-knowledge beginner: flags unexplained
+        │                            # terms, logic jumps, concepts used before their `requires`
+        └── ai-reviewer.md           # final gate: re-checks risky facts and the review
+                                     # checklist; APPROVE → published as "Reviewed by AI"
 ```
 
-Only these two are custom agents, because both need an independent view the writer cannot have. Writing, research and revision run in the main session through skills; mechanical rules (links, banned words, word count) are CI scripts.
+Only these three are custom agents, because each needs an independent view the writer cannot have. Writing, research and revision run in the main session through skills; mechanical rules (links, banned words, word count) are CI scripts.
 
 ```
 write-node (main session)
@@ -226,14 +237,15 @@ write-node (main session)
    ├─▶ fact-checker    ─┐ in parallel,
    ├─▶ beginner-reader ─┘ independent
    ├─▶ writer fixes issues from both
-   └─▶ PR with claims table + beginner-reader notes ─▶ reviewer
+   ├─▶ ai-reviewer ─▶ APPROVE: published (reviewed_by: ai) / REQUEST CHANGES: fix, review again
+   └─▶ PR with claims table, agent notes, AI review verdict ─▶ human merges
 ```
 
 **Reviewer workflow:**
 
 1. Run `/write-node <id> <id> ...` for a batch of 3–5 nodes.
 2. Claude researches, writes, runs checks, calls the `fact-checker` and `beginner-reader` agents and opens a PR with the claims table and beginner-reader notes.
-3. Review the PR preview. Comments are applied with `/revise-node`.
+3. Read the AI review summary in the PR and merge. Optionally review a node yourself: comments are applied with `/revise-node`; to sign it off, set `reviewed_by: <your name>` and `reviewed_at`.
 4. **Improvement loop:** when the same kind of correction happens twice, Claude updates the relevant skill or `CLAUDE.md`, so the writer improves over time under the reviewer's control.
 
 ## 6. Pages and UX
@@ -399,7 +411,7 @@ At about 4 reviewed nodes per week:
 
 | When | Code | Content |
 |---|---|---|
-| Days 1–2 | **Contract (before splitting):** node schema as code, graph build + validation, `CLAUDE.md`, skills, `fact-checker` and `beginner-reader` agents | — |
+| Days 1–2 | **Contract (before splitting):** node schema as code, graph build + validation, `CLAUDE.md`, skills, `fact-checker`, `beginner-reader` and `ai-reviewer` agents | — |
 | Weeks 1–2 | Session A: Astro scaffold, CI, preview deploys, domain on Cloudflare | Session B: 5 pilot nodes → review → adjust template; tester round 1 |
 | Weeks 3–9 | Node page, path view, search, mini graph, timeline, explore (depth 1–2), feedback widget | Rest of Part 1; tester round 2 |
 | ~Week 9 | **🚀 Launch Part 1** | |
