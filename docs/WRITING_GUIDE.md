@@ -73,6 +73,7 @@ Never use an AI answer, a content farm or an unsourced blog as a source. Every s
 
 - SVG in one consistent style (Excalidraw or hand-written SVG).
 - **Every diagram has alt text** describing what it shows.
+- A text diagram in a code block (used until an SVG is drawn) has no alt attribute, so put one italic line right before it that describes what it shows: *Diagram: …*. That line is its alt text.
 - A diagram must make sense without the text, and the text without the diagram.
 
 ## Links between nodes
