@@ -105,7 +105,7 @@ sources:
   - title: "RFC 1034, Domain Names: Concepts and Facilities"
     url: https://www.rfc-editor.org/rfc/rfc1034
 author: ai                      # "ai" or the human writer's name
-reviewed_by: adityaokke         # set by the reviewer, required to publish
+reviewed_by: ai                 # "ai" (ai-reviewer agent approved) or the human reviewer's name; required to publish
 reviewed_at: 2026-10-30
 updated: 2026-10-30
 ---
@@ -188,14 +188,16 @@ Links back to the nodes used.
 
 ## Review checklist
 
-Before a node moves to `published`:
+Before a node moves to `published`, the `ai-reviewer` agent (or a human reviewer) confirms:
 
 - [ ] Every technical term is defined or linked on first use
 - [ ] Nothing depends on a node that is not in `requires`
 - [ ] No banned words
 - [ ] The analogy says where it breaks down
 - [ ] Every fact, date and number is checked against a source (claims table)
-- [ ] "Try it" steps were done in a real browser and work
+- [ ] "Try it" steps work: checked against official docs by the AI reviewer, and in a real browser by a human reviewer
 - [ ] Diagrams have alt text
 - [ ] 600–1,200 words
 - [ ] Read as a real beginner, or by one
+
+Project nodes always need a human reviewer before they are published (`reviewed_by: ai` is rejected for `type: project`).

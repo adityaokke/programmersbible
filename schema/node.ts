@@ -6,6 +6,9 @@ import { z } from "zod";
 
 export const NODE_TYPES = ["concept", "event", "project", "hub"] as const;
 export const PARTS = ["machine", "network", "web", "code"] as const;
+/** `reviewed_by` value for nodes approved by the ai-reviewer agent, not yet checked by a human. */
+export const AI_REVIEWER = "ai";
+
 export const STATUSES = ["planned", "draft", "review", "published"] as const;
 
 const nodeId = z
@@ -45,7 +48,7 @@ export const nodeFrontmatter = z
     sources: z.array(source).default([]),
 
     author: z.string().optional(), // "ai" or the human writer's name
-    reviewed_by: z.string().optional(),
+    reviewed_by: z.string().optional(), // "ai" (the ai-reviewer agent) or the human reviewer's name
     reviewed_at: isoDate.optional(),
     updated: isoDate.optional(),
   })
@@ -68,8 +71,14 @@ export const nodeFrontmatter = z
     need(!!node.author, "author", 'author is required ("ai" or a name)');
 
     if (node.status === "published") {
-      need(!!node.reviewed_by, "reviewed_by", "published nodes must have a human reviewer");
+      need(!!node.reviewed_by, "reviewed_by", 'published nodes need a reviewer ("ai" or a name)');
       need(!!node.reviewed_at, "reviewed_at", "published nodes must have a review date");
+      // Step-by-step projects block the reader when one step is wrong, so a human checks them.
+      need(
+        node.type !== "project" || node.reviewed_by !== AI_REVIEWER,
+        "reviewed_by",
+        "project nodes must be reviewed by a human before they are published",
+      );
     }
   });
 
