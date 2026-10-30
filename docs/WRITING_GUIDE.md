@@ -32,6 +32,8 @@ They make a confused reader feel stupid. The validator rejects them in `review` 
 - **Simplify, but never say something false.** When you leave something out, say so: *"(This is simplified. The full story is in [[dns|DNS]].)"*
 - Use real numbers: "about 4 billion", not "a lot".
 - **Every fact, date, name and number must be supported by a source.** No source → the claim does not go in.
+- **Names exactly as the source writes them.** If the source says "P. Mockapetris" or "W. Buchholz", write that, or add a source that shows the full name. The same goes for job titles ("engineer", "chemist") and words like "popular" or "very large": if the source does not say it, leave it out.
+- **No made-up reasons.** If a source gives a name or a date but not *why*, do not add a "because". Write "This period is often called…", not "Because they discovered so much, people called it…".
 
 ### Structure and length
 
