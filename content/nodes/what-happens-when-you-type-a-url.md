@@ -36,6 +36,20 @@ sources:
     url: https://home.cern/science/computing/the-birth-of-the-web/short-history-web/
   - title: "RFC 9000, QUIC: A UDP-Based Multiplexed and Secure Transport"
     url: https://www.rfc-editor.org/rfc/rfc9000
+  - title: "MDN Web Docs: The web standards model"
+    url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/The_web_standards_model
+  - title: "Chrome for Developers: Network features reference"
+    url: https://developer.chrome.com/docs/devtools/network/reference
+  - title: "Microsoft Edge DevTools: Keyboard shortcuts"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
+  - title: "Firefox DevTools User Docs: Keyboard shortcuts"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
+  - title: "Firefox DevTools User Docs: Network Monitor toolbar"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/toolbar/index.html
+  - title: "RFC 9114, HTTP/3 (HTTP over QUIC)"
+    url: https://www.rfc-editor.org/rfc/rfc9114
+  - title: "Firefox DevTools User Docs: Network request details"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_details/index.html
   - title: "RFC 9110, HTTP Semantics (default port 443 for https)"
     url: https://www.rfc-editor.org/rfc/rfc9110
 author: ai
@@ -105,13 +119,13 @@ The HTML file is only the start. Inside it are references to other files that th
 - **images**
 - **JavaScript** files, which make the page react to you (for example, a menu that opens when you click it)
 
-For each file, the browser repeats steps 4 and 5. If a file is on a different server, it also repeats steps 2 and 3 first. A single page often needs many files.
+For each file, the browser repeats steps 4 and 5. If a file comes from a different domain name, it also repeats steps 2 and 3 first. A single page often needs many files.
 
 ### 7. Draw the page
 
 Finally, the browser turns all these files into what you see. In a very simple version, the browser:
 
-1. reads the HTML and builds a list of all the parts of the page (headings, paragraphs, pictures),
+1. reads the HTML and builds a map of all the parts of the page (headings, paragraphs, pictures) and how they fit inside each other,
 2. applies the CSS to decide how each part looks,
 3. works out **where** each part goes on the screen and how big it is,
 4. **paints** the result on your screen as **pixels** (the tiny colored dots that make up any screen image).
@@ -124,9 +138,9 @@ Nobody designed this whole chain at once. Its pieces were invented at different 
 
 - **IP**, the rules for addressing and moving packets, was published as a standard in 1981.
 - **DNS** was first described in 1983, when one shared list of names became too big.
-- The **World Wide Web** was first proposed in 1989 by Tim Berners-Lee at **CERN**, a large science laboratory in Europe. By the end of 1990, the first web server and the first browser were running there.
+- The **World Wide Web** was first proposed in 1989 by Tim Berners-Lee at **CERN**, a research center where thousands of scientists work together. By the end of 1990, the first web server and the first browser were running there.
 
-These pieces work together because each one is an open standard: a public set of rules that anyone can follow. That is why any browser can talk to any web server in the world.
+These pieces work together because each one is an open standard: a public set of rules that anyone can use. Because browsers follow the same published standards, a page should look the same in browsers from different makers.
 
 ## 🧪 Try it in your browser
 
@@ -134,7 +148,7 @@ Let's watch all of these steps happen. You will use your browser's developer too
 
 1. Open a new tab in Chrome, Edge or Firefox.
 2. Open the developer tools: `F12` or `Ctrl` + `Shift` + `I` on Windows, `Cmd` + `Option` + `I` on Mac. (On some laptops you must hold the `Fn` key while you press `F12`.)
-3. Click the **Network** tab. It only records while it is open, so open it **before** you load the page.
+3. Click the **Network** tab. The developer tools only record network activity while they are open, so open them **before** you load the page.
 4. In the address bar, type `https://en.wikipedia.org/wiki/Computer` and press `Enter`. If the list stays empty, press `Ctrl` + `R` (`Cmd` + `R` on Mac) to load the page again.
 5. Watch the list fill up. **Each row is one file the browser asked for.**
 
@@ -143,9 +157,9 @@ Now look closer:
 - In the bar at the bottom of the panel, find the number before the word **requests**. That is how many files the page needed.
 - Click the **first row** (named `Computer`). This is the HTML page from step 5. A details area opens: click its **Headers** tab.
 - Find the **status code**: `200`. (If you visited this page before, you might see `304` instead. It means "not changed, use the copy you already saved".)
-- Find the **Remote Address** (in Firefox: **Address**). That is the server's IP address: the answer DNS gave in step 2. It may end with `:443`. That number is a **port**, a kind of door number on the server. 443 is the usual door for HTTPS.
+- Find the **Remote Address**. (In Firefox, first click the small triangle at the top of the Headers tab to show more details, then find **Address**.) That is the server's IP address: the answer DNS gave in step 2. It may end with `:443`. That number is a **port**, a kind of door number on the server. 443 is the usual door for HTTPS.
 
-Look at the other rows too. The **Type** column shows what kind of file each one is. Chrome and Edge show words like `stylesheet` (CSS) and `script` (JavaScript). Firefox shows `css`, `js`, and image types like `png`. Can you find CSS, JavaScript and image files? Those are step 6.
+Look at the other rows too. Above the list are filter buttons, such as **JS** and **CSS**. Click one to show only that kind of file. Can you find JavaScript and CSS files? Those are step 6.
 
 ## Common misunderstandings
 
@@ -171,4 +185,11 @@ Look at the other rows too. The **Type** column shows what kind of file each one
 - CERN, The birth of the Web: https://home.cern/science/computing/the-birth-of-the-web/
 - CERN, A short history of the Web: https://home.cern/science/computing/the-birth-of-the-web/short-history-web/
 - RFC 9000, QUIC: https://www.rfc-editor.org/rfc/rfc9000
+- MDN Web Docs, The web standards model: https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/The_web_standards_model
+- Chrome for Developers, Network features reference: https://developer.chrome.com/docs/devtools/network/reference
+- Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
+- Firefox DevTools User Docs, Keyboard shortcuts: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
+- Firefox DevTools User Docs, Network Monitor toolbar: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/toolbar/index.html
+- RFC 9114, HTTP/3: https://www.rfc-editor.org/rfc/rfc9114
+- Firefox DevTools User Docs, Network request details: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_details/index.html
 - RFC 9110, HTTP Semantics: https://www.rfc-editor.org/rfc/rfc9110
