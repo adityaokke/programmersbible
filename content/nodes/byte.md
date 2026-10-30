@@ -85,7 +85,7 @@ Why does it stop at 255 and not 256? Because counting starts at 0. From 0 to 255
 
 One byte is enough for one letter of basic English text: the letters A to Z, digits and common signs like `!` or `?`. For example, the capital letter **H** is stored as the number 72, which fits in one byte. (How letters become numbers is the topic of [[text-as-numbers]].)
 
-Other **characters** (a character is one letter, digit, sign or symbol) need more than one byte. The web's standards require a text format called **UTF-8** for new formats. In UTF-8, one character uses **1 to 4 bytes**. Letters from many languages, and emoji, use 2, 3 or 4. (Some emoji, like flags or emoji with a skin color, are made of several characters joined together, so they use even more bytes.)
+Other **characters** (a character is one letter, digit, sign or symbol) need more than one byte. The web's Encoding Standard requires a text format called **UTF-8** for new formats. In UTF-8, one character uses **1 to 4 bytes**. Letters from many languages, and emoji, use 2, 3 or 4. (Some emoji, like flags or emoji with a skin color, are made of several characters joined together, so they use even more bytes.)
 
 Bytes are also the basic unit of size. A file of 1,000 bytes is one kilobyte. (Some systems count 1,024 bytes instead. You will see why in [[data-size-units]].)
 
@@ -93,13 +93,13 @@ Bytes are also the basic unit of size. A file of 1,000 bytes is one kilobyte. (S
 
 The word "byte" was invented at the company **IBM** in **1956**. A team was designing a new computer called **Stretch**. A member of the team, **W. Buchholz**, needed a name for "a group of bits" that the machine handled together.
 
-The earliest use found in Buchholz's files is an internal IBM note from June 1956. At first, a byte was not 8 bits. It could have between one and six bits, depending on the task. In August 1956, the team considered bytes of 8 bits, and Stretch soon allowed bytes of up to 8 bits.
+The earliest use found in Buchholz's files is an internal IBM note from June 1956. At first, a byte was not 8 bits. It could have between one and six bits, depending on the task. In August 1956, bytes of 8 bits were considered, and Stretch soon allowed bytes of up to 8 bits.
 
-The spelling is on purpose. The word comes from "bite" (a small piece), but it was spelled with a **y** so that nobody would accidentally change it into "bit".
+The spelling is on purpose. The word comes from "bite", but it was spelled with a **y** so that nobody would accidentally change it into "bit".
 
 In the mid-1960s, IBM's **System/360** computers set the byte at exactly 8 bits and spread 8-bit bytes far and wide. Since then, "byte" has meant 8 bits almost everywhere.
 
-Some technical documents use the word **octet** instead, so there is no confusion: an octet is always exactly 8 bits. You will see "octet" in internet standards.
+Some technical documents, such as internet standards, use the word **octet** instead. An octet is always exactly 8 bits.
 
 ## 🧪 Try it in your browser
 
