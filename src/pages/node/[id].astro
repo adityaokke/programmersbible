@@ -10,6 +10,7 @@ const { node } = Astro.props as { node: Node };
 const readable = isReadable(node);
 const html = readable ? renderBody(node) : "";
 const position = pathPosition(node.id);
+const mapUrl = `/map?topic=${node.id}`;
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
 const related = byIds([...node.related, ...node.part_of, ...node.led_to]);
@@ -28,11 +29,16 @@ const byline =
 ---
 
 <Base title={node.title} description={node.summary}>
+  {!position && (
+    <div class="breadcrumb">
+      <a href={mapUrl}>See on the map</a>
+    </div>
+  )}
   {
     position && (
       <div class="breadcrumb">
         <a href={`/path/${position.path.id}`}>{position.path.title}</a> › {position.section.title} › {position.index + 1} of{" "}
-        {position.total}
+        {position.total} · <a href={mapUrl}>See on the map</a>
         <div class="progress">
           <span style={`width: ${((position.index + 1) / position.total) * 100}%`} />
         </div>
