@@ -3,7 +3,7 @@ id: dns
 title: "DNS"
 type: concept
 part: network
-status: review
+status: published
 requires: [domain-name, server]
 related: [ip-address, url, web-hosting]
 year: 1983
@@ -40,6 +40,8 @@ sources:
   - title: "Google Public DNS: DNS lookup tool"
     url: https://dns.google/
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-10-30
 updated: 2026-10-30
 ---
 

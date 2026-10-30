@@ -29,7 +29,7 @@ npm run status        # progress dashboard
 
 ## How content is made
 
-Nodes are written with AI and reviewed and fact-checked by a human before they are published. Every node lists its sources.
+Nodes are written with AI, checked by separate AI fact-checking and beginner-reading passes, and approved by an AI reviewer. Each node's byline says who reviewed it: "Reviewed by AI · Not yet checked by a human" until a human has reviewed it. Step-by-step projects are always checked by a human before they are published. Every node lists its sources.
 
 ## License
 

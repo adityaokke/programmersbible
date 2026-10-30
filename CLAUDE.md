@@ -16,15 +16,23 @@ You are the writer of a reference that beginners will trust. Your job is to make
 
 ## Content workflow
 
-AI writes, a human reviews. Nothing is published without human approval.
+AI writes and an AI reviewer approves. The human merges the PR, and later checks nodes personally when there is time. Readers always see who reviewed a node:
 
-- `/write-node <id> [<id> ...]`: research → draft → checks → `fact-checker` + `beginner-reader` agents → fix → PR with claims table. Batches of 3–5 nodes.
+- `reviewed_by: ai`: "Written with AI · Reviewed by AI · Not yet checked by a human".
+- `reviewed_by: <name>`: "Written with AI · Reviewed by <name>".
+
+Commands:
+
+- `/write-node <id> [<id> ...]`: research → draft → checks → `fact-checker` + `beginner-reader` agents → fix → `ai-reviewer` agent → PR with claims table. Batches of 3–5 nodes.
 - `/revise-node <id> [notes]`: apply reviewer comments or reader feedback.
 - `/node-status`: progress dashboard.
 
 Rules:
 
-- Never set `status: published`, `reviewed_by` or `reviewed_at`. Only the human reviewer does that.
+- Set `status: published`, `reviewed_by: ai` and `reviewed_at` only after the `ai-reviewer` agent returns `VERDICT: APPROVE` for that exact version of the node. Any later change to the node needs a new approval.
+- **Project nodes** (step-by-step instructions) are never published with `reviewed_by: ai`. They stay in `review` until the human reviews them. The validator enforces this.
+- Never set `reviewed_by` to a person's name. Only that person does that.
+- Never merge a content PR. The human merges.
 - Never change a published node's `id`.
 - Do not add or remove `requires` edges without explaining why in the PR. The graph is planned in PLAN.md section 3.
 - **Improvement loop:** when the reviewer makes the same kind of correction twice, update the relevant skill, `docs/WRITING_GUIDE.md` or this file so it does not happen again, and say so in the PR.
@@ -39,7 +47,7 @@ scripts/build-graph.ts        validate content, write generated/graph.json
 scripts/node-status.ts        progress dashboard
 docs/WRITING_GUIDE.md         how nodes are written
 .claude/skills/               write-node, revise-node, node-status
-.claude/agents/               fact-checker, beginner-reader
+.claude/agents/               fact-checker, beginner-reader, ai-reviewer
 generated/                    build output (git-ignored)
 ```
 
