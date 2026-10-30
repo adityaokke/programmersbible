@@ -166,7 +166,7 @@ updated: 2026-10-30
 
 - **Concept:** In one sentence → Why should I care? → Analogy → How it actually works → How it came to be → 🧪 Try it in your browser → Common misunderstandings → Recap (3 bullets) → Sources
 - **Event:** In one sentence → The world before → What happened → Why it mattered → 🔍 See it for yourself → Recap → Sources
-- **Project (milestone):** Goal → What you'll need → Steps with checkpoints → "It works!" criteria → If it doesn't work → What you just learned → Sources
+- **Project (milestone):** Goal → What you'll need → Steps with checkpoints → "It works!" criteria → If it doesn't work → What you learned → Sources
 
 ### Review checklist
 

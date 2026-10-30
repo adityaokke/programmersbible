@@ -124,7 +124,7 @@ export const REQUIRED_HEADINGS: Record<(typeof NODE_TYPES)[number], string[]> = 
     "Steps",
     "It works!",
     "If it doesn't work",
-    "What you just learned",
+    "What you learned",
     "Sources",
   ],
   hub: [],
