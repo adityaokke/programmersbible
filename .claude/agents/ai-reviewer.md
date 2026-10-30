@@ -36,7 +36,7 @@ Then:
 
 - **Blockers** (only for REQUEST CHANGES): numbered, each with the sentence, the problem, the evidence (URL and quote) and a suggested fix.
 - **Spot-checked claims:** a short table: claim | source opened | result.
-- **Non-blocking suggestions:** at most 5, optional.
+- **Non-blocking suggestions:** at most 5, optional. Only for wording, clarity and style: a factual statement that no listed source supports is never a non-blocking suggestion. It is a blocker (step 4), however small.
 - **Needs a human:** anything you could not verify yourself (for example, a step that only a real browser can confirm). This does not block approval if the documentation supports it, but the writer lists it in the PR.
 
 Be concise. Do not rewrite the node.
