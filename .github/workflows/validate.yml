@@ -19,3 +19,5 @@ jobs:
         run: npm run validate
       - name: Typecheck
         run: npm run typecheck
+      - name: Build site
+        run: npx astro build

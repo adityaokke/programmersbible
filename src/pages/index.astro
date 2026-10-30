@@ -1,0 +1,48 @@
+---
+import Base from "../layouts/Base.astro";
+import { allPaths, nodeById } from "../lib/content.ts";
+
+const firstChapter = allPaths.find((p) => p.id === "first-chapter");
+const firstNode = firstChapter ? nodeById.get(firstChapter.sections[0]!.nodes[0]!) : undefined;
+
+const examples = [
+  "What's inside a computer?",
+  "How does the internet work?",
+  "What is a domain?",
+  "How do I make a website?",
+];
+---
+
+<Base>
+  <div class="narrow">
+    <h1>From knowing how to use a browser to understanding how it all works.</h1>
+    <p class="muted">
+      The foundations every programmer should know, from the first computers to your own website on your own domain.
+    </p>
+
+    <h2>What do you want to understand?</h2>
+    <form action="/search" method="get" role="search">
+      <input type="search" name="q" placeholder="e.g. how does a website get to my phone?" style="width: 100%" />
+    </form>
+    <p class="small muted">Not sure what to ask? Try one:</p>
+    <div class="chips">
+      {examples.map((q) => <a href={`/search?q=${encodeURIComponent(q)}`}>{q}</a>)}
+    </div>
+
+    <p>or</p>
+    {firstNode && <a class="button" href="/path/first-chapter">▶ Start from the very beginning</a>}
+
+    {
+      firstChapter && (
+        <div class="parts">
+          {firstChapter.sections.map((s) => (
+            <div>
+              <strong>{s.title}</strong>
+              <div class="small muted">{s.nodes.length} topics</div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</Base>

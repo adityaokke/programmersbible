@@ -1,0 +1,11 @@
+{
+  // One Cloudflare Worker serves the static site (and, later, the /api routes).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "programmersbible",
+  "compatibility_date": "2026-10-30",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
