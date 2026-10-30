@@ -46,17 +46,29 @@ generated/                    build output (git-ignored)
 ## Commands
 
 ```
+npm run dev           local site at http://localhost:4321 (shows drafts)
+npm run build         validate, then build the production site into dist/ (published nodes only)
+npm run build:preview same, but shows draft and review nodes (Linux/CI shell)
+npm run deploy        build, then deploy to Cloudflare with wrangler
 npm run validate      check all content (CI runs this); exit 1 on error
 npm run build:graph   validate, then write generated/graph.json
 npm run status        progress per path and section
-npm run typecheck     TypeScript check for schema/ and scripts/
+npm run typecheck     TypeScript check for schema/, scripts/ and src/
 ```
 
 ## Development
 
-Planned stack (see PLAN.md section 7): Astro (static) + Cytoscape.js + Pagefind, served by one Cloudflare Worker (static assets + Hono API), Better Auth (passwordless), Cloudflare D1 (SQLite) via Drizzle.
+Stack (see PLAN.md section 7): Astro (static) + Cytoscape.js + Pagefind, served by one Cloudflare Worker (static assets + Hono API), Better Auth (passwordless), Cloudflare D1 (SQLite) via Drizzle. Built so far: Astro static site (home, node pages, path, timeline, simple search) and `wrangler.jsonc` for static assets.
+
+```
+src/lib/content.ts    build-time graph access for pages (uses scripts/lib/content.ts)
+src/pages/            index, node/[id], path/[id], timeline, search, 404
+src/layouts/          Base layout
+src/styles/           global.css (light and dark)
+```
 
 - `schema/node.ts` is the contract between content and development. Change it first, then update both sides.
+- Production shows only `published` nodes; others render as "being written". `astro dev` and `SHOW_DRAFTS=true` show drafts.
 - TypeScript, strict mode, ES modules. Node ≥ 22.
 - Keep the site static-first: reading must never depend on the API or the database.
 - Before opening a PR, run `npm run validate` and `npm run typecheck`.

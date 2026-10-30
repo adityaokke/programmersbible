@@ -1,0 +1,79 @@
+---
+import Base from "../layouts/Base.astro";
+import { searchIndex } from "../lib/content.ts";
+
+// Simple search over titles, aliases and the questions each node answers.
+// Full-text search (Pagefind) replaces this later.
+const index = searchIndex();
+---
+
+<Base title="Search">
+  <div class="narrow">
+    <h1>Search</h1>
+    <form action="/search" method="get" role="search">
+      <input id="q" type="search" name="q" placeholder="What do you want to understand?" style="width: 100%" />
+    </form>
+    <p id="summary" class="small muted"></p>
+    <ul id="results" class="node-list"></ul>
+  </div>
+
+  <script is:inline type="application/json" id="search-index" set:html={JSON.stringify(index)} />
+  <script>
+    type Entry = { id: string; title: string; summary: string; part: string; readable: boolean; terms: string };
+
+    const index: Entry[] = JSON.parse(document.getElementById("search-index")!.textContent!);
+    const input = document.getElementById("q") as HTMLInputElement;
+    const results = document.getElementById("results")!;
+    const summary = document.getElementById("summary")!;
+
+    const STOP = new Set(["a", "an", "the", "is", "are", "what", "how", "does", "do", "i", "my", "to", "of", "in", "on", "it", "and", "or", "why", "can", "you", "get", "s"]);
+
+    function words(text: string): string[] {
+      return text.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w && !STOP.has(w));
+    }
+
+    function search(query: string) {
+      const qWords = words(query);
+      const scored = index
+        .map((e) => {
+          const title = e.title.toLowerCase();
+          let score = 0;
+          for (const w of qWords) {
+            if (title.includes(w)) score += 3;
+            else if (e.terms.includes(w)) score += 1;
+          }
+          return { e, score };
+        })
+        .filter((r) => r.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+
+      results.replaceChildren(
+        ...scored.map(({ e }) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = `/node/${e.id}`;
+          a.textContent = e.title;
+          const wrap = document.createElement("span");
+          wrap.append(a);
+          const note = document.createElement("div");
+          note.className = "small muted";
+          note.textContent = e.readable ? e.summary : "Coming soon";
+          wrap.append(note);
+          li.append(wrap);
+          return li;
+        }),
+      );
+      summary.textContent = query
+        ? scored.length
+          ? `Topics that match "${query}":`
+          : `Nothing matches "${query}" yet. Try other words, or start from the beginning.`
+        : "";
+    }
+
+    const initial = new URLSearchParams(location.search).get("q") ?? "";
+    input.value = initial;
+    search(initial);
+    input.addEventListener("input", () => search(input.value));
+  </script>
+</Base>

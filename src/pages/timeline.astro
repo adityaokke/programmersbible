@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+import { nodes, nodeUrl } from "../lib/content.ts";
+
+const events = nodes.filter((n) => n.type === "event" && n.year !== undefined).sort((a, b) => a.year! - b.year!);
+---
+
+<Base title="Timeline" description="How we got from the abacus to the smartphone.">
+  <div class="narrow">
+    <h1>Timeline</h1>
+    <p class="muted">How we got from counting on an abacus to a computer in your pocket.</p>
+    <ol class="timeline">
+      {
+        events.map((e) => (
+          <li>
+            <span class="when">{e.era_label ?? e.year}</span>
+            <a href={nodeUrl(e.id)}>{e.title}</a>
+            {e.summary && <div class="small muted">{e.summary}</div>}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>

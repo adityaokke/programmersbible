@@ -1,0 +1,128 @@
+---
+import Base from "../../layouts/Base.astro";
+import { byIds, isReadable, leadsTo, nodeUrl, nodes, pathPosition, renderBody, type Node } from "../../lib/content.ts";
+
+export function getStaticPaths() {
+  return nodes.map((node) => ({ params: { id: node.id }, props: { node } }));
+}
+
+const { node } = Astro.props as { node: Node };
+const readable = isReadable(node);
+const html = readable ? renderBody(node) : "";
+const position = pathPosition(node.id);
+const learnFirst = byIds(node.requires);
+const next = leadsTo(node.id);
+const related = byIds([...node.related, ...node.part_of, ...node.led_to]);
+// "ai" means the ai-reviewer agent approved it; say plainly that no human has checked it yet.
+const reviewed = !node.reviewed_by
+  ? undefined
+  : node.reviewed_by === "ai"
+    ? "Reviewed by AI · Not yet checked by a human"
+    : `Reviewed by ${node.reviewed_by}`;
+const byline =
+  node.author === "ai"
+    ? `Written with AI · ${reviewed ?? "Not reviewed yet"}`
+    : node.author
+      ? `Written by ${node.author}${reviewed ? ` · ${reviewed}` : ""}`
+      : undefined;
+---
+
+<Base title={node.title} description={node.summary}>
+  {
+    position && (
+      <div class="breadcrumb">
+        <a href={`/path/${position.path.id}`}>{position.path.title}</a> › {position.section.title} › {position.index + 1} of{" "}
+        {position.total}
+        <div class="progress">
+          <span style={`width: ${((position.index + 1) / position.total) * 100}%`} />
+        </div>
+      </div>
+    )
+  }
+
+  <div class="node-layout">
+    <article>
+      <h1>{node.title}</h1>
+      <p class="small muted">
+        {node.type === "event" && <span class="event-mark">🕰 {node.era_label ?? node.year} · </span>}
+        {node.read_minutes && <>⏱ {node.read_minutes} min read</>}
+        {node.status !== "published" && (
+          <>
+            {" "}
+            <span class={`badge ${node.status}`}>{node.status}</span>
+          </>
+        )}
+      </p>
+
+      {
+        readable ? (
+          <Fragment set:html={html} />
+        ) : (
+          <div class="notice">
+            <p>
+              <strong>This topic is being written.</strong> It will be published after it has been fact-checked and
+              reviewed.
+            </p>
+            {learnFirst.length > 0 && <p>While you wait, you can read what comes before it (listed on this page).</p>}
+          </div>
+        )
+      }
+
+      {readable && byline && <p class="small muted">{byline}</p>}
+
+      {
+        position && (
+          <nav class="pager">
+            <span>{position.prev && <a href={nodeUrl(position.prev.id)}>← {position.prev.title}</a>}</span>
+            <span>{position.next && <a href={nodeUrl(position.next.id)}>{position.next.title} →</a>}</span>
+          </nav>
+        )
+      }
+    </article>
+
+    <aside class="sidebar">
+      {
+        learnFirst.length > 0 && (
+          <section>
+            <h3>📚 Learn first</h3>
+            <ul>
+              {learnFirst.map((n) => (
+                <li>
+                  <a href={nodeUrl(n.id)}>{n.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+      {
+        next.length > 0 && (
+          <section>
+            <h3>➡ Leads to</h3>
+            <ul>
+              {next.map((n) => (
+                <li>
+                  <a href={nodeUrl(n.id)}>{n.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+      {
+        related.length > 0 && (
+          <section>
+            <h3>🔗 Related</h3>
+            <ul>
+              {related.map((n) => (
+                <li>
+                  <a href={nodeUrl(n.id)}>{n.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </aside>
+  </div>
+</Base>

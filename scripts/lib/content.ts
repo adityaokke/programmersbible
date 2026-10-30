@@ -4,7 +4,8 @@ import matter from "gray-matter";
 import YAML from "yaml";
 import { nodeFrontmatter, pathFile, type NodeFrontmatter, type PathFile } from "../../schema/node.ts";
 
-export const ROOT = join(import.meta.dirname, "..", "..");
+// Commands run from the repository root (npm scripts, astro); bundlers move this file.
+export const ROOT = process.cwd();
 export const NODES_DIR = join(ROOT, "content", "nodes");
 export const PATHS_DIR = join(ROOT, "content", "paths");
 
@@ -24,6 +25,9 @@ export type LoadedPath = {
 // YAML 1.2 keeps dates as strings, which is what the schema expects.
 const parseYaml = (src: string) => YAML.parse(src) as object;
 
+// Windows checkouts may use CRLF line endings; the parsers expect LF.
+const readText = (path: string) => readFileSync(path, "utf8").replace(/\r\n/g, "\n");
+
 const rel = (file: string) => relative(ROOT, file).replaceAll("\\", "/");
 
 function listFiles(dir: string, ext: string): string[] {
@@ -38,7 +42,7 @@ export function loadNodes(issues: Issue[]): LoadedNode[] {
   const nodes: LoadedNode[] = [];
   for (const path of listFiles(NODES_DIR, ".md")) {
     const file = rel(path);
-    const parsed = matter(readFileSync(path, "utf8"), { engines: { yaml: parseYaml } });
+    const parsed = matter(readText(path), { engines: { yaml: parseYaml } });
     const result = nodeFrontmatter.safeParse(parsed.data);
     if (!result.success) {
       for (const issue of result.error.issues) {
@@ -60,7 +64,7 @@ export function loadPaths(issues: Issue[]): LoadedPath[] {
   const paths: LoadedPath[] = [];
   for (const path of listFiles(PATHS_DIR, ".yaml")) {
     const file = rel(path);
-    const result = pathFile.safeParse(parseYaml(readFileSync(path, "utf8")));
+    const result = pathFile.safeParse(parseYaml(readText(path)));
     if (!result.success) {
       for (const issue of result.error.issues) {
         issues.push({ level: "error", file, message: `${issue.path.join(".")}: ${issue.message}` });
