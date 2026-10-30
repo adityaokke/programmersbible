@@ -44,6 +44,8 @@ sources:
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
   - title: "Firefox DevTools User Docs: Keyboard shortcuts"
     url: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
+  - title: "Firefox DevTools User Docs: Network request list"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_list/index.html
   - title: "Firefox DevTools User Docs: Network Monitor toolbar"
     url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/toolbar/index.html
   - title: "RFC 9114, HTTP/3 (HTTP over QUIC)"
@@ -140,7 +142,7 @@ Nobody designed this whole chain at once. Its pieces were invented at different 
 - **DNS** was first described in 1983, when one shared list of names became too big.
 - The **World Wide Web** was first proposed in 1989 by Tim Berners-Lee at **CERN**, a research center where thousands of scientists work together. By the end of 1990, the first web server and the first browser were running there.
 
-These pieces work together because each one is an open standard: a public set of rules that anyone can use. Because browsers follow the same published standards, a page should look the same in browsers from different makers.
+These pieces are open standards: a public set of rules that anyone can use. Because browsers follow the same published standards, a page should look the same in browsers from different makers.
 
 ## 🧪 Try it in your browser
 
@@ -157,7 +159,7 @@ Now look closer:
 - In the bar at the bottom of the panel, find the number before the word **requests**. That is how many files the page needed.
 - Click the **first row** (named `Computer`). This is the HTML page from step 5. A details area opens: click its **Headers** tab.
 - Find the **status code**: `200`. (If you visited this page before, you might see `304` instead. It means "not changed, use the copy you already saved".)
-- Find the **Remote Address**. (In Firefox, first click the small triangle at the top of the Headers tab to show more details, then find **Address**.) That is the server's IP address: the answer DNS gave in step 2. It may end with `:443`. That number is a **port**, a kind of door number on the server. 443 is the usual door for HTTPS.
+- Find the server's IP address: the answer DNS gave in step 2. In Chrome and Edge, right-click the row of column names at the top of the list and turn on **Remote address**. In Firefox, click the small triangle at the top of the Headers tab to show more details, then find **Address**. The address may end with `:443`. That number is a **port**, a kind of door number on the server. 443 is the usual door for HTTPS.
 
 Look at the other rows too. Above the list are filter buttons, such as **JS** and **CSS**. Click one to show only that kind of file. Can you find JavaScript and CSS files? Those are step 6.
 
@@ -189,6 +191,7 @@ Look at the other rows too. Above the list are filter buttons, such as **JS** an
 - Chrome for Developers, Network features reference: https://developer.chrome.com/docs/devtools/network/reference
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Keyboard shortcuts: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
+- Firefox DevTools User Docs, Network request list: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_list/index.html
 - Firefox DevTools User Docs, Network Monitor toolbar: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/toolbar/index.html
 - RFC 9114, HTTP/3: https://www.rfc-editor.org/rfc/rfc9114
 - Firefox DevTools User Docs, Network request details: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_details/index.html

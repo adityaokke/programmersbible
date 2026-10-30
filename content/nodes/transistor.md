@@ -43,18 +43,13 @@ In the 1940s, the first electronic computers, like [[eniac]], were built from **
 
 But vacuum tubes had serious problems. They used a lot of power, they produced a lot of heat, and they took up a lot of space. They also burned out and had to be replaced. ENIAC used about 18,000 tubes, and keeping them working reliably was the biggest challenge of running it.
 
-Computers were not the only users of tubes. The American telephone network also used vacuum tubes, and mechanical switches with moving metal parts, to connect calls. The telephone company had its own research center, called **Bell Labs**. Bell Labs wanted to replace the tubes and the mechanical switches with something smaller and more reliable.
+Computers were not the only users of tubes. The American telephone network also used vacuum tubes, and mechanical switches with moving parts, to connect calls. The telephone company had its own research center, called **Bell Labs**. Bell Labs wanted to replace the tubes and the mechanical switches with something more reliable.
 
 ## What happened
 
-At Bell Labs, a group of scientists studied **semiconductors**. To understand them, think about two kinds of material:
+At Bell Labs, a group of scientists studied **semiconductors**: a group of materials that includes silicon and germanium. The scientists hoped they could **control** how much electricity flows through a semiconductor. If they could, a small solid piece of it might do the work of a vacuum tube.
 
-- A **conductor**, like copper, lets electricity flow through it easily.
-- An **insulator**, like rubber, stops electricity.
-
-A **semiconductor** is in between. The useful thing is that you can **control** how much electricity it lets through.
-
-The group was led by **William Shockley** and the chemist Stanley Morgan. Two members of the group, **John Bardeen** and **Walter Brattain**, did the key experiments. Their most intense period of work was from November 17 to December 23, 1947. This period is often called the "Miracle Month".
+The group was led by **William Shockley** and Stanley Morgan. Two members of the group, **John Bardeen** and **Walter Brattain**, did the key experiments. Their most intense period of work was from November 17 to December 23, 1947. This period is often called the "Miracle Month".
 
 They used a small, flat piece of very pure **germanium**, a type of semiconductor. They pressed two gold contacts onto it, very close together, held in place by a small plastic wedge. On **December 16, 1947**, their experiment worked. A weak electrical **signal** (a small, changing flow of electricity, like the electricity that carries your voice in a telephone line) went into the device. It came out **stronger**: up to 100 times stronger. This was the first working transistor. This first kind is called a **point-contact transistor**: its gold contacts touch the germanium at tiny points.
 
@@ -73,7 +68,7 @@ A transistor works the same way, with electricity: a **small** electrical signal
 
 Computers use transistors as switches. Many switches working together can hold bits and do calculations with them. You will see how in later lessons.
 
-*(Where the tap comparison breaks down: a tap has moving parts. A transistor has none. Electricity controls electricity directly, inside the solid material.)*
+*(Where the tap comparison breaks down: you turn a tap with your hand. In a transistor, electricity controls electricity. In the first transistor, the signal on one gold contact controlled the flow of electricity through the other.)*
 
 Compared to a vacuum tube, a transistor has big advantages:
 
