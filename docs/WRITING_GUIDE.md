@@ -181,7 +181,7 @@ Numbered steps with checkpoints.
 How the reader knows they succeeded.
 ## If it doesn't work
 The most common problems and fixes.
-## What you just learned
+## What you learned
 Links back to the nodes used.
 ## Sources
 ```
