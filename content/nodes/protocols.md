@@ -137,19 +137,15 @@ Both sides know these rules before they start. That is why they understand each 
 
 Several protocols work together, each with its own job. They are stacked in **layers**, and each layer relies on the one below it. When you open a web page:
 
-*Diagram: three protocols stacked in layers. HTTP is on top, TCP is in the middle, IP is at the bottom, and below them is the network of cables and radio waves.*
-
-```
-+-------------------------------------------------+
-| HTTP: what the browser and the server say       |
-+-------------------------------------------------+
-| TCP:  all the pieces arrive, without errors,    |
-|       and in the right order                    |
-+-------------------------------------------------+
-| IP:   addresses that name each device           |
-+-------------------------------------------------+
-| the network: cables and radio waves             |
-+-------------------------------------------------+
+```mermaid
+flowchart TB
+  accTitle: Protocols stacked in layers
+  accDescr: Three protocols stacked in layers, each relying on the one below it. HTTP is on top: what the browser and the server say. TCP is in the middle: all the pieces arrive, without errors, and in the right order. IP is below it: addresses that name each device. At the bottom is the network itself: cables and radio waves.
+  http["HTTP: what browser and server say"]
+  tcp["TCP: pieces arrive, without errors, in order"]
+  ip["IP: addresses that name each device"]
+  net["The network: cables and radio waves"]
+  http -- relies on --> tcp -- relies on --> ip -- relies on --> net
 ```
 
 - **HTTP** is on top. It is usually sent over TCP. (A newer version, HTTP/3, uses a different protocol instead of TCP.)

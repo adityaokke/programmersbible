@@ -79,19 +79,14 @@ A group of wires that carries bits between parts of a computer is called a **bus
 - **Data wires** carry the bits that are being moved.
 - **Control wires** carry the command, such as "read" or "write". In that model, one control signal also says whether the CPU wants memory or an input or output device.
 
-*Diagram: the CPU at the top, connected by one long bus to memory (RAM), storage, and input and output devices. Bits can travel along the bus in both directions.*
-
-```
-                 ┌───────────┐
-                 │    CPU    │
-                 └─────┬─────┘
-                       │
- ══════╤═══════════════╪══════════════╤══════════  BUS (groups of wires)
-       │               │              │
- ┌─────┴─────┐   ┌─────┴─────┐   ┌────┴──────────────┐
- │  MEMORY   │   │  STORAGE  │   │ INPUT and OUTPUT  │
- │   (RAM)   │   │ (SSD/HDD) │   │ keyboard, screen  │
- └───────────┘   └───────────┘   └───────────────────┘
+```mermaid
+flowchart TB
+  accTitle: The CPU and the other parts share a bus
+  accDescr: The CPU is at the top. It is connected by one long bus, a group of wires, to memory (RAM), to storage (SSD or HDD), and to input and output devices such as the keyboard and the screen. Bits can travel along the bus in both directions.
+  cpu[CPU] <--> bus([Bus])
+  bus <--> ram["Memory (RAM)"]
+  bus <--> storage[Storage]
+  bus <--> io["Input and output"]
 ```
 
 (This picture is simplified. A real computer has several buses. For example, external devices often connect through USB, a different bus.)
