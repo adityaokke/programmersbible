@@ -78,14 +78,14 @@ A coin toss has **2** possible results: heads or tails. A dice roll has **6** po
 
 You can find any answer with yes-or-no questions. Each good question cuts the possible answers in half. Say a friend thinks of a number from 1 to 8:
 
+```mermaid
+flowchart TD
+  accTitle: Guessing a number from 1 to 8
+  accDescr: Guessing a number from 1 to 8. At the start, 8 numbers are possible: 1 to 8. "Is it bigger than 4?" Yes: 4 numbers are left, 5 6 7 8. "Is it bigger than 6?" No: 2 numbers are left, 5 6. "Is it 6?" No: 1 number is left, 5, so the number is found. Each yes-or-no answer removes half of the possible numbers. After three answers, one number is left.
+  s8["Start: 1 2 3 4 5 6 7 8<br/>(8 possible)"] -- "Bigger than 4? Yes" --> s4["5 6 7 8<br/>(4 possible)"]
+  s4 -- "Bigger than 6? No" --> s2["5 6<br/>(2 possible)"]
+  s2 -- "Is it 6? No" --> s1["5<br/>(1: found it)"]
 ```
-Start:                          1 2 3 4 5 6 7 8   (8 possible)
-"Is it bigger than 4?"  Yes ->          5 6 7 8   (4 possible)
-"Is it bigger than 6?"  No  ->          5 6       (2 possible)
-"Is it 6?"              No  ->          5         (1: found it)
-```
-
-*Diagram: guessing a number from 1 to 8. Each yes-or-no answer removes half of the possible numbers. After three answers, one number is left.*
 
 Information can be measured this way. The standard unit of information is called the **[[bit]]**. One bit is the information that cuts the uncertainty in half, like the answer to one of the questions above. So finding a number from 1 to 8 took **3 bits**: three answers.
 
