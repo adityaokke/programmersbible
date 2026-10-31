@@ -2,7 +2,7 @@
 
 A free, open knowledge graph that takes you from knowing how to use a web browser to understanding how it all works: computers, bits and bytes, the history of computing and the internet, networks, the web, and finally your own website live on your own domain.
 
-> 🚧 In development. See [PLAN.md](PLAN.md) for the full plan.
+> 🚧 In development.
 
 ## How it works
 
