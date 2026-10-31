@@ -97,14 +97,15 @@ The data that travels over networks is called **traffic**. The Internet Society 
 
 With an IXP, traffic between two networks in the same country can stay in that country. Without one, the Internet Society says, it may travel abroad and back.
 
-*Diagram: a laptop sends a packet through the home router and a line to ISP A. ISP A passes it, at an internet exchange point, to ISP B, which delivers it to the website's network.*
-
-```
- [laptop] -> [home router + modem] ==line==> [ISP A's routers]
-                                                    |
-                                       internet exchange point
-                                                    |
-                    [website's network] <- [ISP B's routers]
+```mermaid
+flowchart TD
+  accTitle: A packet's path through two ISPs
+  accDescr: A laptop sends a packet through the home router and modem, and over a line to ISP A's routers. ISP A passes it, at an internet exchange point, to ISP B's routers, which deliver it to the website's network.
+  L["Laptop"] --> H["Home router<br/>+ modem"]
+  H -- line --> A["ISP A's routers"]
+  A --> X["Internet<br/>exchange point"]
+  X --> B["ISP B's routers"]
+  B --> W["Website's network"]
 ```
 
 ## How it came to be

@@ -110,11 +110,15 @@ Take the address `142.250.190.78`. It matches two rows: `142.250` and `142.250.1
 
 Each step from one device to the next is called a **hop**.
 
-*Diagram: a packet goes from a laptop through a home router and three routers of internet providers to a website's computer. Each arrow is one hop.*
-
-```
- [laptop] --> [home router] --> [router] --> [router] --> [router] --> [website's computer]
-          hop 1            hop 2        hop 3        hop 4         hop 5
+```mermaid
+flowchart TD
+  accTitle: A packet's path, hop by hop
+  accDescr: A packet goes from a laptop through a home router and three routers of internet providers to a website's computer. Each arrow is one hop: hop 1 from the laptop to the home router, hops 2, 3 and 4 between routers, and hop 5 from the last router to the website's computer.
+  L[Laptop] -- hop 1 --> H[Home router]
+  H -- hop 2 --> R1[Router]
+  R1 -- hop 3 --> R2[Router]
+  R2 -- hop 4 --> R3[Router]
+  R3 -- hop 5 --> W[Website's computer]
 ```
 
 ### Time to live

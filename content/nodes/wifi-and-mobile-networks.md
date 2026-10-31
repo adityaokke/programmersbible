@@ -84,17 +84,22 @@ Think of **lamps**. Wi-Fi is like one lamp that lights only the room around it. 
 
 In [[what-is-a-network]], you saw that devices can connect by cable or by **radio waves**. Wi-Fi and mobile networks both use radio. They use it for the first link: the one between your device and the network. After that, your [[packets]] usually travel through cables and routers.
 
-*Diagram: two ways a phone reaches the internet. Top: by radio to a home router, then by a line to an internet service provider. Bottom: by radio to the base station of a cell, then by fiber or microwave link to the core network, then to the internet.*
-
-```
- Wi-Fi:
- [phone] ~~radio~~> [home router] -----line------> [ISP] ---> the internet
-
- Mobile network:
- [phone] ~~radio~~> [base station] --fiber or--> [core network] ---> the internet
-                    (in your cell)    microwave
-
- ~~ = radio waves to your device     -- = other links (usually cables)
+```mermaid
+flowchart TD
+  accTitle: Two ways a phone reaches the internet
+  accDescr: A phone can reach the internet in two ways. With Wi-Fi, it sends radio waves to a home router, the router sends the data over a line to an internet service provider (ISP), and from there it reaches the internet. With a mobile network, the phone sends radio waves to the base station of its cell, the base station sends the data over a fiber or microwave link to the core network, and from there it reaches the internet. Only the first link, from the phone, is radio; the other links are usually cables.
+  P[Phone]
+  R[Home router]
+  I[ISP]
+  B[Base station<br/>of your cell]
+  C[Core network]
+  N[The internet]
+  P -. "Wi-Fi radio" .-> R
+  R -- line --> I
+  I --> N
+  P -. "mobile radio" .-> B
+  B -- "fiber or<br/>microwave" --> C
+  C --> N
 ```
 
 ### Wi-Fi
