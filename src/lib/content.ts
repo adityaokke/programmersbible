@@ -81,11 +81,13 @@ const CALLOUT_MARGIN = 16;
 
 type Label = NodeFrontmatter["images"][number]["labels"][number];
 
-// Callouts: labels sit in a margin beside the picture, with a line to a dot on the part,
+// Callouts: labels sit in a margin beside the picture, with an arrow to the part,
 // so nothing covers the photo. Positions are in % of the whole callout box.
-function withCallouts(inner: string, labels: Label[]): string {
+// `aspect` is the picture's width divided by its height, used to aim the arrowheads.
+function withCallouts(inner: string, labels: Label[], aspect: number): string {
   if (!labels.length) return inner;
   const M = CALLOUT_MARGIN;
+  const boxAspect = aspect / (1 - (2 * M) / 100); // the box is wider than the picture by the margins
   const toBox = (x: number) => M + (x * (100 - 2 * M)) / 100;
   const parts = labels.map((l) => {
     const side = l.side ?? (l.x < 50 ? "left" : "right");
@@ -95,11 +97,17 @@ function withCallouts(inner: string, labels: Label[]): string {
     // A white halo under a dark line keeps it visible on light and dark photos.
     .map((p) => ["halo", "ink"].map((c) => `<line class="${c}" x1="${p.lx}" y1="${p.labelY}" x2="${p.px}" y2="${p.y}" />`).join(""))
     .join("");
-  const dots = parts.map((p) => `<span class="dot" style="left:${p.px}%;top:${p.y}%"></span>`).join("");
+  // An arrowhead at the part, turned to follow its line (angles measured in real proportions).
+  const arrows = parts
+    .map((p) => {
+      const angle = (Math.atan2(p.y - p.labelY, (p.px - p.lx) * boxAspect) * 180) / Math.PI;
+      return `<span class="arrow" style="left:${p.px}%;top:${p.y}%;transform:rotate(${angle.toFixed(1)}deg)"><svg viewBox="0 0 14 12"><path d="M0 0 L14 6 L0 12 Z" /></svg></span>`;
+    })
+    .join("");
   const names = parts
     .map((p) => `<span class="callout ${p.side}" style="${p.side === "left" ? `right:${100 - p.lx}%` : `left:${p.lx}%`};top:${p.labelY}%">${escapeHtml(p.text)}</span>`)
     .join("");
-  return `<span class="callouts" style="--m:${M}%">${inner}<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>${dots}${names}</span>`;
+  return `<span class="callouts" style="--m:${M}%">${inner}<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>${arrows}${names}</span>`;
 }
 
 const escapeHtml = (text: string) =>
@@ -131,17 +139,18 @@ export async function renderBody(node: Node): Promise<string> {
         const box = zoom
           ? `<span class="zoom-box" style="left:${zoom.x}%;top:${zoom.y}%;width:${zoom.w}%;height:${zoom.h}%" aria-hidden="true"></span>`
           : "";
-        const main = withCallouts(`<span class="photo">${img}${box}</span>`, credit?.labels ?? []);
+        const { width = 1, height = 1 } = imageSize(readFileSync(join(IMAGES_DIR, node.id, file)));
+        const main = withCallouts(`<span class="photo">${img}${box}</span>`, credit?.labels ?? [], width / height);
         if (!zoom) return `<figure class="picture">${main}${caption}</figure>`;
 
         // The close-up is the same file, enlarged and shifted inside a window with the
         // rectangle's shape, so it needs no extra image and stays in the same style.
-        const { width = 1, height = 1 } = imageSize(readFileSync(join(IMAGES_DIR, node.id, file)));
         const scale = 100 / zoom.w;
         const closeImg = `<img src="${src}" alt="" loading="lazy" style="width:${scale * 100}%;left:${-zoom.x * scale}%;top:${(-zoom.y * 100) / zoom.h}%" />`;
         const close = withCallouts(
           `<span class="photo closeup" style="aspect-ratio:${width * zoom.w}/${height * zoom.h}">${closeImg}</span>`,
           zoom.labels,
+          (width * zoom.w) / (height * zoom.h),
         );
         return `<figure class="picture zoomed"><span class="picture-row"><span class="picture-main">${main}</span><span class="picture-zoom">${close}<span class="zoom-caption">${escapeHtml(zoom.text)}</span></span></span>${caption}</figure>`;
       },
