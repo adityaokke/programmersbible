@@ -95,7 +95,10 @@ input[type="search"] {
 
 /* Node page */
 .node-layout { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 3rem; }
-@media (max-width: 900px) { .node-layout { grid-template-columns: 1fr; } }
+/* minmax(0, …): a long code line or URL must not make the column (and the page) wider than the screen. */
+@media (max-width: 900px) { .node-layout { grid-template-columns: minmax(0, 1fr); } }
+.node-layout article { min-width: 0; overflow-wrap: anywhere; }
+.node-layout article pre { max-width: 100%; overflow-x: auto; overflow-wrap: normal; }
 
 .breadcrumb { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
 .progress { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 0.4rem; }
@@ -193,6 +196,12 @@ figure.picture .closeup img { position: absolute; max-width: none; height: auto;
 }
 figure.picture figcaption { margin-top: 0.4rem; font-size: 0.8rem; color: var(--muted); }
 figure.diagram svg { max-width: 100%; height: auto; }
+/* On small screens a diagram shrinks to at most 80% of its size; a wider one scrolls sideways. */
+@media (max-width: 640px) {
+  .diagram-light, .diagram-dark { overflow-x: auto; }
+  figure.diagram svg { max-width: none; min-width: min(calc(var(--w) * 0.8px), 100%); width: 100%; }
+  figure.diagram svg { min-width: calc(var(--w) * 0.8px); }
+}
 .diagram-dark { display: none; }
 @media (prefers-color-scheme: dark) {
   .diagram-light { display: none; }
