@@ -91,7 +91,7 @@ Pick the form that fits the idea:
 **Photos.** Take them from Wikimedia Commons or another source that shows a license. Never copy a photo marked "all rights reserved" (most museum photos): link to it in "See it for yourself" instead.
 
 - Allowed licenses: Public domain, CC0, CC BY and CC BY-SA (the list is in `schema/node.ts`).
-- Save the file in `content/images/<node-id>/` with a kebab-case name (`open-hard-drive.jpg`). About 1,000 pixels wide is enough; about 2,000 if you show a close-up.
+- Save the file in `content/images/<node-id>/` with a kebab-case name (`open-hard-drive.jpg`). `npm run fetch-image` does this and shrinks it to 1,000 pixels wide (`--width 2000` if you show a close-up). For a file added another way, run `npm run optimize-images`; the validator warns about pictures that are too big for slow phone connections.
 - Use it in the text as `![alt text](images/<file>)`, on its own line.
 - List it in the frontmatter `images` with `file`, `alt`, `source` (the image's own page), `author` (as the source writes it) and `license`. The site shows the credit under the picture, which CC BY needs.
 - Open the picture and check that it really shows what the alt text says.

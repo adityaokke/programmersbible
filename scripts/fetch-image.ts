@@ -10,13 +10,14 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { IMAGE_LICENSES } from "../schema/node.ts";
 import { IMAGES_DIR } from "./lib/content.ts";
+import { MAX_WIDTH, MAX_WIDTH_ZOOM, optimizeImage } from "./lib/images.ts";
 
 const args = process.argv.slice(2);
 const option = (name: string) => {
   const i = args.indexOf(`--${name}`);
   return i === -1 ? undefined : args.splice(i, 2)[1];
 };
-const width = Number(option("width") ?? 1000);
+const width = Math.min(Number(option("width") ?? MAX_WIDTH), MAX_WIDTH_ZOOM);
 const name = option("name");
 const [nodeId = "", rawTitle = ""] = args;
 if (!nodeId || !rawTitle) {
@@ -100,9 +101,11 @@ async function main(): Promise<number> {
   const dir = join(IMAGES_DIR, nodeId);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, file), bytes);
+  // Commons may send the original when it is small, or a big PNG: shrink and recompress.
+  const size = await optimizeImage(join(dir, file), width);
 
   const quote = (s: string) => JSON.stringify(s);
-  console.error(`Saved content/images/${nodeId}/${file} (${Math.round(bytes.length / 1024)} KB, original ${info.width}px wide).`);
+  console.error(`Saved content/images/${nodeId}/${file} (${Math.round(size / 1024)} KB, at most ${width}px wide; original ${info.width}px).`);
   console.error("Open it and check it shows what the text needs. Then add this to the node's frontmatter and write the alt text:\n");
   console.log(`images:
     - file: ${file}
