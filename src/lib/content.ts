@@ -73,8 +73,8 @@ const SEQUENCE_LAYOUT = { width: 110, actorMargin: 24, boxMargin: 6, noteMargin:
 const PHONE_WIDTH = 350;
 // The dark theme's notes are grey on grey and its arrow labels sit on grey patches; fix both.
 const DIAGRAM_COLORS = {
-  light: {},
-  // Arrow labels sit on the page's own card color instead of a grey patch.
+  // Arrow labels sit on the page's own color (--bg) instead of a white or grey patch.
+  light: { edgeLabelBackground: "#fdfcf9" },
   dark: { noteBkgColor: "#2b3242", noteTextColor: "#e9e9ec", noteBorderColor: "#8fb0ff", edgeLabelBackground: "#15161a" },
 } as const;
 
@@ -220,8 +220,9 @@ export async function renderBody(node: Node): Promise<string> {
     if (l.status === "rejected") throw new Error(`${node.id}: mermaid diagram ${i} failed: ${l.reason}`);
     if (d.status === "rejected") throw new Error(`${node.id}: mermaid diagram ${i} failed: ${d.reason}`);
     // The natural width lets small screens shrink a diagram only so far, then scroll instead.
-    // A diagram too wide for a phone (it shrinks to 80% at most) gets a note to scroll sideways.
-    const wide = l.value.width * 0.8 > PHONE_WIDTH;
+    // A diagram too wide for a phone gets a note to scroll sideways. One that is only slightly too
+    // wide (up to 10% more) shrinks a little past 80% instead, so its text stays readable.
+    const wide = l.value.width * 0.8 > PHONE_WIDTH * 1.1;
     const hint = wide ? `<p class="scroll-hint">Scroll sideways to see the whole diagram →</p>` : "";
     return `<figure class="diagram${wide ? " wide" : ""}" style="--w:${Math.round(l.value.width)}">${hint}<div class="diagram-light">${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
   });
