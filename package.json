@@ -12,7 +12,9 @@
     "validate": "tsx scripts/build-graph.ts --check",
     "build:graph": "tsx scripts/build-graph.ts",
     "status": "tsx scripts/node-status.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "fetch-image": "tsx scripts/fetch-image.ts",
+    "shoot": "tsx scripts/shoot.ts"
   },
   "engines": {
     "node": ">=22"
