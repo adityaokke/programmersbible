@@ -37,6 +37,17 @@ export const IMAGE_LICENSES = [
   "CC BY-SA 4.0",
 ] as const;
 
+// A callout: x and y are the part's position in percent of the picture's width and height,
+// from the top left. side puts the label left or right (default: the nearer side); ly moves
+// the label up or down (default: same height as the part), to keep labels apart.
+const calloutLabel = z.object({
+  x: z.number().min(0).max(100),
+  y: z.number().min(0).max(100),
+  text: z.string().min(1),
+  side: z.enum(["left", "right"]).optional(),
+  ly: z.number().min(0).max(100).optional(),
+});
+
 // A picture stored in content/images/<node-id>/ and used in the body as ![alt](images/<file>).
 const image = z.object({
   file: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*\.(jpg|jpeg|png|svg|webp)$/, "file must be a kebab-case name with an image extension"),
@@ -44,21 +55,20 @@ const image = z.object({
   source: z.url(), // the page the image was taken from, e.g. its Wikimedia Commons page
   author: z.string().min(1), // as the source writes it
   license: z.enum(IMAGE_LICENSES),
-  // Callouts: a label beside the picture with a line to the part it names. x and y are the
-  // part's position in percent of the picture's width and height, from the top left.
-  // side puts the label left or right of the picture (default: the nearer side);
-  // ly moves the label up or down (default: same height as the part), to keep labels apart.
-  labels: z
-    .array(
-      z.object({
-        x: z.number().min(0).max(100),
-        y: z.number().min(0).max(100),
-        text: z.string().min(1),
-        side: z.enum(["left", "right"]).optional(),
-        ly: z.number().min(0).max(100).optional(),
-      }),
-    )
-    .default([]),
+  // Callouts: a label beside the picture with a line to the part it names.
+  labels: z.array(calloutLabel).default([]),
+  // A close-up shown beside the photo: x, y, w and h mark a rectangle in percent of the
+  // picture (from the top left). Its labels are placed in percent of the close-up.
+  zoom: z
+    .object({
+      x: z.number().min(0).max(100),
+      y: z.number().min(0).max(100),
+      w: z.number().gt(0).max(100),
+      h: z.number().gt(0).max(100),
+      text: z.string().min(1),
+      labels: z.array(calloutLabel).default([]),
+    })
+    .optional(),
 });
 
 export const nodeFrontmatter = z
