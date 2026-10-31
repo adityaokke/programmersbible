@@ -78,6 +78,9 @@ function resolveWikiLinks(markdown: string): string {
 
 // Width of the margin on each side of a labelled picture, in % of the callout box.
 const CALLOUT_MARGIN = 16;
+// The gap between an arrow's tip and the part it points at, in pixels at a typical figure width.
+const CALLOUT_GAP = 8;
+const CALLOUT_REF_WIDTH = 650;
 
 type Label = NodeFrontmatter["images"][number]["labels"][number];
 
@@ -91,17 +94,25 @@ function withCallouts(inner: string, labels: Label[], aspect: number): string {
   const toBox = (x: number) => M + (x * (100 - 2 * M)) / 100;
   const parts = labels.map((l) => {
     const side = l.side ?? (l.x < 50 ? "left" : "right");
-    return { ...l, side, px: toBox(l.x), lx: side === "left" ? M - 1 : 100 - M + 1, labelY: l.ly ?? l.y };
+    const lx = side === "left" ? M - 1 : 100 - M + 1;
+    const labelY = l.ly ?? l.y;
+    const px = toBox(l.x);
+    // Stop the arrow a few pixels before the part, so the arrowhead does not hide it.
+    // Lengths are estimated at a typical figure width; the gap scales with the screen.
+    const width = CALLOUT_REF_WIDTH;
+    const length = Math.hypot(((px - lx) * width) / 100, ((l.y - labelY) * width) / boxAspect / 100);
+    const t = length > 0 ? Math.max(0, 1 - CALLOUT_GAP / length) : 1;
+    return { ...l, side, lx, labelY, px, ex: lx + (px - lx) * t, ey: labelY + (l.y - labelY) * t };
   });
   const lines = parts
     // A white halo under a dark line keeps it visible on light and dark photos.
-    .map((p) => ["halo", "ink"].map((c) => `<line class="${c}" x1="${p.lx}" y1="${p.labelY}" x2="${p.px}" y2="${p.y}" />`).join(""))
+    .map((p) => ["halo", "ink"].map((c) => `<line class="${c}" x1="${p.lx}" y1="${p.labelY}" x2="${p.ex}" y2="${p.ey}" />`).join(""))
     .join("");
   // An arrowhead at the part, turned to follow its line (angles measured in real proportions).
   const arrows = parts
     .map((p) => {
       const angle = (Math.atan2(p.y - p.labelY, (p.px - p.lx) * boxAspect) * 180) / Math.PI;
-      return `<span class="arrow" style="left:${p.px}%;top:${p.y}%;transform:rotate(${angle.toFixed(1)}deg)"><svg viewBox="0 0 14 12"><path d="M0 0 L14 6 L0 12 Z" /></svg></span>`;
+      return `<span class="arrow" style="left:${p.ex}%;top:${p.ey}%;transform:rotate(${angle.toFixed(1)}deg)"><svg viewBox="0 0 14 12"><path d="M0 0 L14 6 L0 12 Z" /></svg></span>`;
     })
     .join("");
   const names = parts
