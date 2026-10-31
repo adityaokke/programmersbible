@@ -101,24 +101,22 @@ In HTTPS, key pairs help prove who the server is, and help both sides agree on a
 
 ### TLS: the protocol that adds the S
 
-MDN says HTTPS uses a protocol called **TLS** (Transport Layer Security) to encrypt all communication. TLS starts with a **handshake**: setup messages sent before any HTTP message.
+MDN says HTTPS uses a protocol called **TLS** (Transport Layer Security) to encrypt all communication. TLS starts with a **handshake**: setup messages sent before any HTTP message. In the handshake, the two sides agree on which TLS version and ciphers to use, the server sends its certificate, and they agree on a secret key.
 
-*Diagram: a browser on the left and a server on the right. First they exchange handshake messages (single-line arrows): they agree on the TLS version and ciphers, the server sends its certificate, the browser checks it, and both agree on a secret key. After that, the HTTP request and the HTTP response travel between them encrypted (double-line arrows).*
-
-```
- BROWSER (client)                              SERVER
-     |                                            |
-     |  1. Hello: which TLS version and ciphers?  |
-     | -----------------------------------------> |
-     |  2. Answer, and the server's certificate   |
-     | <----------------------------------------- |
-     |  3. Browser checks the certificate.        |
-     |     Both sides agree on a secret key.      |
-     |                                            |
-     |  4. Encrypted HTTP request                 |
-     | =========================================> |
-     |  5. Encrypted HTTP response                |
-     | <========================================= |
+```mermaid
+sequenceDiagram
+  accTitle: The TLS handshake, then encrypted HTTP (simplified)
+  accDescr: A browser and a server. First they exchange handshake messages. The browser says hello and asks which TLS version and ciphers to use. The server answers and sends its certificate. The browser checks the certificate, and both sides agree on a secret key. After that, the HTTP request and the HTTP response travel between them encrypted.
+  participant B as Browser (client)
+  participant S as Server
+  Note over B,S: Handshake (setup)
+  B->>S: 1. Hello: which TLS version and ciphers?
+  S->>B: 2. Answer, and the server's certificate
+  Note over B: 3. Checks the certificate
+  Note over B,S: 4. Both sides agree on a secret key
+  Note over B,S: After the handshake: encrypted
+  B->>S: 5. Encrypted HTTP request
+  S->>B: 6. Encrypted HTTP response
 ```
 
 (This order is simplified.) After the handshake, MDN says, the two sides use the secret key to encrypt "any messages, including HTTP headers as well as bodies".

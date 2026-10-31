@@ -83,14 +83,16 @@ A cookie is a **name**, a **value** and a few settings, such as an end date. It 
 2. Your [[web-browser|browser]] stores the cookie on your computer.
 3. With later requests to the same website, your browser adds a `Cookie` header with the stored cookies.
 
-*Diagram: a server response with the header Set-Cookie: id=a3fWa, then the browser's next request with the header Cookie: id=a3fWa.*
-
-```
-SERVER'S RESPONSE                 HTTP/1.1 200 OK
-                                  Set-Cookie: id=a3fWa      <- "keep this"
-
-BROWSER'S NEXT REQUEST            GET /next-page HTTP/1.1
-                                  Cookie: id=a3fWa          <- "here it is again"
+```mermaid
+sequenceDiagram
+  accTitle: A server sets a cookie, and the browser sends it back
+  accDescr: Your browser sends a request to a website's server. The server's response has the header Set-Cookie: id=a3fWa. Your browser stores this cookie. With its next request to the same website, the browser adds the header Cookie: id=a3fWa.
+  participant B as Your browser
+  participant S as Website's server
+  B->>S: A request
+  S-->>B: Response with<br/>Set-Cookie: id=a3fWa
+  Note over B: Stores the cookie
+  B->>S: Next request, with<br/>Cookie: id=a3fWa
 ```
 
 ### Signing in
@@ -112,6 +114,24 @@ MDN lists three main uses: **session management** (signing in, shopping carts), 
 A web page can contain content from other websites, such as an advert. That content can also send cookies. A **first-party cookie** comes from the website in your address bar. A **third-party cookie** comes from a different website.
 
 MDN explains the privacy problem. Imagine one advert company with adverts on many websites. Each advert is loaded from the company's server. So on each website, your browser sends the company a request, with its cookie, unless your browser's protections stop this (see below). The company then sees the same browser on all those websites. MDN says it can build "a detailed profile" (a description) of your browsing history and interests.
+
+```mermaid
+sequenceDiagram
+  accTitle: How one advert company sees you on two websites
+  accDescr: Your browser loads a page from website A. The page has an advert, so the browser asks the advert company's server for it. The company sends the advert and a cookie. Later your browser loads a page from website B, which has an advert from the same company. The browser asks the company's server for that advert and sends the same cookie. The company sees the same browser on both websites. Browser protections against third-party cookies can stop this.
+  participant B as Browser
+  participant A as Site A
+  participant W as Site B
+  participant Ad as Ad company
+  B->>A: Get page
+  A-->>B: Page with an<br/>advert spot
+  B->>Ad: Get advert
+  Ad-->>B: Advert + cookie
+  B->>W: Get page
+  W-->>B: Page with an<br/>advert spot
+  B->>Ad: Get advert +<br/>same cookie
+  Note over Ad: Same browser<br/>on A and B
+```
 
 MDN also lists honest uses, such as staying signed in on several websites that belong together.
 
