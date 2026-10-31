@@ -77,19 +77,16 @@ Every computer does four kinds of jobs:
 3. **Storing:** the computer **keeps** information, so it can use it now or later.
 4. **Output:** a result comes **out**. Letters appear on the screen, or a printer prints a page.
 
-In this picture, information flows from left to right. Below the processing step, memory and storage keep information:
+In this picture, information flows from input, through processing, to output. Processing also sends information to memory and storage, and gets it back:
 
+```mermaid
+flowchart TD
+  accTitle: The four jobs of a computer
+  accDescr: Input, such as a keyboard, mouse or touch screen, goes to processing, which follows the program's instructions. Processing gives a result to output, such as a screen or printer. Processing is also connected both ways with memory and storage, which keep information and programs.
+  input["Input: keyboard, mouse, touch screen"] --> processing["Processing: follows the program"]
+  processing --> output["Output:<br/>screen, printer"]
+  processing <--> keep["Memory and<br/>storage"]
 ```
-   INPUT   ───────►   PROCESSING   ───────►   OUTPUT
- (keyboard,       (follows the program's     (screen,
-  mouse,           instructions)              printer)
-  touch screen)          ▲   │
-                         │   ▼
-                  MEMORY and STORAGE
-               (keep information and programs)
-```
-
-*Diagram: three words in a row, joined by arrows that point right: INPUT, then PROCESSING, then OUTPUT. Below PROCESSING, two arrows connect it with MEMORY and STORAGE: one goes down, one comes back up.*
 
 The part that does the processing is called the **processor**, or **CPU** (short for Central Processing Unit). One computer course describes it this way: it "acts like a brain: follows the instructions in the code". (**Code** means the instructions of a program.) You will learn more in [[cpu]].
 
