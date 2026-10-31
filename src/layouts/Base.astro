@@ -8,6 +8,7 @@ interface Props {
 
 const { title, description = "From knowing how to use a browser to understanding how it all works." } = Astro.props;
 const fullTitle = title ? `${title} · Programmer's Bible` : "Programmer's Bible";
+const REPO = "https://github.com/adityaokke/programmersbible";
 ---
 
 <!doctype html>
@@ -33,5 +34,17 @@ const fullTitle = title ? `${title} · Programmer's Bible` : "Programmer's Bible
     <main class="container">
       <slot />
     </main>
+    <footer class="site-footer">
+      <p>
+        Free and open source. Text and pictures written for this site:{" "}
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>. Code:{" "}
+        <a href={`${REPO}/blob/main/LICENSE`}>MIT</a>. Photos keep their own licenses, credited under each one.
+      </p>
+      <p>
+        Topics are written with AI and checked against the sources listed at the end of each one. Each topic says who
+        reviewed it. <a href={`${REPO}/issues/new?template=report-a-problem.yml`}>Report a problem</a> ·{" "}
+        <a href={REPO}>Source on GitHub</a>
+      </p>
+    </footer>
   </body>
 </html>
