@@ -86,19 +86,17 @@ Other files are not programs. A photo or a letter is **data**: information that 
 
 ### What happens when you open a program
 
-*Diagram: the life of a program, from top to bottom. A programmer writes source code. A compiler turns it into a program file of machine code, kept in storage. When you open the program, its instructions are copied into RAM. The CPU then carries them out, one by one.*
-
-```
-  source code, written by a programmer
-               │
-               ▼   compiler
-  program file of machine code ── waits in STORAGE (kept when power is off)
-               │
-               ▼   you open the program
-  copy of the instructions in RAM (memory)
-               │
-               ▼
-  the CPU carries out the instructions, one by one
+```mermaid
+flowchart TD
+  accTitle: The life of a program
+  accDescr: From top to bottom. A programmer writes source code. A compiler turns it into a program file of machine code, which waits in storage, where it is kept when the power is off. When you open the program, its instructions are copied into RAM, the memory. The CPU then carries them out, one by one.
+  S["Source code,<br/>written by a programmer"]
+  F["Program file of<br/>machine code,<br/>waits in storage<br/>(kept when power is off)"]
+  R["Copy of the instructions<br/>in RAM (memory)"]
+  C["The CPU carries out<br/>the instructions, one by one"]
+  S -- compiler --> F
+  F -- you open the program --> R
+  R --> C
 ```
 
 (Programs can also be run by an interpreter. See below.)

@@ -85,21 +85,16 @@ Stanford's course says that source code does not run on the CPU directly. Only m
 - A **compiler** is a program that translates source code into machine code, usually **ahead of time**, before the program runs. The result is a program made of machine code, ready to run later. For example, MDN Web Docs (a guide to web technologies, run by the company Mozilla) says C and C++ are compiled into machine code.
 - An **interpreter** is a program that reads your code and carries it out right away, step by step. MDN says you do not have to change the code into a different form first. The interpreter is itself a program, like any app. So, in the end, the CPU still runs only machine code. (This is simplified; see below.)
 
-*Diagram: source code can go two ways. On the left, a compiler translates it into machine code, and the CPU runs that machine code. On the right, an interpreter reads the source code and carries it out step by step, while the CPU runs the interpreter's own machine code.*
-
-```
-               source code (words and symbols people can read)
-                 │                                 │
-                 ▼                                 ▼
-   COMPILER: translates the whole       INTERPRETER: reads your code
-   program, usually before it runs      and carries it out, step by step
-                 │                                 │
-                 ▼                                 │
-   machine code (0s and 1s)                        │
-                 │                                 │
-                 ▼                                 ▼
-   the CPU runs your program's          the CPU runs the interpreter,
-   machine code                         which is made of machine code
+```mermaid
+flowchart TD
+  accTitle: Two ways to run source code
+  accDescr: Source code can go two ways. On the left, a compiler translates the whole program into machine code, usually before it runs, and the CPU runs that machine code. On the right, an interpreter reads the source code and carries it out step by step. The interpreter is itself a program made of machine code, and the CPU runs the interpreter's machine code, not your source code.
+  S["Source code<br/>words and symbols<br/>people can read"]
+  S --> C["Compiler<br/>translates the whole<br/>program, usually<br/>before it runs"]
+  C --> M["Machine code<br/>0s and 1s"]
+  M -- run by --> CPU1["CPU runs your<br/>program's machine code"]
+  S -- read by --> I["Interpreter<br/>reads your code and<br/>carries it out, step by step"]
+  I -- run by --> CPU2["CPU runs the interpreter's<br/>own machine code,<br/>not your source code"]
 ```
 
 The two methods can be mixed. MDN says that most modern JavaScript interpreters also compile your code while it runs, into a faster binary form.

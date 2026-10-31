@@ -105,17 +105,13 @@ The **Network** tab lists the requests your browser sends and the files that com
 
 ### Your changes stay on your computer
 
-*Diagram: the web server keeps the original files. Your browser downloads a copy and builds the page. DevTools changes only that copy. When you reload the page, your browser loads the original page again and your changes are gone.*
-
-```
-   WEB SERVER                     YOUR BROWSER
-  ┌──────────────┐   a copy     ┌──────────────────────┐
-  │ original     │ ───────────► │ your copy of the page│ ◄── DevTools
-  │ files        │              │ (the DOM)            │     changes this
-  └──────────────┘              └──────────────────────┘
-        ▲                                 │
-        │      reload = load the original │
-        └──────── again; changes are gone ┘
+```mermaid
+flowchart TD
+  accTitle: DevTools changes only your copy of the page
+  accDescr: The web server keeps the original files. Your browser downloads a copy and builds the page from it: your copy of the page, the DOM. DevTools changes only that copy. When you reload the page, your browser loads the original files again and your changes are gone.
+  server["Web server:<br/>original files"] -- a copy --> copy["Your browser:<br/>your copy of the page<br/>(the DOM)"]
+  devtools["DevTools"] -- changes only this --> copy
+  copy -- "reload: load the<br/>original again" --> fresh["Your browser:<br/>a new copy;<br/>your changes are gone"]
 ```
 
 MDN says you can change the page in DevTools, "but you cannot save your changes." When you reload, the browser builds the page again from the original files. (Chrome has a feature, called local overrides, that can keep some changes on your own computer. But it "doesn't save changes made in the DOM tree of the Elements panel", says Chrome's documentation.)
