@@ -116,18 +116,18 @@ An **address** here is a number that names one computer on the network, like a h
 3. Each packet is sent on its own. Packets from the same message can take **different paths**, so they may arrive **out of order**.
 4. The receiver uses the order information to put the pieces back in order. If a packet is missing or damaged, it can be sent again.
 
-*Diagram: four numbered packets travel through routers by different paths, arrive as 1, 3, 2, 4, and are put back as 1, 2, 3, 4.*
-
-```
- SENDER                                              RECEIVER
-
- message                                            arrives as   put back
- cut into   [1][2][3][4]                            [1][3][2][4] in order
- packets          |                                      ^       [1][2][3][4]
-                  |                                      |
-                  +--> router --> router ----------------+
-                  |                                      |
-                  +--> router --------> router ----------+
+```mermaid
+flowchart LR
+  accTitle: Packets take different paths and are put back in order
+  accDescr: The sender cuts a message into four numbered packets: 1, 2, 3 and 4. The packets travel through routers by two different paths. They arrive at the receiver out of order, as 1, 3, 2, 4. The receiver puts them back in order as 1, 2, 3, 4.
+  cut["Sender: message cut into packets 1 2 3 4"]
+  r1[Router] --> r2[Router]
+  r3[Router] --> r4[Router]
+  cut --> r1
+  cut --> r3
+  r2 --> arrive["Receiver: arrives as 1 3 2 4"]
+  r4 --> arrive
+  arrive --> order["Put back in order: 1 2 3 4"]
 ```
 
 ### Sharing the connections

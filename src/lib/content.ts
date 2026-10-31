@@ -66,6 +66,16 @@ export const nodeUrl = (id: string) => `/node/${id}`;
 // Each diagram is drawn twice, for light and dark mode; CSS shows the one that matches.
 const renderMermaid = createMermaidRenderer();
 const DIAGRAM_THEMES = { light: "neutral", dark: "dark" } as const;
+// Mermaid's default sequence diagrams are wide (150 px boxes, 50 px gaps, boxes repeated at the
+// bottom). Tighter spacing lets a small diagram fit a phone without scrolling.
+const SEQUENCE_LAYOUT = { width: 110, actorMargin: 24, boxMargin: 6, noteMargin: 6, messageMargin: 30, mirrorActors: false, wrap: true };
+// Space for a diagram on a small phone (390 px screen minus the page's side padding).
+const PHONE_WIDTH = 350;
+// The dark theme's notes are grey on grey; give them readable text.
+const DIAGRAM_COLORS = {
+  light: {},
+  dark: { noteBkgColor: "#2b3242", noteTextColor: "#e9e9ec", noteBorderColor: "#8fb0ff" },
+} as const;
 
 // [[node-id]] or [[node-id|label]] → link to the node, labelled with its title by default.
 function resolveWikiLinks(markdown: string): string {
@@ -190,7 +200,10 @@ export async function renderBody(node: Node): Promise<string> {
 
   const [light, dark] = await Promise.all(
     (["light", "dark"] as const).map((mode) =>
-      renderMermaid(diagrams, { prefix: `${node.id}-${mode}`, mermaidConfig: { theme: DIAGRAM_THEMES[mode] } }),
+      renderMermaid(diagrams, {
+        prefix: `${node.id}-${mode}`,
+        mermaidConfig: { theme: DIAGRAM_THEMES[mode], themeVariables: DIAGRAM_COLORS[mode], sequence: SEQUENCE_LAYOUT },
+      }),
     ),
   );
   html = html.replace(/<!--diagram-(\d+)-->/g, (_, i: string) => {
@@ -198,7 +211,10 @@ export async function renderBody(node: Node): Promise<string> {
     if (l.status === "rejected") throw new Error(`${node.id}: mermaid diagram ${i} failed: ${l.reason}`);
     if (d.status === "rejected") throw new Error(`${node.id}: mermaid diagram ${i} failed: ${d.reason}`);
     // The natural width lets small screens shrink a diagram only so far, then scroll instead.
-    return `<figure class="diagram" style="--w:${Math.round(l.value.width)}"><div class="diagram-light">${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
+    // A diagram too wide for a phone (it shrinks to 80% at most) gets a note to scroll sideways.
+    const wide = l.value.width * 0.8 > PHONE_WIDTH;
+    const hint = wide ? `<p class="scroll-hint">Scroll sideways to see the whole diagram →</p>` : "";
+    return `<figure class="diagram${wide ? " wide" : ""}" style="--w:${Math.round(l.value.width)}">${hint}<div class="diagram-light">${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
   });
   return html;
 }

@@ -199,7 +199,9 @@ figure.picture figcaption { margin-top: 0.4rem; font-size: 0.8rem; color: var(--
 figure.picture .picture-caption { display: block; margin-bottom: 0.2rem; font-size: 0.95rem; color: var(--fg); }
 figure.diagram svg { max-width: 100%; height: auto; }
 /* On small screens a diagram shrinks to at most 80% of its size; a wider one scrolls sideways. */
+.scroll-hint { display: none; margin: 0 0 0.3rem; font-size: 0.8rem; color: var(--muted); }
 @media (max-width: 640px) {
+  figure.diagram.wide .scroll-hint { display: block; }
   .diagram-light, .diagram-dark { overflow-x: auto; }
   figure.diagram svg { max-width: none; min-width: min(calc(var(--w) * 0.8px), 100%); width: 100%; }
   figure.diagram svg { min-width: calc(var(--w) * 0.8px); }
