@@ -3,12 +3,15 @@
 //   npm run build:graph   → check, then write generated/graph.json
 // Exits with code 1 if there is any error.
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { BANNED_WORDS, REQUIRED_HEADINGS, WORD_RANGE } from "../schema/node.ts";
 import {
+  IMAGES_DIR,
   ROOT,
   headings,
+  imageRefs,
+  mermaidBlocks,
   loadNodes,
   loadPaths,
   stripCode,
@@ -108,6 +111,46 @@ function checkWriting(node: LoadedNode) {
 }
 
 nodes.forEach(checkWriting);
+
+// --- Pictures and diagrams ----------------------------------------------------
+
+function checkMedia(node: LoadedNode) {
+  const { id, images } = node.data;
+  const dir = join(IMAGES_DIR, id);
+  const listed = new Set(images.map((i) => i.file));
+  const used = new Set(imageRefs(node.body));
+
+  // Every picture in the text has its credit in the frontmatter, and the file exists.
+  for (const file of used) {
+    if (!listed.has(file)) {
+      issues.push({ level: "error", file: node.file, message: `images/${file} is used but not listed in images (source, author, license)` });
+    }
+  }
+  for (const file of listed) {
+    if (!existsSync(join(dir, file))) {
+      issues.push({ level: "error", file: node.file, message: `images: content/images/${id}/${file} does not exist` });
+    }
+    if (!used.has(file)) {
+      issues.push({ level: "warning", file: node.file, message: `images: ${file} is listed but not used in the text` });
+    }
+  }
+  if (existsSync(dir)) {
+    for (const file of readdirSync(dir)) {
+      if (!listed.has(file)) {
+        issues.push({ level: "warning", file: node.file, message: `content/images/${id}/${file} is not listed in images` });
+      }
+    }
+  }
+
+  // Diagrams are read by screen readers through their title and description.
+  for (const block of mermaidBlocks(node.body)) {
+    if (!/^\s*accTitle:/m.test(block) || !/^\s*accDescr:/m.test(block)) {
+      issues.push({ level: "error", file: node.file, message: "mermaid diagram needs accTitle: and accDescr: (its alt text)" });
+    }
+  }
+}
+
+nodes.forEach(checkMedia);
 
 // --- Paths -------------------------------------------------------------------
 
