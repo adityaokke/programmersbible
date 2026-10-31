@@ -16,6 +16,16 @@ questions:
   - why is an SSD faster than a hard drive
   - what is flash memory
 aliases: [hard drive, hard disk, hard disk drive, HDD, SSD, solid-state drive, flash memory, disk, drive, persistent storage]
+images:
+  - file: open-hard-drive.jpg
+    alt: "An open hard drive. A shiny round platter takes up much of the case. A thin metal arm reaches over the platter, with the head at its tip."
+    source: https://commons.wikimedia.org/wiki/File:Open_hard-drive.jpg
+    author: Zzubnik
+    license: Public domain
+    labels:
+      - { x: 20, y: 30, text: Platter }
+      - { x: 50.5, y: 29.5, text: Head, side: right, ly: 12 }
+      - { x: 52, y: 46, text: Arm, side: right }
 sources:
   - title: "Stanford CS101: Computer Hardware"
     url: https://web.stanford.edu/class/cs101/hardware-1.html
@@ -91,19 +101,7 @@ A **hard disk drive** (HDD, or "hard drive") stores bits as a **magnetic pattern
 - A **head** on a moving **arm** reads and writes the bits. It floats a tiny distance above the platter, without touching it.
 - To write, the head makes small areas of the platter magnetic, pointing one way or the other. The bits are stored in the pattern of these directions.
 
-```
-          platter, seen from above
-         ___________________
-       /                     \
-      |                       |
-      |       center    head  |
-      |         o         *===|=====[ arm ]=====O
-      |     (platter spins    |          (the arm turns here,
-      |      around here)     |           so the head moves
-       \_____________________/            in and out)
-```
-
-*Diagram: a platter seen from above, with the head at the end of an arm. The arm turns at its far end, so the head moves in and out.*
+![An open hard drive. A shiny round platter takes up much of the case. A thin metal arm reaches over the platter, with the head at its tip.](images/open-hard-drive.jpg)
 
 Before the head can read, the arm must move it to the right ring of the platter. Then the drive must wait until the right place spins under the head. This takes time.
 
