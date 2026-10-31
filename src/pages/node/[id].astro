@@ -8,7 +8,7 @@ export function getStaticPaths() {
 
 const { node } = Astro.props as { node: Node };
 const readable = isReadable(node);
-const html = readable ? renderBody(node) : "";
+const html = readable ? await renderBody(node) : "";
 const position = pathPosition(node.id);
 const mapUrl = `/map?topic=${node.id}`;
 const learnFirst = byIds(node.requires);

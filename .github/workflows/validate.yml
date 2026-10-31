@@ -19,5 +19,8 @@ jobs:
         run: npm run validate
       - name: Typecheck
         run: npm run typecheck
+      # Mermaid diagrams are drawn into SVG at build time in a headless browser.
+      - name: Install Chromium for diagrams
+        run: npx playwright install --with-deps chromium
       - name: Build site
-        run: npx astro build
+        run: npm run build:site
