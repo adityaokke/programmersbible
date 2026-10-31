@@ -101,20 +101,25 @@ But server computers are often different from your laptop:
 
 ![A metal rack frame holding ten flat, wide server computers, stacked one above another.](images/rack-of-servers.jpg)
 
-```
-  CLIENTS                              ONE SERVER COMPUTER
-                                 ┌────────────────────────────────┐
-  laptop  ──── request ───►      │  server programs:              │
-                                 │   ┌────────────┐ ┌──────────┐  │
-  phone   ──── request ───►  ────┤   │ web server │ │  email   │  │
-           (the network)         │   │  program   │ │  server  │  │
-  computer ─── request ───►      │   └────────────┘ └──────────┘  │
-                                 │  parts: CPU, RAM, storage,     │
-                                 │         network connection     │
-                                 └────────────────────────────────┘
-```
+This diagram shows one server computer, with its parts and its programs, and the clients that send it requests:
 
-*Diagram: three clients on the left (a laptop, a phone, another computer) each send a request across the network to one server computer on the right. Inside the server computer are its parts (CPU, RAM, storage, network connection) and two server programs: a web server and an email server.*
+```mermaid
+flowchart TD
+  accTitle: Three clients send requests to one server computer
+  accDescr: Three clients, a laptop, a phone and another computer, each send a request across the network to one server computer. Inside the server computer are its parts (CPU, RAM, storage, network connection) and two server programs: a web server and an email server.
+  laptop[Laptop] -- request --> net([The network])
+  phone[Phone] -- request --> net
+  pc[Computer] -- request --> net
+  net --> srv
+  subgraph srv["One server computer"]
+    direction TB
+    web["Web server<br/>program"]
+    mail["Email server<br/>program"]
+    parts["Parts: CPU, RAM,<br/>storage, network<br/>connection"]
+    web ~~~ parts
+    mail ~~~ parts
+  end
+```
 
 ### Many programs, many clients
 

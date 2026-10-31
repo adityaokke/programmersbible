@@ -4,6 +4,8 @@ title: "The Physical Internet: Cables, Undersea Lines, Data Centers"
 type: concept
 part: network
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [isp]
 related: [what-is-a-network, wifi-and-mobile-networks, server, telegraph-and-telephone]
 summary: "The internet is a physical thing: glass fiber cables on land and under the oceans carry much of its data as light, and buildings called data centers hold the computers that run websites and apps."
@@ -52,8 +54,6 @@ sources:
   - title: "Wikipedia: Submarine communications cable (general background reference)"
     url: https://en.wikipedia.org/wiki/Submarine_communications_cable
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -103,22 +103,17 @@ A **data center**, IBM says, is a room, building or facility that houses compute
 
 Servers are stacked "on top of each other in a rack to save space". A **rack** holds many servers, one on top of another. Switches, routers and fiber carry data between the servers, and out to users. A data center must keep running all the time, so it has cooling systems for the heat, batteries for short power cuts, and generators for longer ones.
 
-*Diagram: a web page travels from a data center on another continent through fiber to a station on the coast, travels along the seabed in a submarine cable with repeaters, reaches a station on your coast, then crosses your ISP's network to your home. Simplified: data often crosses several networks.*
+The picture below shows, simplified, how a web page can reach you from a data center on another continent. In real life, data often crosses several networks on the way.
 
-```
- [data center: servers in racks]
-        |  fiber on land
- [station on the coast]
-        |
- ~~~~~~~|~~~~ ocean ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        |____ submarine cable on the seabed ____(R)____
-                                       (R) = repeater  |
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~
-                                  [station on your coast]
-                                                       |  fiber on land
-                                            [your ISP's routers]
-                                                       |
-                                                  [your home]
+```mermaid
+flowchart TD
+  accTitle: A web page's trip across an ocean
+  accDescr: Simplified. A web page leaves a data center, where servers sit in racks, on another continent. It travels through fiber on land to a station on the coast, then along the seabed in a submarine cable with repeaters, to a station on your coast. From there it travels through fiber on land to your ISP's routers, and then to your home.
+  D["Data center<br/>(servers in racks)"] -- fiber on land --> S1["Station on<br/>the coast"]
+  S1 --> C["Submarine cable<br/>on the seabed,<br/>with repeaters"]
+  C --> S2["Station on<br/>your coast"]
+  S2 -- fiber on land --> I["Your ISP's<br/>routers"]
+  I --> H["Your home"]
 ```
 
 ## How it came to be
