@@ -15,11 +15,23 @@ function reach(id: string, seen = new Set<string>()): Set<string> {
   return seen;
 }
 
-// Part titles come from the path sections ("Part 1: The Machine").
+// One box per First Chapter part, titled by its path section ("Part 1: The Machine"), and one box
+// per other path ("More to Explore"), so the topics read after the First Chapter sit together.
+const firstChapter = allPaths.find((p) => p.id === "first-chapter");
+const inFirstChapter = new Set(firstChapter?.sections.flatMap((s) => s.nodes) ?? []);
+const otherPath = new Map(
+  allPaths.filter((p) => p !== firstChapter).flatMap((p) => p.sections.flatMap((s) => s.nodes.map((id) => [id, p] as const))),
+);
+const groupOf = (n: (typeof nodes)[number]) =>
+  inFirstChapter.has(n.id) ? n.part : (otherPath.get(n.id)?.id ?? n.part);
 const partTitles: Record<string, string> = {};
-for (const section of allPaths.flatMap((p) => p.sections)) {
+for (const section of firstChapter?.sections ?? []) {
   const first = nodes.find((n) => n.id === section.nodes[0]);
   if (first) partTitles[first.part] ??= section.title;
+}
+for (const n of nodes) {
+  const path = otherPath.get(n.id);
+  if (!inFirstChapter.has(n.id) && path) partTitles[path.id] ??= path.title;
 }
 
 const weights = new Map(nodes.map((n) => [n.id, reach(n.id).size]));
@@ -73,7 +85,7 @@ function runLayout(seed: number) {
     style: [{ selector: "node", style: { width: "data(size)", height: "data(size)" } }],
     elements: [
       ...Object.keys(partTitles).map((id) => ({ data: { id: `part-${id}` } })),
-      ...nodes.map((n) => ({ data: { id: n.id, parent: `part-${n.part}`, size: size(n.id) } })),
+      ...nodes.map((n) => ({ data: { id: n.id, parent: `part-${groupOf(n)}`, size: size(n.id) } })),
       ...edges.map((e) => ({ data: { source: e.from, target: e.to } })),
     ],
   });
@@ -189,7 +201,7 @@ const data = {
     id: n.id,
     title: n.title,
     type: n.type,
-    part: n.part,
+    part: groupOf(n),
     status: n.status,
     readable: isReadable(n),
     summary: isReadable(n) ? (n.summary ?? "") : "",
@@ -204,11 +216,20 @@ const data = {
 ---
 
 <Base title="Map" description="Every topic and how they connect. Zoom in to see more.">
-  <h1>Map</h1>
+  <h1 class="visually-hidden">Map</h1>
   <p class="muted">
     Every topic, and what you need to know first. Zoom out to see the big parts; zoom in to see each topic and
     what it is about. Tap a topic to see what to learn before it. Prefer a list? Follow the <a href="/path/first-chapter">First Chapter</a>.
   </p>
+
+  <ul class="map-legend small muted">
+    <li><span class="dot concept"></span> Topic</li>
+    <li><span class="dot event"></span> History</li>
+    <li><span class="dot project"></span> Project</li>
+    <li><span class="dot unread"></span> Being written</li>
+    <li><span class="dot planned"></span> Not written yet</li>
+    <li>Bigger dot: more topics build on it. Arrows point from what you learn first to what it unlocks.</li>
+  </ul>
 
   <div class="map-wrap">
     <div id="map" aria-label="Map of all topics. The same topics are listed in the First Chapter."></div>
@@ -228,15 +249,6 @@ const data = {
       <a class="button" id="panel-read" href="#">Read</a>
     </aside>
   </div>
-
-  <ul class="map-legend small muted">
-    <li><span class="dot concept"></span> Topic</li>
-    <li><span class="dot event"></span> History</li>
-    <li><span class="dot project"></span> Project</li>
-    <li><span class="dot unread"></span> Being written</li>
-    <li><span class="dot planned"></span> Not written yet</li>
-    <li>Bigger dot: more topics build on it. Arrows point from what you learn first to what it unlocks.</li>
-  </ul>
 
   <script is:inline type="application/json" id="map-data" set:html={JSON.stringify(data)} />
 </Base>
@@ -286,6 +298,9 @@ const data = {
     transition: font-size 0.2s, color 0.2s;
   }
   #map-labels:global(.far) :global(.part-label) { color: var(--part); font-size: 1.4rem; }
+  @media (max-width: 640px) {
+    #map-labels:global(.far) :global(.part-label) { font-size: 1.1rem; }
+  }
   .map-controls {
     position: absolute;
     top: 0.75rem;
@@ -325,7 +340,7 @@ const data = {
   .key-line { display: inline-block; width: 1rem; height: 3px; margin-right: 0.4rem; border-radius: 2px; vertical-align: 0.2rem; }
   .key-line.before { background: var(--event); }
   .key-line.after { background: var(--accent); }
-  .map-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding: 0; list-style: none; }
+  .map-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0 0 0.75rem; padding: 0; list-style: none; }
   .dot { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--accent); vertical-align: -0.05rem; }
   .dot.event { background: var(--event); transform: rotate(45deg); border-radius: 2px; }
   .dot.project { background: var(--ok); border-radius: 2px; }
@@ -352,8 +367,8 @@ const data = {
   const v = (name: string) => css.getPropertyValue(name).trim();
   const dark = matchMedia("(prefers-color-scheme: dark)").matches;
   const partColor: Record<string, string> = dark
-    ? { machine: "#8fb0ff", network: "#5fd0c4", web: "#d3a6ff", code: "#f0b45c" }
-    : { machine: "#2b59c3", network: "#0f7f7a", web: "#7b45c4", code: "#9a5b00" };
+    ? { machine: "#8fb0ff", network: "#5fd0c4", web: "#d3a6ff", code: "#f0b45c", "more-to-explore": "#f0b45c" }
+    : { machine: "#2b59c3", network: "#0f7f7a", web: "#7b45c4", code: "#9a5b00", "more-to-explore": "#9a5b00" };
 
   // Zoom levels, as a multiple of the "show everything" zoom. Like towns on a street map, topics
   // appear one by one as you zoom in: each part's key topics always, the rest from 0.9× to 2.4×.
@@ -377,7 +392,7 @@ const data = {
     autoungrabify: true,
     autounselectify: true,
     elements: [
-      ...data.parts.map((p) => ({ data: { id: `part-${p.id}`, color: partColor[p.id] }, classes: "part" })),
+      ...data.parts.map((p) => ({ data: { id: `part-${p.id}`, color: partColor[p.id] ?? v("--accent") }, classes: "part" })),
       ...data.nodes.map((n) => ({
         position: n.position,
         data: { ...n, parent: `part-${n.part}`, color: partColor[n.part] ?? v("--accent") },
@@ -507,10 +522,21 @@ const data = {
     const placed: { x1: number; y1: number; x2: number; y2: number }[] = [];
     const width = root.clientWidth;
     const height = root.clientHeight;
-    const lit = labels.filter((l) => l.node.hasClass("lit"));
-    const order = lit.length ? [...lit, ...labels.filter((l) => !l.node.hasClass("lit"))] : labels;
     const isFree = (box: (typeof placed)[number]) =>
       !placed.some((b) => box.x1 < b.x2 && b.x1 < box.x2 && box.y1 < b.y2 && b.y1 < box.y2);
+    // Part titles go first: above their box, or else inside its top or below it, and never past the
+    // map's left or right edge (small screens). Topic names then keep clear of them.
+    for (const { part, el } of partLabels) {
+      const b = part.renderedBoundingBox();
+      const [w, h] = [el.offsetWidth, el.offsetHeight];
+      const x1 = Math.max(0, Math.min(width - w, (b.x1 + b.x2) / 2 - w / 2));
+      const spots = [b.y1 - 4 - h, b.y1 + 4, b.y2 + 4].map((y) => ({ x1, y1: y, x2: x1 + w, y2: y + h }));
+      const box = spots.find(isFree) ?? spots[0]!;
+      el.style.transform = `translate(${Math.round(box.x1)}px, ${Math.round(box.y1)}px)`;
+      placed.push(box);
+    }
+    const lit = labels.filter((l) => l.node.hasClass("lit"));
+    const order = lit.length ? [...lit, ...labels.filter((l) => !l.node.hasClass("lit"))] : labels;
     for (const l of order) {
       const p = l.node.renderedPosition();
       const r = l.node.renderedHeight() / 2 + 2;
@@ -531,10 +557,6 @@ const data = {
       if (visible) placed.push(box);
       l.el.classList.toggle("off", !visible);
       l.el.classList.toggle("faded", visible && l.node.hasClass("faded"));
-    }
-    for (const { part, el } of partLabels) {
-      const b = part.renderedBoundingBox();
-      el.style.transform = `translate(${Math.round((b.x1 + b.x2) / 2)}px, ${Math.round(b.y1 - 4)}px) translate(-50%, -100%)`;
     }
   }
 
@@ -560,6 +582,8 @@ const data = {
   placeLabels();
   cy.on("zoom", applyZoomLevel);
   cy.on("render", placeLabels);
+  // Part titles grow or shrink with an animation when zooming past "far"; place them again at its end.
+  layer.addEventListener("transitionend", placeLabels);
   addEventListener("resize", () => {
     const before = view();
     cy.resize();
