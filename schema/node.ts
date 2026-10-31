@@ -55,6 +55,9 @@ const image = z.object({
   source: z.url(), // the page the image was taken from, e.g. its Wikimedia Commons page
   author: z.string().min(1), // as the source writes it
   license: z.enum(IMAGE_LICENSES),
+  // A short visible caption, when a reader could misread the picture (for example a museum
+  // sign that names more than the picture shows). Only what the node's sources support.
+  caption: z.string().min(1).optional(),
   // Callouts: a label beside the picture with a line to the part it names.
   labels: z.array(calloutLabel).default([]),
   // A close-up shown beside the photo: x, y, w and h mark a rectangle in percent of the

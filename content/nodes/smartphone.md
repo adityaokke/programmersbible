@@ -18,6 +18,22 @@ questions:
   - when did the app store open
   - is a smartphone a computer
 aliases: [smartphone, smartphones, smart phone, iPhone, Android, IBM Simon, Simon Personal Communicator, App Store, Android Market, T-Mobile G1, mobile phone, cell phone]
+images:
+  - file: ibm-simon.jpg
+    alt: "The IBM Simon, its screen showing dialing buttons."
+    source: https://commons.wikimedia.org/wiki/File:IBM_Simon_Personal_Communicator.png
+    author: "Bcos47"
+    license: Public domain
+    caption: "The Simon in its charging base."
+    labels:
+      - { x: 50, y: 52, text: Touch screen, side: left }
+  - file: original-iphone.jpg
+    alt: "The first iPhone, its front almost all screen."
+    source: https://commons.wikimedia.org/wiki/File:IPhone_First_Generation_(cropped).jpg
+    author: "Carl Berkeley from Riverside California"
+    license: CC BY-SA 2.0
+    labels:
+      - { x: 42, y: 45, text: Touch screen, side: left }
 sources:
   - title: "Computer History Museum, Revolution: Mobile Computing (introduction)"
     url: https://www.computerhistory.org/revolution/mobile-computing/18
@@ -81,6 +97,8 @@ The museum calls the **Simon**, from the companies IBM and BellSouth, "the first
 
 But the Simon was "brick-like" in weight and look, says the museum. You could talk on it for less than 30 minutes, and it cost $899. The museum calls it "unsuccessful".
 
+![The IBM Simon, its screen showing dialing buttons.](images/ibm-simon.jpg)
+
 ### Smartphones before the iPhone
 
 From 1999, the museum says, successful smartphones "began appearing from companies around the world, bringing the Web to your pocket": you could visit web pages on the phone.
@@ -89,7 +107,7 @@ From 1999, the museum says, successful smartphones "began appearing from compani
 
 ### The iPhone is announced (January 2007)
 
-On January 9, 2007, at an event called Macworld in San Francisco, Apple showed the **iPhone**. Apple is the company you met in the personal computer lesson. Steve Jobs, Apple's CEO (its chief executive), called it "a revolutionary and magical product".
+On January 9, 2007, at an event called Macworld in San Francisco, Apple showed the **iPhone**. You met Apple in the personal computer lesson. Steve Jobs, Apple's CEO (its chief executive), called it "a revolutionary and magical product".
 
 Apple said the iPhone combined three products in one:
 
@@ -98,6 +116,8 @@ Apple said the iPhone combined three products in one:
 3. a device for the internet, with email and a web browser called Safari.
 
 Apple called the iPhone's large screen a **multi-touch** display. Apple said you could control the iPhone with your fingers alone. For example, you could flick a finger to scroll through a list of songs. To type, you used what Apple called a "soft keyboard": a keyboard drawn on the screen.
+
+![The first iPhone, its front almost all screen.](images/original-iphone.jpg)
 
 Apple's press release also listed a camera and three **sensors**: parts that measure something about the world. One of them, the accelerometer, noticed when you turned the phone on its side. Then the picture on the screen turned too.
 
@@ -140,7 +160,7 @@ App stores also gave **developers** (people who write [[software]]) a new way to
 
 The International Telecommunication Union (ITU) is a United Nations agency for information and communication technologies. In its 2025 figures, it says that "82 per cent of individuals 10 years or older own a mobile phone". That number counts all mobile phones, not only smartphones.
 
-This lesson tells what happened. It does not try to explain why some phones succeeded and others did not.
+This lesson does not explain why some phones succeeded or failed.
 
 ## 🔍 See it for yourself
 
