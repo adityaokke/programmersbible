@@ -4,6 +4,8 @@ title: "The Microprocessor"
 type: event
 part: machine
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [integrated-circuit, cpu]
 related: [transistor, eniac]
 led_to: [personal-computer]
@@ -18,6 +20,20 @@ questions:
   - why was the microprocessor important
   - what is the difference between a cpu and a microprocessor
 aliases: [microprocessor, microprocessors, MPU, Intel 4004, "4004", CPU on a chip, MCS-4, Busicom]
+images:
+  - file: busicom-board-4004.jpg
+    alt: "A calculator circuit board. The photographer's red arrows point at its MCS-4 chips: a white 4004 in the top row, and dark 4001, 4002 and 4003 chips."
+    source: https://commons.wikimedia.org/wiki/File:Intel_4004_on_Busicom_calculator_circuit_board.jpg
+    author: "MaltaGC"
+    license: CC BY-SA 4.0
+  - file: intel-4004-open.jpg
+    alt: "An Intel 4004 with its white case opened. In the middle is the small, shiny silicon chip. Thin wires connect it to the pins."
+    source: https://commons.wikimedia.org/wiki/File:Intel_4004_open.jpg
+    author: "the Science Museum"
+    license: CC BY 4.0
+    labels:
+      - { x: 49, y: 49, text: Chip, side: right, ly: 30 }
+      - { x: 12, y: 60, text: Case, side: left }
 sources:
   - title: "Computer History Museum, The Silicon Engine: 1971, Microprocessor Integrates CPU Function onto a Single Chip"
     url: https://www.computerhistory.org/siliconengine/microprocessor-integrates-cpu-function-onto-a-single-chip/
@@ -42,8 +58,6 @@ sources:
   - title: "Wikipedia: Microprocessor (general background reference)"
     url: https://en.wikipedia.org/wiki/Microprocessor
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -74,11 +88,17 @@ At Intel, **Ted Hoff** proposed a different plan. The Computer History Museum sa
 
 The main chip of the four was the **Intel 4004**. It was the CPU. The other three chips were for **memory** (keeping information) and for **input and output** (taking information in and giving results out). Together, these four chips were called the **MCS-4**.
 
+
+![A calculator circuit board. The photographer's red arrows point at its MCS-4 chips: a white 4004 in the top row, and dark 4001, 4002 and 4003 chips.](images/busicom-board-4004.jpg)
+
 According to the museum, Ted Hoff and **Stanley Mazor** came up with the idea for the 4004. **Federico Faggin** was the main designer and the project leader. In 1970, **Masatoshi Shima** of Busicom was given the job of helping Faggin with the 4004 design.
 
 ### A whole CPU on one chip
 
 The museum says that new chip-making methods and design advances made it possible to put a CPU on a single chip. Faggin adapted Intel's methods for making memory chips to fit about 2,300 transistors on the 4004. (Different Computer History Museum pages give 2,300 or 2,250.) The museum's timeline says the 4004 could do up to 90,000 operations per second, working on 4 bits at a time.
+
+
+![An Intel 4004 with its white case opened. In the middle is the small, shiny silicon chip. Thin wires connect it to the pins.](images/intel-4004-open.jpg)
 
 The IEEE page says the 4004 was a complete CPU "on a single silicon chip". It also says that this single-chip design brought "significant cost and performance improvements" over designs that used many chips.
 
@@ -102,14 +122,12 @@ Putting a whole CPU on one or a few chips "greatly reduced the cost of computing
 
 Intel soon made more microprocessors, such as the 8008 (1972) and the 8080 (1974). Other companies made them too. One low-cost microprocessor, the 6502 from a company called MOS Technology, helped Apple, Atari, Commodore and other companies make personal computers and games. (This is from the museum's Silicon Engine page.) The IEEE page says the success of the 4004 led to microprocessors being used in many products, including the [[personal-computer|personal computer]].
 
-Today, microprocessors are in a great many places. Wikipedia says that thousands of things that are not usually thought of as computers contain them, such as home appliances, vehicles and toys. And the number of transistors grew enormously: Stanford's course says "chips can contain billions of transistors".
+Today, Wikipedia says, thousands of things that are not usually thought of as computers contain microprocessors, such as home appliances, vehicles and toys. And transistor counts grew enormously: Stanford's course says "chips can contain billions of transistors".
 
 ## 🔍 See it for yourself
 
 1. Open the Computer History Museum's [Busicom 141-PF prototype page](https://www.computerhistory.org/revolution/artifact/285/1534). A **prototype** is an early test version of a product. Read the text under the photo. It says this calculator was the test machine for the first commercial use of the 4004 (the first use in a product for sale). It also says the four MCS-4 chips are visible in the photo.
-2. Open the museum's [Silicon Engine page for 1971](https://www.computerhistory.org/siliconengine/microprocessor-integrates-cpu-function-onto-a-single-chip/). The page has photos with captions. Read the captions to find a close-up photo of the 4004 chip. Its caption says the gold lines show how complex the 4004's **layout** is (how its parts are arranged on the chip). Another caption names the 4004 team, who met again in 2007.
-
-These pages show the real 4004 chips, the calculator they were made for, and some of the people who made them.
+2. Open the museum's [Silicon Engine page for 1971](https://www.computerhistory.org/siliconengine/microprocessor-integrates-cpu-function-onto-a-single-chip/). Read the photo captions to find a close-up of the 4004 chip. Its caption says the gold lines show how complex the 4004's **layout** is (how its parts are arranged on the chip).
 
 ## Recap
 
