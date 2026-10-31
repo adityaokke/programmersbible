@@ -95,13 +95,16 @@ At first, TCP did everything. Then the designers saw that "in some cases packet 
 
 Together they are called **TCP/IP**. The name is also used for the whole family of protocols that grew around them. Their official rules were published in September 1981, as RFC 791 (IP) and RFC 793 (TCP).
 
-*Diagram: TCP/IP connecting three networks. Computer A, on a radio network, sends packets through a gateway to the ARPANET, then through another gateway to a third network, where computer B is. IP runs on the computers and on every gateway. TCP runs only on the two computers at the ends.*
-
-```
- [computer A]                                                  [computer B]
-  TCP                                                           TCP
-  IP -- radio network -- [gateway] -- ARPANET -- [gateway] -- third network -- IP
-        (network 1)         IP       (network 2)    IP        (network 3)
+```mermaid
+flowchart TD
+  accTitle: TCP/IP connecting three networks
+  accDescr: Computer A, on a radio network, sends packets through a gateway to the ARPANET, then through another gateway to a third network, where computer B is. IP runs on the computers and on every gateway. TCP runs only on the two computers at the ends.
+  A["Computer A<br/>TCP + IP"] --> N1(["Network 1:<br/>radio network"])
+  N1 --> G1["Gateway<br/>IP"]
+  G1 --> N2(["Network 2:<br/>ARPANET"])
+  N2 --> G2["Gateway<br/>IP"]
+  G2 --> N3(["Network 3:<br/>third network"])
+  N3 --> B["Computer B<br/>TCP + IP"]
 ```
 
 A way to picture it: think of the postcards from [[packets]]. IP is the address written on each postcard. Each postal service on the way is like a gateway: it reads only the address and passes the card on. TCP is the number on each card ("card 3 of 40"). The receiver uses the numbers to sort the cards and to tell the sender which ones arrived. The sender sends again any card that went missing.
