@@ -41,8 +41,8 @@ sources:
     url: https://dns.google/
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-30
-updated: 2026-10-30
+reviewed_at: 2026-10-31
+updated: 2026-10-31
 ---
 
 > **In one sentence:** DNS (the Domain Name System) is the worldwide system that finds the IP address that belongs to a domain name.
@@ -84,6 +84,29 @@ Here is what happens when your browser needs the address of `wikipedia.org`. (Th
 4. The resolver asks a **`.org` server**. It answers: "I do not know either, but here are the addresses of the name servers for `wikipedia.org`."
 5. The resolver asks a **name server for `wikipedia.org`**. It holds the information for `wikipedia.org` and the names under it, and gives the real answer: the IP address.
 6. The resolver sends the address to your computer, and saves it in its cache for a limited time.
+
+```mermaid
+sequenceDiagram
+  accTitle: How a resolver finds the address of wikipedia.org
+  accDescr: Your computer asks a resolver. If the answer is not in its cache, the resolver asks a root server, then a .org server, then a name server for wikipedia.org, which gives the IP address. The resolver sends the address back to your computer and saves it in its cache.
+  participant C as Your computer
+  participant R as Resolver
+  participant Root as Root server
+  participant Org as .org server
+  participant W as Name server for wikipedia.org
+  C->>R: What is the IP address of wikipedia.org?
+  Note over R: Checks its cache first
+  opt Not in the cache
+    R->>Root: wikipedia.org?
+    Root-->>R: Ask the .org servers
+    R->>Org: wikipedia.org?
+    Org-->>R: Ask the name servers for wikipedia.org
+    R->>W: wikipedia.org?
+    W-->>R: The IP address
+    Note over R: Saves the answer in its cache
+  end
+  R-->>C: The IP address
+```
 
 That time limit is called the **TTL** (time to live). Each answer comes with a TTL, counted in seconds. When the TTL ends, the saved answer expires, and the resolver must ask again.
 

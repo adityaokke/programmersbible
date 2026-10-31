@@ -1,6 +1,7 @@
 node_modules/
 generated/
 dist/
+public/images/
 .astro/
 .wrangler/
 .env

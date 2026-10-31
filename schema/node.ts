@@ -22,6 +22,55 @@ const source = z.object({
   url: z.url(),
 });
 
+// Licenses that can be shared under the content license (CC BY-SA 4.0). "All rights reserved"
+// images (most museum photos) cannot be copied: link to them in "See it for yourself" instead.
+export const IMAGE_LICENSES = [
+  "Public domain",
+  "CC0 1.0",
+  "CC BY 2.0",
+  "CC BY 2.5",
+  "CC BY 3.0",
+  "CC BY 4.0",
+  "CC BY-SA 2.0",
+  "CC BY-SA 2.5",
+  "CC BY-SA 3.0",
+  "CC BY-SA 4.0",
+] as const;
+
+// A callout: x and y are the part's position in percent of the picture's width and height,
+// from the top left. side puts the label left or right (default: the nearer side); ly moves
+// the label up or down (default: same height as the part), to keep labels apart.
+const calloutLabel = z.object({
+  x: z.number().min(0).max(100),
+  y: z.number().min(0).max(100),
+  text: z.string().min(1),
+  side: z.enum(["left", "right"]).optional(),
+  ly: z.number().min(0).max(100).optional(),
+});
+
+// A picture stored in content/images/<node-id>/ and used in the body as ![alt](images/<file>).
+const image = z.object({
+  file: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*\.(jpg|jpeg|png|svg|webp)$/, "file must be a kebab-case name with an image extension"),
+  alt: z.string().min(10, "alt text must describe the picture"),
+  source: z.url(), // the page the image was taken from, e.g. its Wikimedia Commons page
+  author: z.string().min(1), // as the source writes it
+  license: z.enum(IMAGE_LICENSES),
+  // Callouts: a label beside the picture with a line to the part it names.
+  labels: z.array(calloutLabel).default([]),
+  // A close-up shown beside the photo: x, y, w and h mark a rectangle in percent of the
+  // picture (from the top left). Its labels are placed in percent of the close-up.
+  zoom: z
+    .object({
+      x: z.number().min(0).max(100),
+      y: z.number().min(0).max(100),
+      w: z.number().gt(0).max(100),
+      h: z.number().gt(0).max(100),
+      text: z.string().min(1),
+      labels: z.array(calloutLabel).default([]),
+    })
+    .optional(),
+});
+
 export const nodeFrontmatter = z
   .object({
     id: nodeId,
@@ -46,6 +95,7 @@ export const nodeFrontmatter = z
     questions: z.array(z.string().min(1)).default([]),
     aliases: z.array(z.string().min(1)).default([]),
     sources: z.array(source).default([]),
+    images: z.array(image).default([]),
 
     author: z.string().optional(), // "ai" or the human writer's name
     reviewed_by: z.string().optional(), // "ai" (the ai-reviewer agent) or the human reviewer's name

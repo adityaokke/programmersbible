@@ -70,12 +70,54 @@ At least one authoritative source per node, preferring primary sources:
 
 Never use an AI answer, a content farm or an unsourced blog as a source. Every source URL must load.
 
-## Diagrams
+## Diagrams and pictures
 
-- SVG in one consistent style (Excalidraw or hand-written SVG).
-- **Every diagram has alt text** describing what it shows.
-- A text diagram in a code block (used until an SVG is drawn) has no alt attribute, so put one italic line right before or right after it that describes what it shows: *Diagram: …*. That line is its alt text. Code the reader types (console lines, HTML examples) is not a diagram and needs no such line.
-- A diagram must make sense without the text, and the text without the diagram.
+Pick the form that fits the idea:
+
+| The idea is… | Use | Example |
+|---|---|---|
+| steps in order, a flow, layers, a tree, a timeline | a **Mermaid** diagram | DNS lookup, HTTP over TCP over IP, a folder tree |
+| what a real thing looks like | a **photo** from an open-licensed source | an open hard drive, ENIAC, a fiber cable |
+| numbers side by side | a **table** | HDD vs SSD |
+| a small picture no photo shows | a **text diagram** in a code block | a pixel grid of numbers |
+
+**Mermaid.** Write it in a ` ```mermaid ` block. The site draws it at build time, in the same style for every node, with a light and a dark version.
+
+- Start it with `accTitle:` (a short title) and `accDescr:` (what it shows, in full sentences). Together they are its alt text; the validator requires both.
+- It shows only what the text says, and adds no new facts.
+- Keep it small: about 3–8 boxes or people. Labels are short, plain words.
+- Prefer `flowchart` (flows, trees, layers), `sequenceDiagram` (who asks whom, in order) and `timeline`.
+
+**Photos.** Take them from Wikimedia Commons or another source that shows a license. Never copy a photo marked "all rights reserved" (most museum photos): link to it in "See it for yourself" instead.
+
+- Allowed licenses: Public domain, CC0, CC BY and CC BY-SA (the list is in `schema/node.ts`).
+- Save the file in `content/images/<node-id>/` with a kebab-case name (`open-hard-drive.jpg`). About 1,000 pixels wide is enough; about 2,000 if you show a close-up.
+- Use it in the text as `![alt text](images/<file>)`, on its own line.
+- List it in the frontmatter `images` with `file`, `alt`, `source` (the image's own page), `author` (as the source writes it) and `license`. The site shows the credit under the picture, which CC BY needs.
+- Open the picture and check that it really shows what the alt text says.
+- **Point out the parts the text names** with `labels` (callouts): each label sits beside the picture, with an arrow pointing at the part. Give the part's position in percent of the picture (`x` from the left, `y` from the top). Use `side: left|right` and `ly` (the label's height) to keep lines from crossing each other or important parts. Build the site and look at the result before you finish.
+
+  ```yaml
+  labels:
+    - { x: 20, y: 30, text: Platter }
+    - { x: 50.5, y: 29.5, text: Head, side: right, ly: 12 }
+  ```
+- **Show a tiny part up close** with `zoom`: a rectangle on the photo (`x`, `y`, `w`, `h` in percent of the picture) and an enlarged close-up of it under the photo, with its own `labels` (in percent of the close-up) and a short `text` caption. Save the photo about 2,000 pixels wide so close-ups stay sharp. Cropping is a change to the photo: Public domain, CC0, CC BY and CC BY-SA all allow it.
+
+  ```yaml
+  zoom:
+    x: 44
+    y: 23
+    w: 13
+    h: 13
+    text: "Close-up: the head at the tip of the arm"
+    labels:
+      - { x: 50, y: 46, text: Head, side: right }
+  ```
+
+**Text diagrams** have no alt attribute, so put one italic line right before or right after it that describes what it shows: *Diagram: …*. Code the reader types (console lines, HTML examples) and tables of example numbers are not diagrams and need no such line.
+
+Every diagram or picture must make sense with its alt text alone, and the text must make sense without it.
 
 ## Links between nodes
 
@@ -201,7 +243,7 @@ Before a node moves to `published`, the `ai-reviewer` agent (or a human reviewer
 - [ ] The analogy says where it breaks down
 - [ ] Every fact, date and number is checked against a source (claims table)
 - [ ] "Try it" steps work: checked against official docs by the AI reviewer, and in a real browser by a human reviewer
-- [ ] Diagrams have alt text
+- [ ] Diagrams and pictures have alt text; every photo has an allowed license and its credit
 - [ ] 600–1,200 words
 - [ ] Read as a real beginner, or by one
 
