@@ -16,6 +16,16 @@ questions:
   - what is a data center
   - what is fiber optic cable
 aliases: [undersea cable, submarine cable, submarine communications cable, subsea cable, fiber optic cable, optical fiber, fiber, data center, data centre, cable landing station, TAT-8, Submarine Cable Map]
+images:
+  - file: submarine-cable-samples.jpg
+    alt: "Undersea cable samples, most cut open in layers. Thin fibers stick out of a copper tube."
+    source: https://commons.wikimedia.org/wiki/File:Submarine_Optical_Cables.jpg
+    author: "Lonnie Hagadorn"
+    license: CC BY-SA 4.0
+    caption: "Samples of undersea telecom cables, most cut open to show their layers. The red words and name plates are part of the original photo; you do not need to know them all. The glass fibers are only the thin strands at the very top. The photo's word \"Core\" names a different part, not the core of a fiber."
+    labels:
+      - { x: 85.6, y: 10, text: Fibers, side: right }
+      - { x: 85.5, y: 23, text: Copper, side: right }
 sources:
   - title: "TeleGeography: Submarine Cable Frequently Asked Questions"
     url: https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions
@@ -67,7 +77,7 @@ Think of the **roads and warehouses** of the world. The line to your home is a s
 
 Undersea internet cables, and many links on land, use **optical fiber**: a thin strand of very pure glass that carries light. The Fiber Optic Association says the strands are "hair-thin". Most glass fibers are 125 microns (0.125 mm) wide, including the cladding described below.
 
-TeleGeography, a research company of telecom (telephone and data network) experts, explains how data travels. **Lasers** (devices that make a narrow beam of light) at one end fire light down the fibers "at extremely rapid rates". **Receptors** at the other end detect it. (How the light carries the bits of your data is beyond this lesson.)
+TeleGeography, a research company of telecom (telephone and data network) experts, explains how data travels. **Lasers** (devices that make a narrow beam of light) at one end fire light down the fibers "at extremely rapid rates". **Receptors** at the other end detect it. (How light carries your data is beyond this lesson.)
 
 Why does the light stay inside the glass? A fiber has a **core** in the center, surrounded by a layer of glass called the **cladding**. The two kinds of glass are chosen so that the light reflects off the edge of the core, back into the core, a bit like a mirror. This is called **total internal reflection**. A plastic coating protects the glass.
 
@@ -82,6 +92,8 @@ A **submarine cable** (undersea cable) lies on the seabed between stations on la
 In the deep sea, cables lie directly on the ocean floor. Near the shore, they are buried under the seabed for protection. Special ships put the cables in place.
 
 Light loses strength as it travels through a very long fiber. So long undersea cables have **repeaters** at regular intervals: devices that make the light signal stronger again. Repeaters need electricity, so the cable also has a **conductor** (a material, such as copper, that lets electric charges flow easily) near its center. Electricity for the repeaters runs down it.
+
+![Undersea cable samples, most cut open in layers. Thin fibers stick out of a copper tube.](images/submarine-cable-samples.jpg)
 
 Cables can break. TeleGeography says accidents, such as fishing boats and ships dragging their anchors, cause two-thirds of all cable faults (damage).
 
