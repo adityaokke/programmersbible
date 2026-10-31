@@ -39,9 +39,11 @@ const index = searchIndex();
     const words = (text: string) => text.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w && !STOP.has(w));
 
     // Pagefind exists only in a built site; in `astro dev` the import fails and the title index is used alone.
+    // It loads in the background: the first search of a visit waits for it, the title index does not.
     const pagefindUrl = "/pagefind/pagefind.js";
-    const pagefind: Pagefind | null = await import(/* @vite-ignore */ pagefindUrl).catch(() => null);
-    await pagefind?.options({ excerptLength: 24 });
+    const pagefindReady: Promise<Pagefind | null> = import(/* @vite-ignore */ pagefindUrl)
+      .then(async (pf: Pagefind) => (await pf.options({ excerptLength: 24 }), pf))
+      .catch(() => null);
 
     const byId = new Map(index.map((e) => [e.id, e]));
     const idOf = (url: string) => url.replace(/\.html$/, "").split("/").pop() ?? "";
@@ -71,18 +73,15 @@ const index = searchIndex();
     };
 
     async function fullTextMatches(qWords: string[]) {
+      const pagefind = await pagefindReady;
       if (!pagefind || !qWords.length) return [];
       const found = await pagefind.search(qWords.join(" "));
       const data = await Promise.all(found.results.slice(0, MAX * 2).map((r) => r.data()));
       return data.filter((d) => [...d.excerpt.matchAll(/<mark>(.*?)<\/mark>/g)].some((m) => closeForm(m[1]!, qWords)));
     }
 
-    let latest = 0;
-    async function search(query: string) {
-      const run = ++latest;
-      const qWords = words(query);
-      const fullText = await fullTextMatches(qWords);
-      // One ranking: points from the topic's own words, plus up to 6 for a high place in the full-text results.
+    // One ranking: points from the topic's own words, plus up to 6 for a high place in the full-text results.
+    function rank(qWords: string[], fullText: PagefindData[]): Hit[] {
       const scored = new Map<string, { hit: Hit; score: number }>();
       fullText.forEach((d, i) => {
         const id = idOf(d.url);
@@ -95,9 +94,10 @@ const index = searchIndex();
         const score = titleScore(e, qWords);
         if (score > 0) scored.set(e.id, { hit: { url: `/node/${e.id}`, title: e.title, summary: e.readable ? e.summary : "Coming soon", readable: e.readable }, score });
       }
-      const shown = [...scored.values()].sort((a, b) => b.score - a.score).slice(0, MAX).map((s) => s.hit);
-      if (run !== latest) return; // a newer search started while this one waited
+      return [...scored.values()].sort((a, b) => b.score - a.score).slice(0, MAX).map((s) => s.hit);
+    }
 
+    function render(shown: Hit[], query: string, searching: boolean) {
       results.replaceChildren(
         ...shown.map((h) => {
           const li = document.createElement("li");
@@ -121,11 +121,24 @@ const index = searchIndex();
           return li;
         }),
       );
-      summary.textContent = query.trim()
-        ? shown.length
-          ? `Topics that match "${query}":`
-          : `Nothing matches "${query}" yet. Try other words, or start from the beginning.`
-        : "";
+      summary.textContent = !query.trim()
+        ? ""
+        : searching
+          ? "Searching…"
+          : shown.length
+            ? `Topics that match "${query}":`
+            : `Nothing matches "${query}" yet. Try other words, or start from the beginning.`;
+    }
+
+    // Topics found by title show at once; the full-text results replace them when they are ready.
+    let latest = 0;
+    async function search(query: string) {
+      const run = ++latest;
+      const qWords = words(query);
+      if (query.trim()) render(rank(qWords, []), query, true);
+      const fullText = await fullTextMatches(qWords);
+      if (run !== latest) return; // a newer search started while this one waited
+      render(rank(qWords, fullText), query, false);
     }
 
     const initial = new URLSearchParams(location.search).get("q") ?? "";
