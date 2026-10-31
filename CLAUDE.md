@@ -41,6 +41,7 @@ Rules:
 
 ```
 content/nodes/<id>.md         one file per node (frontmatter + markdown body)
+content/images/<id>/         photos used by a node (credited in its frontmatter `images`)
 content/paths/<id>.yaml       guided paths (ordered node ids, grouped in sections)
 schema/node.ts                the content contract (zod); site and scripts both import it
 scripts/build-graph.ts        validate content, write generated/graph.json
@@ -55,7 +56,8 @@ generated/                    build output (git-ignored)
 
 ```
 npm run dev           local site at http://localhost:4321 (shows drafts)
-npm run build         validate, then build the production site into dist/ (published nodes only)
+npm run build         validate, then build the production site into dist/ (published nodes only;
+                      Mermaid diagrams are drawn with a headless Chromium: npx playwright install chromium)
 npm run build:preview same, but shows draft and review nodes (Linux/CI shell)
 npm run deploy        build, then deploy to Cloudflare with wrangler
 npm run validate      check all content (CI runs this); exit 1 on error
