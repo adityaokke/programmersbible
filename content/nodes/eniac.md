@@ -49,7 +49,7 @@ Earlier lessons showed early ideas for machines that follow instructions, such a
 
 Then came the Second World War. The United States Army needed **firing tables**. The National Museum of the United States Army describes them as "charts that helped Soldiers determine the best aim for their weapons". A table had to take into account things like wind speed and temperature, so each one needed many calculations.
 
-Those calculations were done by **human computers**: people whose job was to calculate. A team of women did this work at the University of Pennsylvania. According to Penn Engineering, one ballistics calculation (working out the path of a shell) took 12 hours with a hand calculator. The Army needed more tables than its people could calculate.
+Those calculations were done by **human computers**: people whose job was to calculate. A team of women did this work at the University of Pennsylvania. According to Penn Engineering, one ballistics calculation (working out the path of a bomb or missile) took 12 hours with a hand calculator. The Army needed more tables than its people could calculate.
 
 ## What happened
 

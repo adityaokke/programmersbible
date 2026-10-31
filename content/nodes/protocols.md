@@ -3,7 +3,7 @@ id: protocols
 title: "Protocols"
 type: concept
 part: network
-status: review
+status: published
 requires: [what-is-a-network]
 related: [packets, tcp-ip, http, arpanet]
 summary: "A protocol is a set of rules that computers agree on, so they can send messages to each other and understand them."
@@ -55,11 +55,15 @@ sources:
     url: https://developer.chrome.com/docs/devtools/network/reference
   - title: "Microsoft Edge DevTools: Inspect network activity"
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/
+  - title: "Microsoft Edge DevTools, Console overview"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/
   - title: "Firefox DevTools User Docs: Network Monitor"
     url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html
   - title: "Firefox DevTools User Docs: Network request list"
     url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_list/index.html
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -82,7 +86,7 @@ Think of a **phone call**. You and the other person follow rules without thinkin
 
 A protocol is a set of rules like this, for computers.
 
-**Where the analogy breaks down:** people can guess. If a friend answers the phone in a strange way, you still understand. Computers cannot guess. They follow the rules exactly, and a message that breaks the rules is often not understood. Also, the protocols of the internet are written down in exact detail, in public documents.
+**Where the analogy breaks down:** people can guess. If a friend answers the phone in a strange way, you still understand. Computers do not understand a message the way a person does. Each message has an exact meaning, and both sides must agree on the rules first. Also, the protocols of the internet are written down in exact detail, in public documents.
 
 ## How it actually works
 
@@ -211,5 +215,6 @@ You will see a status code that a server sends back. You need a computer with a 
 - Chrome for Developers, Inspect network activity: https://developer.chrome.com/docs/devtools/network
 - Chrome for Developers, Network features reference: https://developer.chrome.com/docs/devtools/network/reference
 - Microsoft Edge DevTools, Inspect network activity: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/
+- Microsoft Edge DevTools, Console overview: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/
 - Firefox DevTools User Docs, Network Monitor: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html
 - Firefox DevTools User Docs, Network request list: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_list/index.html

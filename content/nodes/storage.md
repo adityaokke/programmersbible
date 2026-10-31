@@ -41,6 +41,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Apple Support: How iOS and macOS report storage capacity"
+    url: https://support.apple.com/en-us/102119
+  - title: "Apple Support: iPhone 16, Tech Specs"
+    url: https://support.apple.com/en-us/121029
+  - title: "Apple Support: Mac keyboard shortcuts"
+    url: https://support.apple.com/en-us/102650
 author: ai
 reviewed_by: ai
 reviewed_at: 2026-10-31
@@ -51,7 +57,7 @@ updated: 2026-10-31
 
 ## Why should I care?
 
-Your photos and apps stay on your phone when you switch it off. That is storage at work. When a phone has "128 GB" of space, that space is storage. (A **GB**, or gigabyte, is about a billion [[byte|bytes]]. See [[data-size-units]].)
+Your photos and apps stay on your phone when you switch it off. That is storage at work. An iPhone 16, for example, has 128 GB, 256 GB or 512 GB of storage. (A **GB**, or gigabyte, is usually counted as a billion [[byte|bytes]]. See [[data-size-units]].)
 
 Storage also explains why you must **save your work**. Unsaved work lives only in the computer's memory. If the power goes off, it is lost.
 
@@ -59,7 +65,7 @@ Storage also explains why you must **save your work**. Unsaved work lives only i
 
 In [[what-is-a-computer]], a cook worked in a kitchen. Memory was the **table**: the food in use right now. Storage was the **fridge**: the food kept for later.
 
-At night, the table is cleared, but the food in the fridge is still there the next morning. In the same way, switching off the computer clears memory, but storage keeps everything.
+At night, the table is cleared, but the food in the fridge is still there the next morning. Switching off the computer clears memory, but storage keeps everything.
 
 **Where the analogy breaks down:** a fridge needs electricity to keep food fresh. Storage does not need any power to keep its bits. Also, storage does not keep things forever: storage devices can break or wear out. So keep extra copies of important files.
 
@@ -123,7 +129,7 @@ Flash cells wear a little every time they are written. So an SSD can be written 
 
 The Computer History Museum calls IBM's **Model 350** the first commercial hard disk drive. It was part of the IBM 305 RAMAC computer system. In **June 1956**, IBM shipped an early unit to Zellerbach Paper in San Francisco. Regular production shipments began in 1957.
 
-It stored about 5 million characters on **50 disks**, each 24 inches (about 61 cm) across. The whole drive was about 5 feet (1.5 m) high. Companies could rent (lease) the drive alone for $750 per month.
+It stored about 5 million characters on **50 disks**, each 24 inches (about 61 cm) across. The whole unit was about 5 feet (1.5 m) high. It was leased (rented out) for $750 per month.
 
 **Flash memory** was invented by **Fujio Masuoka** at the company **Toshiba** in the 1980s. (Computer History Museum pages give two years: 1980 and 1984.) In 1991, the company SunDisk (now SanDisk) built a test version of a flash SSD for IBM. Since then, SSDs have become much more common, and they are replacing hard drives in many computers.
 
@@ -139,7 +145,7 @@ You will use the browser **console**, the tool from [[byte]]. You need a compute
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter` (on a Mac keyboard: `Return`):
 
    ```
    navigator.storage.estimate().then(console.log)
@@ -148,13 +154,13 @@ You will use the browser **console**, the tool from [[byte]]. You need a compute
 4. You should see text in curly brackets `{ }` (you may need to click a small arrow to open it). Look for two numbers, in bytes. Other words, such as `Promise`, are normal.
    - `usage`: how much this site saves now. On example.com it is probably `0`.
    - `quota`: how much this site may save. It is a very long number.
-5. Now type this line and press `Enter`. It divides the quota by one billion (`1000 ** 3`), to change bytes into GB:
+5. Type this line and press `Enter` (or `Return`). It divides the quota by one billion (`1000 ** 3`), to change bytes into GB:
 
    ```
    navigator.storage.estimate().then(e => console.log(e.quota / 1000 ** 3))
    ```
 
-6. When you are done, close the tab.
+6. Then close the tab.
 
 **What you should see:** a number of GB, probably with many decimal digits. This is **not** your drive's size. In Chrome and Edge, it can be up to 60% of your drive's total size. In Firefox, on a site like this one, it can be up to 10% of the drive, but not more than about 10.7 GB. The numbers are estimates, not exact.
 
@@ -183,3 +189,6 @@ You will use the browser **console**, the tool from [[byte]]. You need a compute
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Apple Support, How iOS and macOS report storage capacity: https://support.apple.com/en-us/102119
+- Apple Support, iPhone 16 Tech Specs: https://support.apple.com/en-us/121029
+- Apple Support, Mac keyboard shortcuts: https://support.apple.com/en-us/102650

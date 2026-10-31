@@ -95,7 +95,7 @@ The Computer History Museum says that the ARPANET had 14 nodes at the start of 1
 
 Computers that talk to each other must agree on the form of the data. A **protocol** is a system of rules that define how data is exchanged between computers. In December 1970, a group of researchers finished the first protocol for ARPANET host computers to talk to each other. It was called the **Network Control Protocol (NCP)**.
 
-In 1971, Ray Tomlinson at BBN made the ARPANET's first program for network email. He used the **@** sign to separate the person's name from the computer's name: "user@host". Email addresses still use this form today.
+Ray Tomlinson at BBN made the ARPANET's first program for network email. Sources differ on the year: Lemelson-MIT's page about Tomlinson says 1971, the Computer History Museum lists it under 1972, and the Internet Society history says he wrote the basic email send and read software in March 1972. He used the **@** sign to separate the person's name from the computer's name: "user@host". Email addresses still use this form today.
 
 In October 1972, Bob Kahn organized the first public demonstration of the ARPANET, at a conference called ICCC.
 

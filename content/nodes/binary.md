@@ -83,6 +83,8 @@ worth:         8   4   2   1
 binary digit:  1   1   0   1
 ```
 
+*Diagram: the worths 8, 4, 2, 1 above the digits of 1101.*
+
 Now add the worths that have a 1 under them: 8 + 4 + 1 = **13**. So `1101` in binary is 13 in decimal.
 
 `1101` in binary is read digit by digit: "one, one, zero, one", not "one thousand one hundred and one".
@@ -117,15 +119,15 @@ Counting uses the carrying you know from decimal. In decimal, a position goes ba
 
 ### Why computers use binary
 
-A computer can store a 0 or a 1 in many physical ways. Early machines used the position of a wheel or a lever. Electronic chips use electric charge or electrical signals, and hard drives use tiny spots of magnetism. Anything with two separate states, like a switch that is off or on, can store one binary digit.
+A computer can store a 0 or a 1 in many physical ways. Mechanical machines can use wheel or lever positions. Electronic chips use electric charge or electrical signals, and hard drives use tiny spots of magnetism. Anything with two separate states, like a switch that is off or on, can store one binary digit.
 
-The reason usually given for binary is that it is straightforward to build with electronic parts. (This is simplified. How those parts work comes later, in [[logic-gates]].)
+The reason usually given for binary is that it is straightforward to build with electronic parts. How circuits work with 0s and 1s comes later, in [[logic-gates]].
 
 ## How it came to be
 
-Ideas close to binary are old. For example, the Indian scholar **Pingala** (around the 2nd century BC) used a binary system to describe patterns of short and long syllables in poetry.
+Ideas close to binary are old. The Indian scholar **Pingala** (around the 2nd century BC) used a binary system to describe patterns of short and long syllables in poetry.
 
-In Europe, **Thomas Harriot** studied binary and other ways of writing numbers, but he did not publish his results. They were found later among his papers. Decades later, **Gottfried Leibniz** worked on binary. He is the person usually given the credit for inventing the modern binary system.
+In Europe, **Thomas Harriot** studied binary, but he did not publish his results. They were found later among his papers. Decades later, **Gottfried Leibniz** worked on binary. He is usually given the credit for inventing the modern binary system.
 
 Leibniz described binary counting in a handwritten paper dated **15 March 1679**, called *De progressione dyadica*. He never published it. In **1703**, he sent a paper on binary to the Academy of Sciences in Paris. Its title begins *Explication de l'arithmétique binaire*, "Explanation of binary arithmetic", and it says that the system uses only the characters 0 and 1.
 
@@ -148,7 +150,7 @@ You met the browser **console** in [[counting-systems]].
    (13).toString(2)
    ```
 
-   If the browser adds a bracket or a quote mark by itself while you type, that is fine. Make sure the line looks exactly like the one above.
+   If the browser adds a bracket or a quote mark by itself while you type, make sure the line still looks exactly like the one above.
 
 5. You should see `1101`, maybe inside quote marks, like `'1101'` or `"1101"`. The quote marks mean the answer is text. This is 13 in binary.
 6. Now go the other way. Type this line and press `Enter`:
