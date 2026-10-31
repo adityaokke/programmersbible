@@ -48,6 +48,13 @@ author: ai
 reviewed_by: ai
 reviewed_at: 2026-10-31
 updated: 2026-10-31
+images:
+  - file: imp-computer-history-museum.jpg
+    alt: "A tall grey metal cabinet with two panels of small switches and lights. A sign on it says Interface Message Processor."
+    caption: "An IMP built by BBN, now at the Computer History Museum."
+    source: https://commons.wikimedia.org/wiki/File:BBN_Interface_Message_Processor_CHM.agr.jpg
+    author: "ArnoldReinhold"
+    license: CC BY 4.0
 ---
 
 > **In one sentence:** ARPANET was an early computer network that used packets, paid for by a research agency of the U.S. Department of Defense, and it sent its first message on October 29, 1969.
@@ -70,6 +77,8 @@ You do not need to remember all the names in this story.
 
 In 1967, at a conference of ARPA researchers, Wesley Clark suggested putting special machines in front of the big computers, to run the network. These machines were called **Interface Message Processors**, or **IMPs**. (An **interface** is the meeting point between two things.) The IMP shown in the Computer History Museum is a large box with a small computer (a minicomputer) inside.
 
+![A tall grey metal cabinet with two panels of small switches and lights. A sign on it says Interface Message Processor.](images/imp-computer-history-museum.jpg)
+
 In December 1968, a team led by Frank Heart at the company Bolt Beranek and Newman (BBN) won the contract to build the IMPs. A contract is an agreement to do a job for pay. The IMPs received packets and passed them on, one step closer to the receiver. Today, [[router|routers]] do this job. The Computer History Museum says the IMPs grew into today's routers.
 
 ### The first four sites (1969)
@@ -82,11 +91,17 @@ Two more sites joined: the University of California, Santa Barbara, and the Univ
 
 The IMPs at different sites were joined by **leased telephone lines**: telephone lines rented for the network. So the ARPANET used the same kind of lines as the telephone network. The new part was how it used them: it sent packets over them, as you saw in [[packets]].
 
-*Diagram: two ARPANET sites. At UCLA, a host computer is connected to its IMP. The UCLA IMP is joined to the SRI IMP by a leased telephone line. At SRI, the IMP is connected to SRI's host computer. Packets travel from host to IMP, along the line to the other IMP, then to the other host.*
-
-```
-        UCLA                                          SRI
-  [host computer] --- [IMP] ===== leased line ===== [IMP] --- [host computer]
+```mermaid
+flowchart TD
+  accTitle: Two ARPANET sites
+  accDescr: Two ARPANET sites. At UCLA, a host computer is connected to its IMP. The UCLA IMP is joined to the SRI IMP by a leased telephone line. At SRI, the IMP is connected to SRI's host computer. Packets travel from host to IMP, along the line to the other IMP, then to the other host.
+  subgraph UCLA
+    H1[Host computer] --- I1[IMP]
+  end
+  subgraph SRI
+    I2[IMP] --- H2[Host computer]
+  end
+  I1 -- leased telephone line --- I2
 ```
 
 ### Growth (1970–1990)
