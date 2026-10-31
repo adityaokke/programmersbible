@@ -18,6 +18,8 @@ export async function optimizeImage(path: string, maxWidth: number): Promise<num
   const input = readFileSync(path);
   let image = sharp(input).rotate(); // apply the camera's orientation before resizing
   const { width = 0 } = await image.metadata();
+  // Already small enough: leave it alone. Recompressing a JPEG again only loses quality.
+  if (width <= maxWidth && input.length <= MAX_BYTES) return input.length;
   if (width > maxWidth) image = image.resize({ width: maxWidth });
   const output = path.endsWith(".png")
     ? await image.png({ compressionLevel: 9, palette: true }).toBuffer()

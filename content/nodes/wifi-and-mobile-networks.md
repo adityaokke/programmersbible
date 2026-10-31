@@ -16,6 +16,15 @@ questions:
   - what does 4g or 5g mean on my phone
   - is 5 ghz wi-fi the same as 5g
 aliases: [Wi-Fi, WiFi, wifi, wireless network, WLAN, wireless LAN, "IEEE 802.11", "802.11", access point, wireless router, mobile network, cellular network, cell phone network, mobile data, cell, base station, cell tower, handover, 4G, 5G, LTE]
+images:
+  - file: cell-tower-antennas.jpg
+    alt: "Long, flat, white antennas and smaller boxes around a pole on a roof."
+    caption: "Antennas on a cell tower, on a rooftop in Zagreb, Croatia."
+    source: https://commons.wikimedia.org/wiki/File:Cell_tower_antenna,_Zagreba%C4%8Dka_cesta.jpg
+    author: "Mnalis"
+    license: CC BY-SA 4.0
+    labels:
+      - { x: 35.5, y: 42, text: Antenna, side: left }
 sources:
   - title: "IEEE Standards Association: IEEE 802.11-1997, Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications"
     url: https://standards.ieee.org/standard/802_11-1997.html
@@ -116,6 +125,8 @@ NTT DOCOMO, a mobile network company in Japan, explains how a mobile network cov
 ```
 
 For planning, DOCOMO says six-sided cells (hexagons) have "proved effective". A cellular system uses its limited radio frequencies again in many cells. This lets it cover a very large area "with only a small number of frequency bandwidths".
+
+![Long, flat, white antennas and smaller boxes around a pole on a roof.](images/cell-tower-antennas.jpg)
 
 Your phone talks by radio to the base station of its cell. Ericsson, a maker of this equipment, says the radio network links phones "to the **core network**". It adds that the link from the base stations to the core network is "typically" "fiber or wireless microwave links". (You met optical fiber in the lesson on networks.) From there, your data reaches the internet.
 

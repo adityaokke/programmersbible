@@ -4,6 +4,8 @@ title: "The Integrated Circuit"
 type: event
 part: machine
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [logic-gates]
 led_to: [microprocessor]
 year: 1958
@@ -16,6 +18,21 @@ questions:
   - when was the microchip invented
   - what was the tyranny of numbers
   - what is moore's law
+images:
+  - file: kilby-replica.jpg
+    alt: "A replica of Kilby's first integrated circuit on a clear plate: a narrow strip, with thin gold-colored wires running across it and down from it."
+    source: https://commons.wikimedia.org/wiki/File:Replica_IC.png
+    author: "Florian Schäffer"
+    license: CC BY-SA 4.0
+    caption: "A replica (a copy, not the original) of Kilby's first integrated circuit, in a museum in Germany."
+    zoom:
+      x: 14
+      y: 24
+      w: 58
+      h: 34
+      text: "Close-up: the thin wires on the strip"
+      labels:
+        - { x: 53.4, y: 52.9, text: Flying wires, side: right, ly: 20 }
 aliases: [IC, chip, microchip, computer chip, solid circuit, Jack Kilby, Robert Noyce, Moore's law, tyranny of numbers]
 sources:
   - title: "Computer History Museum, The Silicon Engine: 1958 – All Semiconductor \"Solid Circuit\" is Demonstrated"
@@ -33,8 +50,6 @@ sources:
   - title: "Apple Newsroom: Apple introduces M4 chip (May 2024)"
     url: https://www.apple.com/newsroom/2024/05/apple-introduces-m4-chip/
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -61,6 +76,8 @@ As early as 1952, G. W. A. Dummer, of a research center in England called the Te
 On **September 12, 1958**, he showed his first working circuit to managers at TI. It was built on a tiny bar of **germanium**, about 11 mm by 1.6 mm (7/16 by 1/16 of an inch). From germanium he formed transistor, capacitor and resistor parts. Together they made an **oscillator** circuit. (What an oscillator does is outside this page.) One week later, he showed an **amplifier**, a circuit that makes a signal stronger.
 
 Kilby's circuit was not perfect. The parts were made together, but they were still connected by very thin gold wires, called "flying wires". These wires were not a practical way to make chips in large numbers.
+
+![A replica of Kilby's first integrated circuit on a clear plate: a narrow strip, with thin gold-colored wires running across it and down from it.](images/kilby-replica.jpg)
 
 TI announced Kilby's "solid circuit" idea in **March 1959**. Its first product of this kind went on sale in **March 1960**, for $450 each.
 

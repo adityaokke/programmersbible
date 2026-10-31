@@ -15,6 +15,15 @@ questions:
   - what is the difference between input and output
   - who invented the computer mouse
 aliases: [input, output, input device, output device, I/O, input/output, peripherals, keyboard, mouse, computer mouse, monitor, speakers, printer, touch screen, touchscreen]
+images:
+  - file: first-computer-mouse.jpg
+    alt: "The first computer mouse: a wooden block with one red button on top, joined by a long cable to a plug."
+    source: https://commons.wikimedia.org/wiki/File:SRI_Computer_Mouse.jpg
+    author: "SRI International"
+    license: CC BY-SA 3.0
+    caption: "SRI's first mouse prototype."
+    labels:
+      - { x: 70, y: 36, text: Redwood case, side: left, ly: 34 }
 sources:
   - title: "Code.org CS Discoveries: Lesson 5, Input and Output"
     url: https://curriculum.code.org/csd-18/unit1/5/
@@ -70,7 +79,7 @@ As a programmer, you will write programs that wait for input, such as a click, a
 
 ## Analogy
 
-In that page, a cook followed a recipe. Now look at the cook's kitchen from the outside. It has a small **window** to the dining room.
+On that page, a cook followed a recipe. Now look at the kitchen from outside: it has a small **window** to the dining room.
 
 - A waiter passes an **order** in through the window. That is **input**.
 - The cook makes the dish. That is **processing**.
@@ -104,7 +113,7 @@ Inside the computer, all information is kept as numbers. The signals from an inp
 - A **microphone** turns sound into an electrical signal. A small part then measures that signal again and again, at regular moments, and keeps each measurement as a number. See [[sound-as-numbers]].
 - A picture on a **screen** is made of tiny squares called **pixels**. Each pixel shows one colour. The computer gives each pixel three numbers: how much red, green and blue light to show. See [[images-as-numbers]].
 
-*Diagram: from left to right, a key press goes from your finger to the keyboard, then to the processor, then to the screen, and you see the letter.*
+*Diagram: a key press goes from your finger to the keyboard, to the processor, to the screen, and you see the letter.*
 
 ```
  your finger ──► keyboard ──► processor ──► screen ──► you see
@@ -113,7 +122,7 @@ Inside the computer, all information is kept as numbers. The signals from an inp
 
 ### Devices that do both
 
-Some devices do input **and** output, such as a **touch screen**. You touch it to give input, and it shows you pictures as output. An **internet connection** (the part that links your computer to other computers) also works in both directions: it brings information in from other computers, and sends information out to them.
+Some devices do input **and** output, such as a **touch screen**. You touch it to give input, and it shows you pictures as output. An **internet connection** (the part that links your computer to other computers) also works both ways: it brings information in from other computers and sends information out.
 
 ## How it came to be
 
@@ -122,6 +131,8 @@ The Computer History Museum says that early computers worked with people mostly 
 Screens were expensive at first. **Whirlwind**, a computer at MIT (a university) that started working in 1951, may have been the first computer to show text and pictures on a video screen, according to the museum.
 
 The **mouse** came from a lab that **Douglas Engelbart** set up at the Stanford Research Institute (now SRI International). According to the museum, people say Engelbart had the idea for the mouse in 1961. Computer engineer **Bill English** built the first mouse. The museum says it was made of **redwood**, a kind of wood. (Museum pages give 1963 for Engelbart's first design, and 1964 for the first mouse.) On **9 December 1968**, Engelbart and his team showed the mouse and other new ideas at a conference in San Francisco. This event is often called "the Mother of All Demos" (a **demo**, short for demonstration, shows how something works).
+
+![The first computer mouse: a wooden block with one red button on top, joined by a long cable to a plug.](images/first-computer-mouse.jpg)
 
 ## 🧪 Try it in your browser
 
@@ -146,11 +157,11 @@ You need a computer with a mouse (or a **touchpad**, the flat square on a laptop
    ```
 
    After each line, the console may show the word `undefined`. That is normal. If you see a red error message, check each character and try again.
-5. Now click on an empty part of the page, away from the text and the link. Try a few places.
+5. Now click a few empty places on the page, away from the text and the link.
 6. Press the `B` key. Then hold `Shift` and press `B` again.
 7. When you are done, close the tab.
 
-**What you should see:** after each click, the console shows **two numbers** (sometimes with decimals). They are the position of your click, in pixels. They are measured from the left edge and the top edge of the part of the window that shows the page. After step 6, with an English keyboard layout, the console shows `b`, then `Shift`, then `B`. Shift is a key too, so it gets its own line. A slightly different list is fine.
+**What you should see:** after each click, the console shows **two numbers** (sometimes with decimals). They are the position of your click in pixels, measured from the left and top edges of the part of the window that shows the page. After step 6, with an English keyboard layout, the console shows `b`, then `Shift`, then `B`. Shift is a key too, so it gets its own line. A slightly different list is fine.
 
 **What happened:** your mouse and keyboard (input devices) sent signals. Your two lines asked the browser to show them as numbers and key names on your screen (an output device).
 
