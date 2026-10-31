@@ -53,8 +53,18 @@ const byline =
   }
 
   <div class="node-layout">
-    <article>
+    {/* Search (Pagefind) indexes only published topics: their text, plus the other names and the
+        questions each one answers, which count a little more. */}
+    <article data-pagefind-body={readable ? "" : undefined} data-pagefind-ignore={readable ? undefined : "all"}>
       <h1>{node.title}</h1>
+      {
+        readable && (
+          <div hidden>
+            <span data-pagefind-meta="summary">{node.summary}</span>
+            <p data-pagefind-weight="3">{[...node.aliases, ...node.questions].join(". ")}</p>
+          </div>
+        )
+      }
       <p class="small muted">
         {node.type === "event" && <span class="event-mark">🕰 {node.era_label ?? node.year} · </span>}
         {node.read_minutes && <>⏱ {node.read_minutes} min read</>}

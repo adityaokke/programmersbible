@@ -149,6 +149,9 @@ article pre code { background: none; padding: 0; }
 /* Lists of nodes (path, search, timeline) */
 .node-list { list-style: none; padding: 0; margin: 0; }
 .node-list li { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.35rem 0; border-bottom: 1px solid var(--line); }
+.search-results li { padding: 0.6rem 0; }
+.search-results .excerpt { margin-top: 0.25rem; color: var(--fg); }
+.search-results mark { background: var(--accent-soft); color: inherit; border-radius: 2px; padding: 0 0.1em; }
 .node-list .num { color: var(--muted); min-width: 2rem; text-align: right; font-variant-numeric: tabular-nums; }
 .event-mark { color: var(--event); }
 

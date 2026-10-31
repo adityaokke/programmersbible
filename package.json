@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx scripts/copy-images.ts && astro dev",
     "build": "npm run validate && npm run build:site",
-    "build:site": "tsx scripts/copy-images.ts && astro build",
+    "build:site": "tsx scripts/copy-images.ts && astro build && pagefind --site dist",
     "build:preview": "npm run validate && SHOW_DRAFTS=true npm run build:site",
     "preview": "astro preview",
     "deploy": "npm run build && wrangler deploy",
@@ -39,6 +39,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@types/node": "^26.6.6",
+    "pagefind": "^1.5.2",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "wrangler": "^4.156.0"

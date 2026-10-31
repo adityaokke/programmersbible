@@ -2,8 +2,9 @@
 import Base from "../layouts/Base.astro";
 import { searchIndex } from "../lib/content.ts";
 
-// Simple search over titles, aliases and the questions each node answers.
-// Full-text search (Pagefind) replaces this later.
+// Full-text search with Pagefind: the index (dist/pagefind/) is made after the build from the text of
+// every published topic. The small title index below finds topics by name, aliases and questions; it
+// adds topics Pagefind missed, and it is the only search in `astro dev`, where there is no Pagefind index.
 const index = searchIndex();
 ---
 
@@ -13,59 +14,115 @@ const index = searchIndex();
     <form action="/search" method="get" role="search" aria-label="Search again">
       <input id="q" type="search" name="q" placeholder="What do you want to understand?" style="width: 100%" />
     </form>
-    <p id="summary" class="small muted"></p>
-    <ul id="results" class="node-list"></ul>
+    <p id="summary" class="small muted" aria-live="polite"></p>
+    <ul id="results" class="node-list search-results"></ul>
   </div>
 
   <script is:inline type="application/json" id="search-index" set:html={JSON.stringify(index)} />
   <script>
     type Entry = { id: string; title: string; summary: string; part: string; readable: boolean; terms: string };
+    type Hit = { url: string; title: string; summary: string; excerpt?: string; readable: boolean };
+    type PagefindData = { url: string; excerpt: string; meta: Record<string, string> };
+    type Pagefind = {
+      options: (o: object) => Promise<void>;
+      search: (q: string) => Promise<{ results: { data: () => Promise<PagefindData> }[] }>;
+    };
 
     const index: Entry[] = JSON.parse(document.getElementById("search-index")!.textContent!);
     const input = document.getElementById("q") as HTMLInputElement;
     const results = document.getElementById("results")!;
     const summary = document.getElementById("summary")!;
+    const MAX = 10;
 
-    const STOP = new Set(["a", "an", "the", "is", "are", "what", "how", "does", "do", "i", "my", "to", "of", "in", "on", "it", "and", "or", "why", "can", "you", "get", "s"]);
+    // Words like "how" and "the" are in nearly every topic, so they only get in the way.
+    const STOP = new Set(["a", "an", "the", "is", "are", "was", "what", "how", "does", "do", "did", "i", "me", "my", "to", "of", "in", "on", "it", "its", "and", "or", "why", "when", "where", "who", "which", "can", "could", "you", "your", "get", "s", "be", "for", "with", "from", "at", "by", "this", "that", "there", "about", "into", "if", "so", "we", "they", "work", "works"]);
+    const words = (text: string) => text.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w && !STOP.has(w));
 
-    function words(text: string): string[] {
-      return text.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w && !STOP.has(w));
+    // Pagefind exists only in a built site; in `astro dev` the import fails and the title index is used alone.
+    const pagefindUrl = "/pagefind/pagefind.js";
+    const pagefind: Pagefind | null = await import(/* @vite-ignore */ pagefindUrl).catch(() => null);
+    await pagefind?.options({ excerptLength: 24 });
+
+    const byId = new Map(index.map((e) => [e.id, e]));
+    const idOf = (url: string) => url.replace(/\.html$/, "").split("/").pop() ?? "";
+
+    // The same word, or the same word with a common ending ("computer", "computers", "hosting").
+    const ENDINGS = ["", "s", "es", "ed", "ing"];
+    const sameWord = (a: string, b: string) => ENDINGS.some((e) => a + e === b || b + e === a);
+    const contains = (text: string[], w: string) => text.some((t) => sameWord(t, w));
+
+    // Points from the topic's own words: up to 8 for the share of search words in its title, 8 more when its
+    // title, other names and questions together hold every search word (it was written to answer this), and
+    // 4 more when the search holds its whole title ("computer" for "What is a Computer?").
+    function titleScore(e: Entry, qWords: string[]) {
+      const title = words(e.title);
+      const all = [...title, ...words(e.terms)];
+      const inTitle = qWords.filter((w) => contains(title, w)).length;
+      const covered = qWords.length > 0 && qWords.every((w) => contains(all, w));
+      const wholeTitle = title.length > 0 && title.every((t) => contains(qWords, t));
+      return qWords.length ? (8 * inTitle) / qWords.length + (covered ? 8 : 0) + (wholeTitle ? 4 : 0) : 0;
     }
 
-    function search(query: string) {
+    // Pagefind also matches the start of longer words ("moth" in "motherboard") and similar words. Keep a page
+    // only if a highlighted word is a search word or the same word with a common ending.
+    const closeForm = (found: string, qWords: string[]) => {
+      const f = found.toLowerCase().replace(/[^a-z0-9]/g, "");
+      return qWords.some((w) => sameWord(f, w));
+    };
+
+    async function fullTextMatches(qWords: string[]) {
+      if (!pagefind || !qWords.length) return [];
+      const found = await pagefind.search(qWords.join(" "));
+      const data = await Promise.all(found.results.slice(0, MAX * 2).map((r) => r.data()));
+      return data.filter((d) => [...d.excerpt.matchAll(/<mark>(.*?)<\/mark>/g)].some((m) => closeForm(m[1]!, qWords)));
+    }
+
+    let latest = 0;
+    async function search(query: string) {
+      const run = ++latest;
       const qWords = words(query);
-      const scored = index
-        .map((e) => {
-          const title = e.title.toLowerCase();
-          let score = 0;
-          for (const w of qWords) {
-            if (title.includes(w)) score += 3;
-            else if (e.terms.includes(w)) score += 1;
-          }
-          return { e, score };
-        })
-        .filter((r) => r.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 10);
+      const fullText = await fullTextMatches(qWords);
+      // One ranking: points from the topic's own words, plus up to 6 for a high place in the full-text results.
+      const scored = new Map<string, { hit: Hit; score: number }>();
+      fullText.forEach((d, i) => {
+        const id = idOf(d.url);
+        const entry = byId.get(id);
+        const hit = { url: `/node/${id}`, title: d.meta.title ?? entry?.title ?? "", summary: d.meta.summary ?? "", excerpt: d.excerpt, readable: true };
+        scored.set(id, { hit, score: (entry ? titleScore(entry, qWords) : 0) + 6 * (1 - i / fullText.length) });
+      });
+      for (const e of index) {
+        if (scored.has(e.id)) continue;
+        const score = titleScore(e, qWords);
+        if (score > 0) scored.set(e.id, { hit: { url: `/node/${e.id}`, title: e.title, summary: e.readable ? e.summary : "Coming soon", readable: e.readable }, score });
+      }
+      const shown = [...scored.values()].sort((a, b) => b.score - a.score).slice(0, MAX).map((s) => s.hit);
+      if (run !== latest) return; // a newer search started while this one waited
 
       results.replaceChildren(
-        ...scored.map(({ e }) => {
+        ...shown.map((h) => {
           const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = `/node/${e.id}`;
-          a.textContent = e.title;
           const wrap = document.createElement("span");
+          const a = document.createElement("a");
+          a.href = h.url;
+          a.textContent = h.title;
           wrap.append(a);
           const note = document.createElement("div");
           note.className = "small muted";
-          note.textContent = e.readable ? e.summary : "Coming soon";
+          note.textContent = h.summary;
           wrap.append(note);
+          if (h.excerpt) {
+            // Pagefind's excerpt is the page's own text with the matching words in <mark>.
+            const excerpt = document.createElement("div");
+            excerpt.className = "small excerpt";
+            excerpt.innerHTML = `…${h.excerpt}…`;
+            wrap.append(excerpt);
+          }
           li.append(wrap);
           return li;
         }),
       );
-      summary.textContent = query
-        ? scored.length
+      summary.textContent = query.trim()
+        ? shown.length
           ? `Topics that match "${query}":`
           : `Nothing matches "${query}" yet. Try other words, or start from the beginning.`
         : "";

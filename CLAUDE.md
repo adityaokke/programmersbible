@@ -73,7 +73,7 @@ npm run share-image   redraw public/og.png, the picture shown when a link to the
 
 ## Development
 
-Stack: Astro (static) + Cytoscape.js + Pagefind, served by one Cloudflare Worker (static assets + Hono API), Better Auth (passwordless), Cloudflare D1 (SQLite) via Drizzle. Built so far: Astro static site (home, node pages, path, timeline, simple search) and `wrangler.jsonc` for static assets.
+Stack: Astro (static) + Cytoscape.js + Pagefind, served by one Cloudflare Worker (static assets + Hono API), Better Auth (passwordless), Cloudflare D1 (SQLite) via Drizzle. Built so far: Astro static site (home, node pages, paths, map, timeline, about, privacy), full-text search with Pagefind (the index is made after the build from published topics), sitemap and share tags, and `wrangler.jsonc` for static assets and the domain.
 
 ```
 src/lib/content.ts    build-time graph access for pages (uses scripts/lib/content.ts)
