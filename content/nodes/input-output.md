@@ -113,11 +113,14 @@ Inside the computer, all information is kept as numbers. The signals from an inp
 - A **microphone** turns sound into an electrical signal. A small part then measures that signal again and again, at regular moments, and keeps each measurement as a number. See [[sound-as-numbers]].
 - A picture on a **screen** is made of tiny squares called **pixels**. Each pixel shows one colour. The computer gives each pixel three numbers: how much red, green and blue light to show. See [[images-as-numbers]].
 
-*Diagram: a key press goes from your finger to the keyboard, to the processor, to the screen, and you see the letter.*
-
-```
- your finger ──► keyboard ──► processor ──► screen ──► you see
-                 (input)                    (output)    the letter
+```mermaid
+flowchart TD
+  accTitle: The path of one key press
+  accDescr: A key press goes from your finger to the keyboard, an input device. From the keyboard it goes to the processor. From the processor it goes to the screen, an output device. Then you see the letter.
+  F["Your finger"] --> K["Keyboard<br/>(input)"]
+  K --> P["Processor"]
+  P --> S["Screen<br/>(output)"]
+  S --> Y["You see the letter"]
 ```
 
 ### Devices that do both
