@@ -82,6 +82,16 @@ An HTTP request is your order slip. An HTTP response is the reply slip, often wi
 
 As in [[client-and-server]], the client (usually your browser) always sends the request, and the server answers.
 
+```mermaid
+sequenceDiagram
+  accTitle: One HTTP request and its response
+  accDescr: The browser sends a request to the server with the method GET and the path /, which asks for the page. The server sends back a response with the status code 200 and the message OK, and then the page itself in the body.
+  participant B as Your browser
+  participant S as Server
+  B->>S: Request: GET /
+  S-->>B: Response: 200 OK + the page
+```
+
 ### The request
 
 MDN lists the parts of a request:

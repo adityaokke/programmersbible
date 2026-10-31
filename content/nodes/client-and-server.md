@@ -81,19 +81,15 @@ Here is what happens, step by step:
 4. **The server sends a response.** If it has the page, it sends a copy. MDN, a website that documents how the web works, says the client gets a copy of the page from the server. If the server cannot find the page, it says so. You may have seen this as a "404 Not Found" page. MDN explains that this means the server cannot find what was asked for.
 5. **The client uses the response.** Your browser shows the page on your screen.
 
-*Diagram: on the left, a client (your browser). On the right, a server program on another computer. An arrow from left to right is labelled "1. request: please send this page". An arrow from right to left is labelled "2. response: here is a copy". The network is between them.*
-
-```
-   CLIENT                                      SERVER
- (your browser)                         (a program on another
-                                          computer, waiting)
-
-     │      1. request: "please send this page"     │
-     │ ───────────────────────────────────────────► │
-     │                                               │
-     │      2. response: "here is a copy"           │
-     │ ◄─────────────────────────────────────────── │
-                      (the network)
+```mermaid
+sequenceDiagram
+  accTitle: A client asks, a server answers
+  accDescr: On the left is the client, your browser. On the right is the server, a program on another computer that waits for requests. First the client sends a request: please send this page. Then the server sends a response: here is a copy.
+  participant C as Client
+  participant S as Server
+  Note over S: Waits for requests
+  C->>S: 1. Request: please send this page
+  S-->>C: 2. Response: here is a copy
 ```
 
 **One server, many clients.** The Wikipedia article says a server may get requests from many different clients in a short time.
@@ -122,6 +118,19 @@ You will act as a client and see the server's answers. This works on a computer 
 **What you should see:** each time, a Wikipedia article appears. The two articles are most likely different. Wikipedia's help pages say this link is used "to access a random article". Wikipedia runs on a program called MediaWiki. Its help pages add: "Users will be redirected to the selection." (**Redirected** means sent on to another address.)
 
 **What happened:** your browser, the client, sent the same request twice, to the same address. The request did not say which article to send. Wikipedia picked an article and answered with a redirect: "go to this article instead". MDN explains that a server sends this kind of response, and the browser then loads the new address. So the client asks, and the server decides what to send back.
+
+```mermaid
+sequenceDiagram
+  accTitle: What happens when you click Special:Random
+  accDescr: Your browser, the client, asks Wikipedia for the address Special:Random. Wikipedia picks an article and answers with a redirect: go to this article instead. The browser then loads the new address, and Wikipedia sends the article.
+  participant B as Your browser
+  participant W as Wikipedia
+  B->>W: Request: Special:Random
+  Note over W: Picks an article
+  W-->>B: Redirect: go to this article instead
+  B->>W: Request: the new address
+  W-->>B: The article
+```
 
 ## Common misunderstandings
 
