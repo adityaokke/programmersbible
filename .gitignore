@@ -7,3 +7,6 @@ public/images/
 .env
 .env.*
 .dev.vars
+
+# Private notes and plans: kept on the maintainer's computer, never committed
+private/

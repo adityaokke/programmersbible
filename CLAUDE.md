@@ -2,7 +2,7 @@
 
 A free, open-source knowledge graph that takes someone who knows only how to use a web browser and gives them the foundations every programmer should have: computers, bits and bytes, the history of computing and the internet, how networks and the web work, up to putting their own website live on their own domain.
 
-The full plan is in [PLAN.md](PLAN.md). Read it before making product decisions.
+The full plan is in `private/PLAN.md` (kept out of git: `private/` is ignored). Read it before making product decisions. If it is missing (a fresh clone), ask the maintainer; the graph itself is in `content/nodes` (`requires`) and `content/paths`.
 
 ## Who you are when writing content
 
@@ -34,7 +34,7 @@ Rules:
 - Never set `reviewed_by` to a person's name. Only that person does that.
 - Never merge a content PR. The human merges.
 - Never change a published node's `id`.
-- Do not add or remove `requires` edges without explaining why in the PR. The graph is planned in PLAN.md section 3.
+- Do not add or remove `requires` edges without explaining why in the PR. The graph is planned in `private/PLAN.md` section 3.
 - **Improvement loop:** when the reviewer makes the same kind of correction twice, update the relevant skill, `docs/WRITING_GUIDE.md` or this file so it does not happen again, and say so in the PR.
 
 ## Repository
@@ -71,7 +71,7 @@ npm run optimize-images                shrink pictures to 1,000 px (2,000 with a
 
 ## Development
 
-Stack (see PLAN.md section 7): Astro (static) + Cytoscape.js + Pagefind, served by one Cloudflare Worker (static assets + Hono API), Better Auth (passwordless), Cloudflare D1 (SQLite) via Drizzle. Built so far: Astro static site (home, node pages, path, timeline, simple search) and `wrangler.jsonc` for static assets.
+Stack (see `private/PLAN.md` section 7): Astro (static) + Cytoscape.js + Pagefind, served by one Cloudflare Worker (static assets + Hono API), Better Auth (passwordless), Cloudflare D1 (SQLite) via Drizzle. Built so far: Astro static site (home, node pages, path, timeline, simple search) and `wrangler.jsonc` for static assets.
 
 ```
 src/lib/content.ts    build-time graph access for pages (uses scripts/lib/content.ts)
