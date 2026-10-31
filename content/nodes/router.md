@@ -16,6 +16,16 @@ questions:
   - is my wi-fi box a router
   - what is a hop
 aliases: [router, routers, routing, routing table, forwarding table, hop, next hop, time to live, TTL, default route, gateway, home router, traceroute]
+images:
+  - file: home-router-back.jpg
+    alt: "The back of a home router: a phone-line socket and four yellow network-cable sockets."
+    caption: "The back of a Netgear DG834G home router: a modem, a router and a switch in one box."
+    source: https://commons.wikimedia.org/wiki/File:Netgear_dg834gv4_rear.jpg
+    author: "Gionnico"
+    license: CC BY-SA 3.0
+    labels:
+      - { x: 19, y: 77, text: Phone line, side: left, ly: 60 }
+      - { x: 42, y: 77, text: Switch, side: right, ly: 40 }
 sources:
   - title: "MDN Web Docs: How does the Internet work?"
     url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work
@@ -39,6 +49,8 @@ sources:
     url: https://www.nist.gov/pml/owm/metric-si-prefixes
   - title: "Wikipedia: Router (computing) (general background reference)"
     url: https://en.wikipedia.org/wiki/Router_(computing)
+  - title: "Wikipedia: Netgear DG834 (for the photo of the home router)"
+    url: https://en.wikipedia.org/wiki/Netgear_DG834
 author: ai
 reviewed_by: ai
 reviewed_at: 2026-10-31
@@ -96,9 +108,9 @@ Take the address `142.250.190.78`. It matches two rows: `142.250` and `142.250.1
 2. It looks up that address in its routing table and chooses the **next hop**: the next router, or the destination computer itself.
 3. It lowers the packet's **time to live** number (see below) and sends the packet on.
 
-Each step from one device to the next on the path is called a **hop**.
+Each step from one device to the next is called a **hop**.
 
-*Diagram: a packet goes from a laptop to a home router, then through three routers of internet providers, then to the computer of a website. Each arrow between two devices is one hop.*
+*Diagram: a packet goes from a laptop through a home router and three routers of internet providers to a website's computer. Each arrow is one hop.*
 
 ```
  [laptop] --> [home router] --> [router] --> [router] --> [router] --> [website's computer]
@@ -119,6 +131,8 @@ RFC 1812 says the routing table should change when the network changes. Routers 
 
 MDN says the box called a "router" in a home is likely a switch, a router and a **modem** in one device. (A modem connects your network to the lines outside, such as telephone lines.)
 
+![The back of a home router: a phone-line socket and four yellow network-cable sockets.](images/home-router-back.jpg)
+
 The home router connects your home network to an **Internet Service Provider** ([[isp|ISP]]), a company that manages routers. It often also does the NAT you met in [[ip-address]].
 
 ## How it came to be
@@ -138,7 +152,7 @@ A tool called **traceroute** lists the routers on a packet's path. It sends pack
 Traceroute usually needs a command line (a window where you type commands), so you will read a real result from 1997.
 
 1. Open [RFC 2151, section 3.4](https://www.rfc-editor.org/rfc/rfc2151.html#section-3.4). On a phone, you may need to scroll sideways.
-2. Find the line that contains `traceroute www.hill.com`. On a computer, you can press `Ctrl` + `F` (Mac: `Cmd` + `F`) and type `traceroute www` to search.
+2. Find the line that contains `traceroute www.hill.com`. On a computer, press `Ctrl` + `F` (Mac: `Cmd` + `F`) and type `traceroute www`.
 3. **What you should see:** 17 numbered lines below it. (Two long lines wrap.) Each line is one hop. Lines 1 to 16 are routers, and line 17 is the destination computer, `syrup.hill.com`. Each shows a name (or only a number), an IP address in round brackets `( )`, and three times in **ms** (milliseconds: thousandths of a second). Each time is one trip there and back.
 4. Read the numbered notes above these lines. Both computers were in one town, Colchester, Vermont, in the United States, but used different ISPs. The packet traveled through cities including New York, Washington, D.C., Chicago and San Jose, California.
 
@@ -167,3 +181,4 @@ Traceroute usually needs a command line (a window where you type commands), so y
 - Internet Society, A Brief History of the Internet: https://www.internetsociety.org/internet/history-internet/brief-history-internet/
 - NIST, Metric (SI) Prefixes: https://www.nist.gov/pml/owm/metric-si-prefixes
 - Wikipedia, Router (computing) (general background reference): https://en.wikipedia.org/wiki/Router_(computing)
+- Wikipedia, Netgear DG834 (for the photo of the home router): https://en.wikipedia.org/wiki/Netgear_DG834
