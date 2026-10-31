@@ -34,7 +34,7 @@ const byline =
       : undefined;
 ---
 
-<Base title={node.title} description={node.summary}>
+<Base title={node.title} description={node.summary} noindex={node.status !== "published"}>
   {!position && (
     <div class="breadcrumb">
       <a href={mapUrl}>See on the map</a>
@@ -91,7 +91,7 @@ const byline =
 
       {
         position && (
-          <nav class="pager">
+          <nav class="pager" aria-label="Previous and next topic">
             <span>{position.prev && <a href={nodeUrl(position.prev.id)}>← {position.prev.title}</a>}</span>
             <span>{position.next && <a href={nodeUrl(position.next.id)}>{position.next.title} →</a>}</span>
           </nav>
@@ -99,11 +99,11 @@ const byline =
       }
     </article>
 
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Related topics">
       {
         learnFirst.length > 0 && (
           <section>
-            <h3>📚 Learn first</h3>
+            <h2>📚 Learn first</h2>
             <ul>
               {learnFirst.map((n) => (
                 <li>
@@ -117,7 +117,7 @@ const byline =
       {
         next.length > 0 && (
           <section>
-            <h3>➡ Leads to</h3>
+            <h2>➡ Leads to</h2>
             <ul>
               {next.map((n) => (
                 <li>
@@ -131,7 +131,7 @@ const byline =
       {
         related.length > 0 && (
           <section>
-            <h3>🔗 Related</h3>
+            <h2>🔗 Related</h2>
             <ul>
               {related.map((n) => (
                 <li>

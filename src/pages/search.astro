@@ -7,10 +7,10 @@ import { searchIndex } from "../lib/content.ts";
 const index = searchIndex();
 ---
 
-<Base title="Search">
+<Base title="Search" noindex>
   <div class="narrow">
     <h1>Search</h1>
-    <form action="/search" method="get" role="search">
+    <form action="/search" method="get" role="search" aria-label="Search again">
       <input id="q" type="search" name="q" placeholder="What do you want to understand?" style="width: 100%" />
     </form>
     <p id="summary" class="small muted"></p>

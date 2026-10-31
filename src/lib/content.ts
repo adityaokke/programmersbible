@@ -204,7 +204,8 @@ export async function renderBody(node: Node): Promise<string> {
     },
   });
 
-  let html = marked.parse(resolveWikiLinks(node.body), { async: false });
+  // A code block can scroll sideways; tabindex lets keyboard users reach it and scroll it too.
+  let html = marked.parse(resolveWikiLinks(node.body), { async: false }).replaceAll("<pre>", '<pre tabindex="0">');
   if (!diagrams.length) return html;
 
   const [light, dark] = await Promise.all(
@@ -224,7 +225,7 @@ export async function renderBody(node: Node): Promise<string> {
     // wide (up to 10% more) shrinks a little past 80% instead, so its text stays readable.
     const wide = l.value.width * 0.8 > PHONE_WIDTH * 1.1;
     const hint = wide ? `<p class="scroll-hint">Scroll sideways to see the whole diagram →</p>` : "";
-    return `<figure class="diagram${wide ? " wide" : ""}" style="--w:${Math.round(l.value.width)}">${hint}<div class="diagram-light">${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
+    return `<figure class="diagram${wide ? " wide" : ""}" style="--w:${Math.round(l.value.width)}">${hint}<div class="diagram-light"${wide ? ' tabindex="0"' : ""}>${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
   });
   return html;
 }

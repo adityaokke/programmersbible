@@ -67,6 +67,8 @@ npm run typecheck     TypeScript check for schema/, scripts/ and src/
 npm run fetch-image -- <id> "File:…"   download a Wikimedia Commons picture with its author and license
 npm run shoot -- <id>                  screenshots of a node's pictures and diagrams (after build:site)
 npm run optimize-images                shrink pictures to 1,000 px (2,000 with a close-up) and recompress
+npm run a11y          accessibility check (axe-core) of the built site, light and dark (CI runs it)
+npm run share-image   redraw public/og.png, the picture shown when a link to the site is shared
 ```
 
 ## Development

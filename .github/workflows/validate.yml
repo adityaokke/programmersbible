@@ -24,3 +24,5 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Build site
         run: npm run build:site
+      - name: Accessibility check (axe-core, light and dark)
+        run: npm run a11y

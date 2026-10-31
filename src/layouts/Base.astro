@@ -4,10 +4,20 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  /** Keep the page out of search engines (topics that are not published yet). */
+  noindex?: boolean;
 }
 
-const { title, description = "From knowing how to use a browser to understanding how it all works." } = Astro.props;
+const {
+  title,
+  description = "From knowing how to use a browser to understanding how it all works.",
+  noindex = false,
+} = Astro.props;
 const fullTitle = title ? `${title} · Programmer's Bible` : "Programmer's Bible";
+// The page's own address, and the picture shown when someone shares a link to it.
+// Pages are built as files (node/dns.html) but served without the ending (node/dns).
+const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, "").replace(/(.)\/$/, "$1"), Astro.site);
+const shareImage = new URL("/og.png", Astro.site);
 const REPO = "https://github.com/adityaokke/programmersbible";
 ---
 
@@ -18,20 +28,35 @@ const REPO = "https://github.com/adityaokke/programmersbible";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Programmer's Bible" />
+    <meta property="og:title" content={title ?? "Programmer's Bible"} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Programmer's Bible: from knowing how to use a browser to understanding how it all works." />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="/">📖 Programmer's Bible</a>
-      <nav>
+      <nav aria-label="Main">
         <a href="/path/first-chapter">First Chapter</a>
         <a href="/map">Map</a>
         <a href="/timeline">Timeline</a>
       </nav>
-      <form action="/search" method="get" role="search">
+      <form action="/search" method="get" role="search" aria-label="Search the site">
         <input type="search" name="q" placeholder="Search a topic…" aria-label="Search" />
       </form>
     </header>
-    <main class="container">
+    <main class="container" id="content">
       <slot />
     </main>
     <footer class="site-footer">
@@ -45,6 +70,7 @@ const REPO = "https://github.com/adityaokke/programmersbible";
         reviewed it. <a href={`${REPO}/issues/new?template=report-a-problem.yml`}>Report a problem</a> ·{" "}
         <a href={REPO}>Source on GitHub</a>
       </p>
+      <p><a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
     </footer>
   </body>
 </html>
