@@ -86,7 +86,7 @@ Pick the form that fits the idea:
 - Start it with `accTitle:` (a short title) and `accDescr:` (what it shows, in full sentences). Together they are its alt text; the validator requires both.
 - It shows only what the text says, and adds no new facts.
 - Keep it small: about 3–8 boxes or people. Labels are short, plain words: a phone shows about 350 pixels, so a sequence diagram with more than 3 people, or with long names ("Server (on another computer)"), scrolls sideways there. Prefer "Server" and put the detail in the text.
-- Prefer `flowchart` (flows, trees, layers), `sequenceDiagram` (who asks whom, in order) and `timeline`.
+- Prefer `flowchart` (flows, trees, layers, and timelines: one box per date, top to bottom) and `sequenceDiagram` (who asks whom, in order). Avoid Mermaid `timeline`: its boxes get unmatched colours, some hard to read, and it is too wide for a phone.
 
 **Photos.** Take them from Wikimedia Commons or another source that shows a license. Never copy a photo marked "all rights reserved" (most museum photos): link to it in "See it for yourself" instead.
 

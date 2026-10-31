@@ -129,19 +129,29 @@ In the same way, `<img src="cat.jpg">` puts a picture on the page. The `src` att
 
 Elements can sit inside other elements. This is called **nesting**. A whole page is nested elements:
 
-*Diagram: a small HTML page and its structure. The html element holds two parts: head and body. Head holds the title, which is shown on the browser tab. Body holds what you see on the page: an h1 heading and a paragraph. The paragraph holds a link.*
-
-```
+```html
 <!doctype html>
 <html>
   <head>
-    <title>My page</title>               html
-  </head>                                ├── head
-  <body>                                 │   └── title
-    <h1>Hello</h1>                       └── body
-    <p>Visit <a href="...">CERN</a></p>      ├── h1
-  </body>                                    └── p
-</html>                                          └── a
+    <title>My page</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <p>Visit <a href="...">CERN</a></p>
+  </body>
+</html>
+```
+
+```mermaid
+flowchart TD
+  accTitle: The structure of the small HTML page
+  accDescr: The html element holds two parts: head and body. Head holds the title, which is shown on the browser tab. Body holds what you see on the page: an h1 heading and a paragraph, p. The paragraph holds a link, a.
+  HTML["html"] --> HEAD["head"]
+  HTML --> BODY["body"]
+  HEAD --> TITLE["title<br/>(shown on the tab)"]
+  BODY --> H1["h1"]
+  BODY --> P["p"]
+  P --> A["a"]
 ```
 
 - `<!doctype html>` goes at the very top. MDN says it "needs to be included for everything else to work correctly".
@@ -149,7 +159,7 @@ Elements can sit inside other elements. This is called **nesting**. A whole page
 - `<head>` holds information **about** the page that is not shown in the page itself. For example, `<title>` is the name on the browser tab, not on the page.
 - `<body>` holds everything you see on the page.
 
-When the browser reads this file, it builds the structure on the right. It is called a **tree**: one element at the top branches into smaller parts, like a family tree. This tree is called the **DOM** (Document Object Model). The Elements tab of [[browser-devtools|DevTools]] (in Firefox: Inspector) shows it.
+When the browser reads this file, it builds the structure in the diagram above. It is called a **tree**: one element at the top branches into smaller parts, like a family tree. This tree is called the **DOM** (Document Object Model). The Elements tab of [[browser-devtools|DevTools]] (in Firefox: Inspector) shows it.
 
 ### Structure, not looks
 
