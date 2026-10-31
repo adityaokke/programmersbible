@@ -3,7 +3,7 @@ id: tcp-ip
 title: "TCP/IP"
 type: event
 part: network
-status: review
+status: published
 requires: [protocols, arpanet]
 related: [packets, ip-address, router]
 led_to: [world-wide-web]
@@ -45,6 +45,8 @@ sources:
   - title: "Wikipedia: Internet protocol suite (general background reference)"
     url: https://en.wikipedia.org/wiki/Internet_protocol_suite
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
