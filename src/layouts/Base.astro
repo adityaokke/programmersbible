@@ -10,7 +10,8 @@ interface Props {
 
 const {
   title,
-  description = "From knowing how to use a browser to understanding how it all works.",
+  // Shown under the title in search results and link previews (LinkedIn wants at least 100 characters).
+  description = "A free, open guide for beginners: how computers, the internet and the web work, from bits and bytes to your own website, with sources for every fact.",
   noindex = false,
 } = Astro.props;
 const fullTitle = title ? `${title} · Programmer's Bible` : "Programmer's Bible";
