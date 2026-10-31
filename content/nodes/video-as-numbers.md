@@ -31,6 +31,8 @@ sources:
     url: https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types
   - title: "Wikipedia: Frame rate (general background reference)"
     url: https://en.wikipedia.org/wiki/Frame_rate
+  - title: "BFI (British Film Institute): How do you solve a problem like Potemkin? (Michael Brooke, 2012)"
+    url: https://www.bfi.org.uk/features/how-do-you-solve-problem-potemkin
   - title: "ITU-T Recommendation H.264: Advanced video coding for generic audiovisual services"
     url: https://www.itu.int/rec/T-REC-H.264
   - title: "ITU-T Recommendation H.264 (05/03): first edition, approved 2003-05-30"
@@ -45,8 +47,8 @@ sources:
     url: https://developer.chrome.com/blog/self-xss
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-01
+updated: 2026-11-01
 ---
 
 > **In one sentence:** A video is many still pictures, called frames, shown quickly one after another, plus sound; because this needs a huge number of bytes, video is compressed by storing mostly what changes from one frame to the next.
@@ -124,7 +126,7 @@ A **container** is the file format that holds everything together: the video, th
 
 ## How it came to be
 
-- **1927 to 1930:** **24 frames per second** became the standard for sound film (film with a recorded sound track).
+- **Late 1920s:** **24 frames per second** became the fixed film standard: synchronised sound (sound in time with the pictures) needed one uniform speed.
 - **Early 1990s:** the **MPEG-1** video codec was first shown.
 - **2003:** on 30 May, the ITU (International Telecommunication Union) approved the first version of the **H.264** standard. The same year, a new version of the **MP4** file format (version 2) was added.
 - **2010:** **WebM** was introduced.
@@ -178,6 +180,7 @@ You will count the bytes of HD video in your browser's **console** (see [[browse
 - Stanford CS101, Image Introduction: https://web.stanford.edu/class/cs101/image-1-introduction.html
 - MDN Web Docs, Image file type and format guide: https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types
 - Wikipedia, Frame rate (general background reference): https://en.wikipedia.org/wiki/Frame_rate
+- BFI, How do you solve a problem like Potemkin?: https://www.bfi.org.uk/features/how-do-you-solve-problem-potemkin
 - ITU-T, Recommendation H.264: https://www.itu.int/rec/T-REC-H.264
 - ITU-T, Recommendation H.264 (05/03): https://www.itu.int/rec/T-REC-H.264-200305-S
 - Chrome for Developers, Open Chrome DevTools: https://developer.chrome.com/docs/devtools/open
