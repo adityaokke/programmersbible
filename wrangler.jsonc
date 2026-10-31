@@ -7,5 +7,11 @@
     "directory": "./dist",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  // The site's own domain. Cloudflare creates the DNS records and the HTTPS certificate on deploy;
+  // the domain's DNS must be managed by Cloudflare (its nameservers point to Cloudflare).
+  "routes": [
+    { "pattern": "programmersbible.com", "custom_domain": true },
+    { "pattern": "www.programmersbible.com", "custom_domain": true }
+  ]
 }
