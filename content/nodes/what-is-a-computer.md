@@ -31,6 +31,8 @@ sources:
     url: https://www.computerhistory.org/revolution/calculators/1/65
   - title: "Computer History Museum blog: Hidden Figures No Longer (Caroline Evans, 2017)"
     url: https://computerhistory.org/blog/hidden-figures-no-longer/
+  - title: "Penn Engineering: Celebrating Penn Engineering History: ENIAC"
+    url: https://www.engineering.upenn.edu/about/history-heritage/eniac/
   - title: "Google Chrome Help: Find a word on a web page"
     url: https://support.google.com/chrome/answer/95440
   - title: "Google Chrome Help: Find a word on a web page (Android)"
@@ -87,6 +89,8 @@ In this picture, information flows from left to right. Below the processing step
                (keep information and programs)
 ```
 
+*Diagram: three words in a row, joined by arrows that point right: INPUT, then PROCESSING, then OUTPUT. Below PROCESSING, two arrows connect it with MEMORY and STORAGE: one goes down, one comes back up.*
+
 The part that does the processing is called the **processor**, or **CPU** (short for Central Processing Unit). One computer course describes it this way: it "acts like a brain: follows the instructions in the code". (**Code** means the instructions of a program.) You will learn more in [[cpu]].
 
 Each instruction is very small. The same course gives examples: "adding two numbers or testing if a number is equal to zero". A program such as the Firefox web browser is made of millions of these small instructions. When a computer follows a program's instructions, we say it **runs** the program. The course gives an example speed: 2 billion instructions per second.
@@ -107,9 +111,9 @@ The same course compares them to a piano (the hardware) and music (the software)
 
 ## How it came to be
 
-For centuries, the word **"computer"** did not mean a machine. It meant a **person**. The Computer History Museum describes them as "low-paid clerks doing simple math" (clerks are office workers). According to the Oxford English Dictionary, the oldest known use of the word in English is in a book from 1613.
+For centuries, the word **"computer"** did not mean a machine. It meant a **person**. The Computer History Museum describes them as "low-paid clerks doing simple math" (clerks are office workers). According to the Oxford English Dictionary, the oldest known use of the word is in a book from 1613.
 
-In the 1940s, people began to build **electronic computers**: machines made of electronic parts, which calculate much faster than a person. In the United States, a team of human computers set up and programmed one of these machines, called [[eniac|ENIAC]]. According to a museum article, work that took a person many hours took ENIAC only minutes.
+In the 1940s, people began to build **electronic computers**: machines made of electronic parts, which calculate much faster than a person. In the United States, a team of human computers set up and programmed one of these machines, called [[eniac|ENIAC]]. According to Penn Engineering, one ballistics calculation (working out the path of a bomb or missile) took 12 hours on a hand calculator. ENIAC could do it in 30 seconds.
 
 In the following years, electronic computers took over the work of human computers. The word "computer" kept its old meaning, a person, until the middle of the 1900s. To read about the tools people used before electronic computers, see [[before-computers]].
 
@@ -152,6 +156,7 @@ You will watch your computer do all four jobs in a second or less.
 - Stanford CS101, Bits and Bytes: https://web.stanford.edu/class/cs101/bits-bytes.html
 - Computer History Museum, Revolution: Human Computers: https://www.computerhistory.org/revolution/calculators/1/65
 - Computer History Museum blog, Hidden Figures No Longer (Caroline Evans, 2017): https://computerhistory.org/blog/hidden-figures-no-longer/
+- Penn Engineering, Celebrating Penn Engineering History: ENIAC: https://www.engineering.upenn.edu/about/history-heritage/eniac/
 - Google Chrome Help, Find a word on a web page: https://support.google.com/chrome/answer/95440
 - Google Chrome Help, Find a word on a web page (Android): https://support.google.com/chrome/answer/95440?co=GENIE.Platform%3DAndroid
 - Microsoft Support, Microsoft Edge keyboard shortcuts: https://support.microsoft.com/en-us/help/4531783/microsoft-edge-keyboard-shortcuts
