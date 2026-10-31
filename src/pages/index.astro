@@ -1,9 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
-import { allPaths, nodeById } from "../lib/content.ts";
+import { allPaths, isReadable, nodeById } from "../lib/content.ts";
 
 const firstChapter = allPaths.find((p) => p.id === "first-chapter");
 const firstNode = firstChapter ? nodeById.get(firstChapter.sections[0]!.nodes[0]!) : undefined;
+// Other paths appear once at least one of their topics can be read.
+const morePaths = allPaths.filter(
+  (p) => p.id !== "first-chapter" && p.sections.some((s) => s.nodes.some((id) => { const n = nodeById.get(id); return n && isReadable(n); })),
+);
 
 const examples = [
   "What's inside a computer?",
@@ -42,6 +46,21 @@ const examples = [
             </div>
           ))}
         </div>
+      )
+    }
+
+    {
+      morePaths.length > 0 && (
+        <>
+          <h2>More to explore</h2>
+          {morePaths.map((p) => (
+            <p>
+              <a href={`/path/${p.id}`}>{p.title}</a>
+              <br />
+              <span class="small muted">{p.description}</span>
+            </p>
+          ))}
+        </>
       )
     }
   </div>
