@@ -8,6 +8,7 @@ import { nodeFrontmatter, pathFile, type NodeFrontmatter, type PathFile } from "
 export const ROOT = process.cwd();
 export const NODES_DIR = join(ROOT, "content", "nodes");
 export const PATHS_DIR = join(ROOT, "content", "paths");
+export const IMAGES_DIR = join(ROOT, "content", "images");
 
 export type Issue = { level: "error" | "warning"; file: string; message: string };
 
@@ -93,4 +94,14 @@ export function stripCode(body: string): string {
 
 export function headings(body: string): string[] {
   return [...stripCode(body).matchAll(/^##\s+(.+)$/gm)].map((m) => m[1]!.trim());
+}
+
+// ![alt](images/<file>) in a node body: pictures stored in content/images/<node-id>/.
+export function imageRefs(body: string): string[] {
+  return [...stripCode(body).matchAll(/!\[[^\]]*\]\(images\/([^)\s]+)\)/g)].map((m) => m[1]!);
+}
+
+// The source of every ```mermaid block in a node body.
+export function mermaidBlocks(body: string): string[] {
+  return [...body.matchAll(/^```mermaid\n([\s\S]*?)^```/gm)].map((m) => m[1]!);
 }

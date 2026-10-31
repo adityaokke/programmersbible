@@ -151,3 +151,50 @@ article pre code { background: none; padding: 0; }
 .timeline li { position: relative; padding: 0 0 1.5rem 1.25rem; }
 .timeline li::before { content: ""; position: absolute; left: -7px; top: 0.55rem; width: 12px; height: 12px; border-radius: 50%; background: var(--event); }
 .timeline .when { position: absolute; left: -5.5rem; width: 4.75rem; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; top: 0.15rem; }
+
+/* Pictures (with their credit) and Mermaid diagrams inside a node. */
+figure.picture,
+figure.diagram { margin: 1.5rem 0; text-align: center; }
+figure.picture img { display: block; max-width: 100%; height: auto; border-radius: 6px; }
+/* Callouts: margins beside the picture hold the labels; lines run from each label to its part. */
+.callouts { position: relative; display: block; padding: 0 var(--m); }
+.callouts img { width: 100%; }
+.photo { position: relative; display: block; }
+.photo > img { display: block; width: 100%; }
+/* The rectangle on the full photo that the close-up enlarges. */
+.zoom-box {
+  position: absolute;
+  border: 2px solid #fff;
+  outline: 2px solid #1d1d1f;
+  border-radius: 4px;
+}
+.closeup { overflow: hidden; border-radius: 6px; outline: 2px solid #1d1d1f; outline-offset: -2px; }
+figure.picture .closeup img { position: absolute; max-width: none; height: auto; border-radius: 0; }
+/* The close-up sits under the full photo, so the photo keeps its full width. */
+.picture-row, .picture-main { display: block; }
+.picture-zoom { display: block; max-width: 30rem; margin: 1rem auto 0; }
+.zoom-caption { display: block; margin-top: 0.3rem; font-size: 0.85rem; color: var(--muted); }
+.callouts svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.callouts line { vector-effect: non-scaling-stroke; }
+.callouts line.halo { stroke: #fff; stroke-width: 4; }
+.callouts line.ink { stroke: #1d1d1f; stroke-width: 1.5; }
+/* The arrowhead's tip sits on the part; the box is turned to follow the line. */
+.callouts .arrow { position: absolute; width: 0; height: 0; transform-origin: 0 0; }
+.callouts .arrow svg { position: absolute; left: -13px; top: -6px; width: 14px; height: 12px; overflow: visible; }
+.callouts .arrow path { fill: #1d1d1f; stroke: #fff; stroke-width: 1.5; stroke-linejoin: round; paint-order: stroke; }
+.callouts .callout {
+  position: absolute;
+  transform: translateY(-50%);
+  padding: 0 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+figure.picture figcaption { margin-top: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+figure.diagram svg { max-width: 100%; height: auto; }
+.diagram-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  .diagram-light { display: none; }
+  .diagram-dark { display: block; }
+}

@@ -86,16 +86,13 @@ A folder inside another folder is called a **subfolder** (or subdirectory).
 
 Folders inside folders make a shape like an upside-down **tree**. At the top is a folder that is not inside any other folder: the **root**. On Windows, each drive, such as `C:`, has its own root.
 
-*Diagram: a tree of folders, drawn as an indented list. At the top is the root of drive C: on Windows. Inside it is the Users folder, inside that a folder for the user Ana, and inside that the folders Documents and Pictures. Documents holds the file letter.txt, and Pictures holds holiday.jpg.*
-
-```
-C:\                       (the root of drive C:)
-└── Users
-    └── Ana
-        ├── Documents
-        │   └── letter.txt
-        └── Pictures
-            └── holiday.jpg
+```mermaid
+flowchart TD
+  accTitle: A tree of folders
+  accDescr: A tree of folders. At the top is the root of drive C: on Windows. Inside it is the Users folder, inside that a folder for the user Ana, and inside that the folders Documents and Pictures. Documents holds the file letter.txt, and Pictures holds holiday.jpg.
+  root["C:#92; (the root of drive C:)"] --> users[Users] --> ana[Ana]
+  ana --> docs[Documents] --> letter[letter.txt]
+  ana --> pics[Pictures] --> holiday[holiday.jpg]
 ```
 
 ### A path is the way to a file
