@@ -38,6 +38,26 @@ Write the body using the section template for the node's `type`. Fill in the fro
 
 Link other nodes with `[[id]]` on first mention only.
 
+## 2b. Illustrate
+
+Read the guide's "Diagrams and pictures" section. For each idea the node explains, ask: would a beginner understand it faster with a picture or a diagram? Most nodes need one or two; some need none.
+
+- **Steps, flows, layers, trees, timelines** → a Mermaid diagram with `accTitle` and `accDescr`. It shows only what the text says.
+- **What a real thing looks like** → a photo from Wikimedia Commons (search it on commons.wikimedia.org). Fetch it with
+  `npm run fetch-image -- <node-id> "File:<name on Commons>" [--name <kebab-name>] [--width 2000]`
+  It refuses licenses the site cannot use and prints the `images:` entry with the author and license. Open the file and check it shows what the text needs. Write the alt text.
+- **Parts the text names** → `labels` (callouts) on the photo. **A tiny part** → a `zoom` close-up (fetch the photo with `--width 2000`).
+- **Never** copy a photo marked "all rights reserved" (most museum photos): link to it in "See it for yourself".
+
+Then look at the result as a reader would:
+
+```
+SHOW_DRAFTS=true npm run build:site
+npm run shoot -- <node-id>
+```
+
+Open the screenshots in `generated/shots/` (light, dark and phone) and fix anything that is wrong: a callout pointing at the wrong part, lines crossing, a label cut off, a diagram too small to read.
+
 ## 3. Check
 
 Run `npm run validate`. Fix every error and every warning about this node. Re-run until clean.

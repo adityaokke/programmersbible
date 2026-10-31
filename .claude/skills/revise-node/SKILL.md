@@ -21,6 +21,7 @@ List every requested change before editing. If a comment is unclear, ask instead
 
 Read [docs/WRITING_GUIDE.md](../../../docs/WRITING_GUIDE.md) again, then edit the node(s).
 
+- If the feedback is about a picture or diagram, follow step 2b ("Illustrate") of the `write-node` skill, including `npm run shoot` to look at the result.
 - If a published node changes, set `status: review`, update `updated`, and remove `reviewed_by` and `reviewed_at`. The old approval does not cover the new text, even if a human gave it.
 - Never set `reviewed_by` to a person's name.
 
