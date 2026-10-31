@@ -18,6 +18,15 @@ questions:
   - what was the ibm pc
   - why is it called a pc
 aliases: [PC, personal computers, home computer, Altair 8800, Altair, IBM PC, IBM 5150, Apple II, TRS-80, Commodore PET, Kenbak-1]
+images:
+  - file: altair-8800.jpg
+    alt: "The Altair 8800: a box with red lights and switches on its front."
+    source: https://commons.wikimedia.org/wiki/File:Altair_8800,_Smithsonian_Museum_(white_background).jpg
+    author: "Ed Uthman from Houston, TX, USA"
+    license: CC BY-SA 2.0
+    labels:
+      - { x: 79.9, y: 24.6, text: Lights, side: right }
+      - { x: 43.4, y: 53.4, text: Switches, side: left }
 sources:
   - title: "Computer History Museum, Revolution: Personal Computers (introduction)"
     url: https://www.computerhistory.org/revolution/personal-computers/17
@@ -69,7 +78,7 @@ Then the [[microprocessor]] arrived: a whole CPU (the part of a computer that fo
 
 ### Hobbyists build their own
 
-Many early personal computers were built by **hobbyists**: people who build electronics for fun, not as their job. They worked in garages, student rooms and basements. They often worked from **kits**: boxes of parts that you put together yourself. They formed clubs to share tips. One was the Homebrew Computer Club ("homebrew" means homemade), which had its own newsletter.
+Many early personal computers were built by **hobbyists**: people who build electronics for fun, not as their job. They often worked from **kits**: boxes of parts that you put together yourself. They formed clubs to share tips. One was the Homebrew Computer Club ("homebrew" means homemade), which had its own newsletter.
 
 ### Was there an earlier one?
 
@@ -81,7 +90,9 @@ In its January 1975 issue, the hobbyist magazine *Popular Electronics* put a new
 
 The Altair used the Intel 8080 microprocessor. The museum's timeline for 1975 says it sold for $297, or $395 with a case. It came with 256 bytes of memory.
 
-In its basic form, you programmed the Altair with rows of switches on its front. You set the switches to one instruction in [[binary]] and stored it in memory. Then you did the same for the next one, until the whole program was in. The only output was a pattern of red lights.
+In its basic form, you programmed the Altair with rows of switches on its front. You set the switches to one instruction in [[binary]] and stored it in memory. Then the next one, until the whole program was in. The only output was a pattern of red lights.
+
+![The Altair 8800: a box with red lights and switches on its front.](images/altair-8800.jpg)
 
 Ed Roberts, a co-founder of MITS, invented it. The museum's catalog says that many people credit the Altair with starting the personal computer revolution.
 
@@ -124,7 +135,7 @@ Growing PC sales also created a fast-growing market for software (programs). It 
 ## 🔍 See it for yourself
 
 1. Open the Computer History Museum's page [What Was the First PC?](https://www.computerhistory.org/revolution/personal-computers/17/297). Read the text about the 1986 contest. Then look at the photos on the page. Each photo has a short caption. Find the one that says "John Blankenbaker with the Kenbak-1 computer".
-2. Open the museum's [1975 timeline](https://www.computerhistory.org/timeline/1975/). The page is long. Press Ctrl+F (Command+F on a Mac) and type Altair to find the entry "MITS Altair 8800 kit appears in Popular Electronics". Read the entry and look at the photo of the Altair next to it.
+2. Open the museum's [1975 timeline](https://www.computerhistory.org/timeline/1975/). Press Ctrl+F (Command+F on a Mac) and type Altair to find the entry "MITS Altair 8800 kit appears in Popular Electronics". Read the entry and look at the photo of the Altair next to it.
 3. Open the museum's page [Personal Computers for the Masses](https://www.computerhistory.org/revolution/personal-computers/17/298). Look through the photo captions for the three computers of 1977: the TRS-80, the Commodore PET and the Apple II.
 
 **What this shows:** the Kenbak-1 and the Altair had switches and lights. The 1977 computers came ready to use, each with a keyboard. On a phone, finding words on a page works differently.
