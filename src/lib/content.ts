@@ -71,14 +71,23 @@ const DIAGRAM_THEMES = { light: "neutral", dark: "dark" } as const;
 const SEQUENCE_LAYOUT = { width: 110, actorMargin: 24, boxMargin: 6, noteMargin: 6, messageMargin: 30, mirrorActors: false, wrap: true };
 // Space for a diagram on a small phone (390 px screen minus the page's side padding).
 const PHONE_WIDTH = 350;
-// The dark theme's notes are grey on grey; give them readable text.
+// The dark theme's notes are grey on grey and its arrow labels sit on grey patches; fix both.
 const DIAGRAM_COLORS = {
   light: {},
-  dark: { noteBkgColor: "#2b3242", noteTextColor: "#e9e9ec", noteBorderColor: "#8fb0ff" },
+  // Arrow labels sit on the page's own card color instead of a grey patch.
+  dark: { noteBkgColor: "#2b3242", noteTextColor: "#e9e9ec", noteBorderColor: "#8fb0ff", edgeLabelBackground: "#15161a" },
 } as const;
 
 // [[node-id]] or [[node-id|label]] → link to the node, labelled with its title by default.
+// Code blocks and inline code are left alone: Mermaid uses [[...]] for a box shape.
 function resolveWikiLinks(markdown: string): string {
+  return markdown
+    .split(/(```[\s\S]*?```|`[^`\n]*`)/g)
+    .map((part, i) => (i % 2 ? part : linkWikiNames(part)))
+    .join("");
+}
+
+function linkWikiNames(markdown: string): string {
   return markdown.replace(/\[\[([^\]|]+)(?:\|([^\]]*))?\]\]/g, (_, rawId: string, label?: string) => {
     const id = rawId.trim();
     const text = label?.trim() || nodeById.get(id)?.title || id;
