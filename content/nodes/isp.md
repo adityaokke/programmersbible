@@ -3,7 +3,7 @@ id: isp
 title: "Internet Service Provider (ISP)"
 type: concept
 part: network
-status: review
+status: published
 requires: [router]
 related: [ip-address, wifi-and-mobile-networks, physical-internet]
 summary: "An Internet Service Provider (ISP) is a company that connects your home or phone to the internet, through its own network of routers and its links to other networks."
@@ -44,6 +44,8 @@ sources:
   - title: "Firefox DevTools User Docs: JSON viewer"
     url: https://firefox-source-docs.mozilla.org/devtools-user/json_viewer/index.html
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -127,7 +129,7 @@ You will see your public address, and the name of the network it belongs to. The
 
 What do these mean? An **autonomous system** is a network, such as an ISP's network, that is run with one set of rules for routing. Its number is the **ASN**. ARIN, another regional registry, says network operators need these numbers to exchange routing information with other ISPs.
 
-So the `holder` is the network your address belongs to. At home, this is usually your ISP. On mobile data, it is usually your mobile company. At school or work, it may be that organization's own network. The name may also look different from the brand name you know.
+So the `holder` is the network your address belongs to. At home, this is usually your ISP. On mobile data, it is usually your mobile company. The name may also look different from the brand name you know.
 
 ## Common misunderstandings
 
