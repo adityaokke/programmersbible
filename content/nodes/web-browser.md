@@ -100,21 +100,20 @@ MDN describes these steps (simplified here):
 5. **The browser reads the HTML.** Inside, it may find links to more files: CSS files, JavaScript files, and media files such as pictures and video. The browser requests each of them. Some of these files may come from other servers.
 6. **The browser draws the page.** It puts all the pieces together. MDN calls this **rendering**. The step where the page appears on the screen is called **painting**.
 
-*Diagram: the browser and a web server. The browser sends a request for a page. The server sends back an HTML file. The browser reads it, asks for more files (CSS, JavaScript, pictures), and then draws the page on the screen. For simplicity, it shows only one server.*
-
-```
-   YOUR BROWSER                               WEB SERVER
-        │  1. request: "send me the page"          │
-        │ ────────────────────────────────────────►│
-        │  2. response: the HTML file              │
-        │ ◄────────────────────────────────────────│
-        │  3. requests: CSS, JavaScript, pictures  │
-        │ ────────────────────────────────────────►│
-        │  4. responses: those files               │
-        │ ◄────────────────────────────────────────│
-        ▼
-   5. the browser puts the pieces together
-      and paints the page on your screen
+```mermaid
+sequenceDiagram
+  accTitle: How a browser gets and shows a page
+  accDescr: The browser asks DNS for the IP address of the server named in the web address, and DNS answers with it. The browser sends a request to the web server for the page, and the server sends back the HTML file. The browser reads it and requests more files, such as CSS, JavaScript and pictures, and the server sends those files. Then the browser puts the pieces together and paints the page on your screen. For simplicity, the diagram shows only one web server.
+  participant B as Browser
+  participant D as DNS
+  participant S as Server
+  B->>D: Which IP address?
+  D-->>B: The IP address
+  B->>S: Request: the page
+  S-->>B: The HTML file
+  B->>S: CSS, JavaScript, pictures
+  S-->>B: Those files
+  Note over B: Builds and paints the page
 ```
 
 Inside a browser is a part that turns the HTML and CSS into what you see on the screen. MDN calls it the **rendering engine** (or browser engine).

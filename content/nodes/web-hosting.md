@@ -4,6 +4,8 @@ title: "Web Hosting"
 type: concept
 part: web
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [server, dns]
 related: [cloud-computing, domain-name, first-website]
 summary: "Web hosting means keeping a website's files on a server that is connected to the internet, so anyone can visit the website at any time."
@@ -56,8 +58,6 @@ sources:
   - title: "Firefox DevTools User Docs: View Source"
     url: https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -96,21 +96,25 @@ MDN says you could host these files on your own computer, but a server from a ho
 
 A [[domain-name|domain name]] is a name like `wikipedia.org`, typed instead of an IP address. A domain name and hosting are different things. You rent a domain name from a company called a **registrar**. Some hosting providers are also registrars. [[dns|DNS]] connects the two. At your **DNS provider** (a service that runs the DNS servers for your domain; most registrars include one), you add a **record**: one piece of information, such as "this name points to this IP address".
 
-*Diagram: you upload files to a server at a hosting provider, and add a DNS record that points your domain name to the server's IP address. A visitor's browser asks DNS for the address, asks the server for the page, and gets a copy of the files.*
-
-```
-  YOU ──── 1. upload your files ────► SERVER at a hosting provider
-   │                                     ▲              │
-   │ 2. add a record:             4. "send me     5. a copy of
-   │    name → server's IP           the page"       the files
-   ▼                                     │              ▼
-  DNS ◄──── 3. "what is the IP ────── VISITOR'S BROWSER
-              address of this name?"
+```mermaid
+sequenceDiagram
+  accTitle: How your files and your domain name reach a visitor
+  accDescr: Step 1, you upload your files to a server at a hosting provider. Step 2, you add a DNS record that points your domain name to the server's IP address. Step 3, a visitor's browser asks DNS for the IP address of your domain name and gets it back. Step 4, the browser asks your server for the page. Step 5, the server sends a copy of your files.
+  participant Y as You
+  participant S as Server
+  participant D as DNS
+  participant B as Browser
+  Y->>S: 1. Upload files
+  Y->>D: 2. Add a record
+  B->>D: 3. IP address of name?
+  D-->>B: The IP address
+  B->>S: 4. Send me the page
+  S-->>B: 5. Copy of the files
 ```
 
 1. You **upload** your files (when you have made them): you copy them from your computer to the server.
 2. You add a DNS record for your domain.
-3. A visitor types your domain name. Their browser asks DNS for the IP address.
+3. A visitor types your domain name. Their browser asks DNS for the IP address and gets it back.
 4. The browser asks your server for the page.
 5. The web server program sends a copy of your files.
 
