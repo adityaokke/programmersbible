@@ -82,19 +82,19 @@ The Analytical Engine had two main parts:
 - The **Store** held numbers: both the starting numbers and the results of steps along the way.
 - The **Mill** did the arithmetic.
 
-Here is how the parts were meant to work together:
+Here is a simplified picture of how the parts were meant to work together:
 
-```
-  PUNCHED CARDS  ─────►  MILL  ─────►  OUTPUT
-  (the program)       (does the      (printed pages,
-                       arithmetic)     punched cards,
-                        ▲   │          drawn graphs)
-                        │   ▼
-                        STORE
-            (holds numbers and results)
+```mermaid
+flowchart TD
+  accTitle: How the Analytical Engine's parts were meant to work together
+  accDescr: A simplified picture. Punched cards, the program, give instructions to the Mill. The Mill takes numbers from the Store, does the arithmetic, and puts results back in the Store. Results come out as printed pages, punched cards or drawn graphs.
+  C["Punched cards<br/>(the program)"] -- instructions --> M["Mill<br/>(does the arithmetic)"]
+  S["Store<br/>(holds numbers<br/>and results)"] -- numbers --> M
+  M -- results --> S
+  M --> O["Output<br/>(printed pages,<br/>punched cards,<br/>drawn graphs)"]
 ```
 
-*Diagram: punched cards give instructions to the Mill. The Mill takes numbers from the Store, calculates, and puts results back in the Store. Results come out as printed pages, punched cards or drawn graphs. (This picture is simplified.)*
+Results were to come out as printed pages, new punched cards or drawn graphs.
 
 The design could also **choose** what to do next, based on a result, and **repeat** a group of steps (a **loop**).
 
@@ -110,7 +110,7 @@ In 1840, Italian scientists invited Babbage to the city of Turin, where he gave 
 
 Her last note, **Note G**, showed step by step how the machine could calculate the **Bernoulli numbers**: a series of numbers in which each one is worked out from the ones before. A large table showed the steps, with columns for the starting numbers, the variables (the values in use), and the results along the way. The Computer History Museum calls her notes "the first published description of a stepwise sequence of operations" (a list of steps) for solving certain mathematical problems. The museum adds that she is often called "the first programmer". Historians still discuss how much of this work was hers and how much was Babbage's.
 
-Lovelace also saw something new. She wrote that the machine might work on "things other than number". For example, she suggested it "might compose elaborate and scientific pieces of music".
+Lovelace also saw something new. She wrote that the machine might work on "things other than number". She suggested it "might compose elaborate and scientific pieces of music".
 
 ## Why it mattered
 
@@ -131,7 +131,7 @@ These pages use harder English. You do not need to read everything. To find a wo
 1. Open the Computer History Museum's page on [The Engines](https://www.computerhistory.org/babbage/engines/). Search for `Mill`. You will find a description of the Analytical Engine's "Store" and "Mill".
 2. Open the museum's page on [Ada Lovelace](https://www.computerhistory.org/babbage/adalovelace/). Search for `first programmer`. You will find the sentence that gives her this name.
 3. Open the Science Museum Group's page on [Babbage's Analytical Engine (trial model)](https://collection.sciencemuseumgroup.org.uk/objects/co62245). You will see photos of the small piece of the Mill that was being built when Babbage died.
-4. Open the University of Oxford article [Ada Lovelace and the Analytical Engine](https://blogs.bodleian.ox.ac.uk/adalovelace/2018/07/26/ada-lovelace-and-the-analytical-engine/). Search for `Note G`. You will find the part about her famous last note.
+4. Open the University of Oxford article [Ada Lovelace and the Analytical Engine](https://blogs.bodleian.ox.ac.uk/adalovelace/2018/07/26/ada-lovelace-and-the-analytical-engine/). Search for `Note G`. You will find the part about her last note.
 
 ## Recap
 

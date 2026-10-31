@@ -91,11 +91,14 @@ When the browser reads the HTML, it builds a model of the page: a map of all its
 
 An **event** is a signal the browser sends when something happens. MDN's examples include a click, a key press, and a page that "finishes loading". JavaScript code can find one part of the page, such as a button, and attach an **event listener** to it: code that waits for one kind of event. When the event happens, the browser runs that code.
 
-*Diagram: the path from your click to a changed page. You click a button. The browser sends a "click" event. The event listener's code runs and changes the DOM. The page on your screen updates, and you see the change.*
-
-```
-  you click ──► browser sends ──► the listener's ──► code changes ──► the page on
-  a button      a "click" event   code runs          the DOM          your screen updates
+```mermaid
+flowchart TD
+  accTitle: From your click to a changed page
+  accDescr: The path from your click to a changed page. You click a button. The browser sends a "click" event. The event listener's code runs and changes the DOM. The page on your screen updates, and you see the change.
+  A[You click a button] --> B[Browser sends a click event]
+  B --> C[Listener's code runs]
+  C --> D[Code changes the DOM]
+  D --> E[Page on screen updates]
 ```
 
 ## How it came to be
