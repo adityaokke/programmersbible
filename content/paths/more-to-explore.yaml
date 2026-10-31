@@ -1,0 +1,10 @@
+id: more-to-explore
+title: "More to Explore"
+description: "Topics to read after the First Chapter, in any order: staying safe online, the internet you use every day, and modern computing."
+sections:
+  - title: "Staying Safe Online"
+    nodes: [passwords, two-step-verification, phishing-and-scams, malware, software-updates, end-to-end-encryption]
+  - title: "Everyday Internet"
+    nodes: [email, search-engines, compression, video-as-numbers, streaming, apps-and-app-stores]
+  - title: "Modern Computing and History"
+    nodes: [moores-law, grace-hopper-and-compilers, open-source, artificial-intelligence, data-centers-and-energy]

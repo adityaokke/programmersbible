@@ -117,6 +117,42 @@ If a learner lands on an advanced node, the page offers to start from its founda
 
 What is programming, really? → Variables → Conditions → Loops → Functions → Reading errors and debugging → How to learn as a programmer → Where to go next.
 
+### Path 3 — "More to Explore" (after the First Chapter, any order)
+
+Topics a beginner meets every day, built on First Chapter nodes. `content/paths/more-to-explore.yaml`.
+
+**Staying Safe Online**
+
+| Node | Requires |
+|---|---|
+| Passwords: how logging in works | HTTPS |
+| Two-step verification | Passwords |
+| Phishing and scams: spotting a fake | URL, Domain name, HTTPS, HTML |
+| Malware: viruses and other harmful programs | Software, Operating system |
+| Software updates: why they matter | Malware |
+| End-to-end encryption | HTTPS |
+
+**Everyday Internet**
+
+| Node | Requires |
+|---|---|
+| Email: how a message travels | Protocols, Client and server, Domain name, DNS |
+| Search engines: how a search works | World Wide Web, Server |
+| Compression: making files smaller | Data size units, Images as numbers |
+| Video as numbers | Images as numbers, Sound as numbers, Compression |
+| Streaming video and music | Video as numbers, Packets, Server |
+| Apps and app stores | Smartphone, Software |
+
+**Modern Computing and History**
+
+| Node | Requires |
+|---|---|
+| Moore's law | Microprocessor, Integrated circuit |
+| 🕰 Grace Hopper and the first compilers | Programming languages, Machine code |
+| Open source software | Software |
+| What AI really is | Software, Cloud computing |
+| Data centers and energy | Cloud computing, Physical internet |
+
 ## 4. Writing guide
 
 ### Rules
