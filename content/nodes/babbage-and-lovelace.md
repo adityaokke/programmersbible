@@ -4,6 +4,8 @@ title: "Babbage and Lovelace"
 type: event
 part: machine
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [before-computers]
 led_to: [turing-universal-machine]
 year: 1834
@@ -17,6 +19,18 @@ questions:
   - what was the difference engine
   - who was the first programmer
   - did babbage build the first computer
+images:
+  - file: analytical-engine-trial-piece.jpg
+    alt: "The trial piece of the Analytical Engine in a glass case: a metal frame packed with stacked gears, with rods and wheels at the front."
+    source: https://commons.wikimedia.org/wiki/File:AnalyticalMachine_Babbage_London.jpg
+    author: "Bruno Barral (ByB)"
+    license: CC BY-SA 2.5
+    caption: "The trial piece: a small part of the Analytical Engine."
+  - file: difference-engine-no-2.jpg
+    alt: "Difference Engine No. 2 in a glass case at the Science Museum, London: a long machine of tall metal columns full of gears, with a crank handle at one end."
+    source: https://commons.wikimedia.org/wiki/File:London_Science_Museum_by_Marcin_Wichary_-_Difference_Engine_No._2,_pt._1_(2290036668).jpg
+    author: "Marcin Wichary from San Francisco, U.S.A."
+    license: CC BY 2.0
 aliases: [charles babbage, ada lovelace, analytical engine, difference engine, note g, first computer program, first programmer]
 sources:
   - title: "Computer History Museum, Revolution: The Revolutionary Babbage Engine"
@@ -36,8 +50,6 @@ sources:
   - title: "Wikipedia: Loom"
     url: https://en.wikipedia.org/wiki/Loom
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -88,6 +100,8 @@ The design could also **choose** what to do next, based on a result, and **repea
 
 This may remind you of the parts of a computer from [[what-is-a-computer]]. The museum compares the Store to a computer's memory and the Mill to its central processor (CPU). But there is a big difference. The Analytical Engine was made of gears and wheels, not electronic parts. And Babbage never finished it. When he died in 1871, only a small test piece of the Mill (a "trial piece") was being built.
 
+![The trial piece of the Analytical Engine in a glass case: a metal frame packed with stacked gears, with rods and wheels at the front.](images/analytical-engine-trial-piece.jpg)
+
 ### Ada Lovelace's notes (1843)
 
 Ada Lovelace (1815–1852) was born Augusta Ada Byron. She was the daughter of the poet Lord Byron. Her mother had studied mathematics. She insisted that Ada should study it too. In 1833, when Ada was seventeen, she met Babbage at a party.
@@ -105,6 +119,8 @@ The Computer History Museum calls the Analytical Engine "arguably the world's fi
 According to the museum, the Analytical Engine "has many essential features found in the modern digital computer", the kind of computer we use today. These include a memory kept separate from the processor, and steps that can choose and repeat. Lovelace's idea was important too: a machine that follows rules could work with symbols, not only with numbers. The museum says she was "the first to explicitly articulate this notion": the first to say it clearly.
 
 But Babbage's machines were not finished in his lifetime. The museum says his ideas were "revolutionary" but "never built", and calls them "a brilliant dead end". (A dead end is a road that goes nowhere.) In 1847–1849, Babbage also designed an improved **Difference Engine No. 2**. In 2002, a complete one was finished in London, built from his drawings.
+
+![Difference Engine No. 2 in a glass case at the Science Museum, London: a long machine of tall metal columns full of gears, with a crank handle at one end.](images/difference-engine-no-2.jpg)
 
 The next big idea in this story is about machines that can follow any list of instructions. It continues in [[turing-universal-machine|Turing and the Universal Machine]].
 

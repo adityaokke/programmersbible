@@ -18,6 +18,24 @@ questions:
   - how did mechanical calculators work
   - what did the word computer mean in the past
 aliases: [abacus, pascaline, pascal's calculator, step reckoner, stepped reckoner, arithmometer, mechanical calculator, history of calculators]
+images:
+  - file: suanpan-abacus.jpg
+    alt: "A Chinese abacus: wooden beads on thin rods in a frame, with a bar across that divides them."
+    source: https://commons.wikimedia.org/wiki/File:Chinese_Suanpan_Abacus.jpg
+    author: "Felix Winkelnkemper"
+    license: CC BY-SA 4.0
+    labels:
+      - { x: 13.5, y: 52.5, text: Bead, side: left }
+      - { x: 13.7, y: 29, text: Rod, side: left }
+      - { x: 72.2, y: 37.5, text: Bar, side: right }
+  - file: pascaline.jpg
+    alt: "A Pascaline: a brass box with six toothed wheels on top, each with a small metal stop."
+    source: https://commons.wikimedia.org/wiki/File:Arts_et_Metiers_Pascaline_dsc03869.jpg
+    author: "David.Monniaux"
+    license: CC BY-SA 3.0
+    labels:
+      - { x: 13.4, y: 40, text: Stop, side: left }
+      - { x: 78.5, y: 38.5, text: Wheel, side: right }
 sources:
   - title: "Computer History Museum, Revolution: The Versatile, Venerable Abacus"
     url: https://www.computerhistory.org/revolution/calculators/1/1
@@ -43,6 +61,8 @@ sources:
     url: https://en.wikipedia.org/wiki/Arithmometer
   - title: "Science Museum Group Collection: Replica of Pascal's calculator"
     url: https://collection.sciencemuseumgroup.org.uk/objects/co60769
+  - title: "Wikipedia: Pascal's calculator"
+    url: https://en.wikipedia.org/wiki/Pascal%27s_calculator
 author: ai
 reviewed_by: ai
 reviewed_at: 2026-10-31
@@ -57,6 +77,8 @@ Imagine you run a shop, collect taxes or plan a ship's journey. You need to add,
 
 For thousands of years, people did this with an **abacus**. An abacus is a counting tool. It has movable markers, such as beads on rods or stones on lines. Each column of markers stands for a value, like the "ones" column and the "tens" column when you write a number. You do arithmetic by moving the markers according to a few rules.
 
+![A Chinese abacus: wooden beads on thin rods in a frame, with a bar across that divides them.](images/suanpan-abacus.jpg)
+
 The Computer History Museum calls the abacus "perhaps the oldest continuously used calculating tool aside from fingers". Early versions were probably stones placed on lines drawn in the dirt. Later versions used beads on rods, or beans on a board or cloth. Abacuses were used from China to Greece to the Inca Empire. A marble table found on the Greek island of Salamis may be the oldest surviving calculating device.
 
 In Europe, a flat counting board was common up to the 1700s. Shopkeepers faced their customers across it. According to the museum, this "counting board" is where the English word **counter** (the table in a shop) comes from.
@@ -70,6 +92,8 @@ The abacus helps you calculate, but you still do the thinking. In the 1600s, inv
 1. **Around 1623: Wilhelm Schickard.** Schickard, a university professor, built two calculators. One was for his friend, the astronomer Johannes Kepler, and was destroyed by fire. The other is lost. We know about them only from his letters and sketches. His machine used toothed wheels to add and subtract, and a set of number rods called Napier's Bones to multiply and divide. The Computer History Museum calls it "the earliest known mechanical four-function calculator". Four-function means it could add, subtract, multiply and divide.
 
 2. **1642: Blaise Pascal.** Pascal was a mathematician and philosopher. His father was a tax collector. To help him, Pascal designed a calculating machine. According to the Science Museum Group, he completed the first one in 1642, when he was 19. Today it is called the **Pascaline**. You put a pointed stick (a stylus) into a toothed wheel at a number, then turned the wheel until it hit a stop. The machine was designed for adding and subtracting. According to the Computer History Museum, Pascal built about 50 of them, but he sold only about 15.
+
+   ![A Pascaline: a brass box with six toothed wheels on top, each with a small metal stop.](images/pascaline.jpg)
 
 3. **1673: Gottfried Leibniz.** Leibniz built the **Step Reckoner**, a four-function calculator. Its new idea was a gear shaped like a drum with steps, called a **stepped drum**. In one turn, a single stepped drum could stand for any digit from 0 to 9. Leibniz built several versions over about 45 years. Only one survives today.
 
@@ -118,3 +142,4 @@ The Computer History Museum in California has an online exhibition with photos o
 - Computer History Museum, Babbage Engine: The Engines: https://www.computerhistory.org/babbage/engines/
 - Wikipedia: Arithmometer: https://en.wikipedia.org/wiki/Arithmometer
 - Science Museum Group Collection, Replica of Pascal's calculator: https://collection.sciencemuseumgroup.org.uk/objects/co60769
+- Wikipedia: Pascal's calculator: https://en.wikipedia.org/wiki/Pascal%27s_calculator
