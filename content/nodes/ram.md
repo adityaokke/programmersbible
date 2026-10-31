@@ -16,7 +16,20 @@ questions:
   - what does random access mean
   - what happens when a computer runs out of RAM
 aliases: [memory, main memory, random access memory, random-access memory, DRAM, working memory]
+images:
+  - file: ram-module.jpg
+    alt: "A memory module: a green board with eight black memory chips in a row, and gold contacts along its bottom edge."
+    source: https://commons.wikimedia.org/wiki/File:16_GiB-DDR4-RAM-Riegel_RAM019FIX_Small_Crop_90_PCNT.png
+    author: PantheraLeo1359531
+    license: CC BY 4.0
+    labels:
+      - { x: 12.5, y: 54, text: Chip, side: left, ly: 30 }
+      - { x: 75, y: 94.5, text: Contacts, side: right, ly: 80 }
 sources:
+  - title: "Wikipedia: Memory refresh"
+    url: https://en.wikipedia.org/wiki/Memory_refresh
+  - title: "Wikipedia: Dynamic random-access memory"
+    url: https://en.wikipedia.org/wiki/Dynamic_random-access_memory
   - title: "Stanford CS101: Computer Hardware"
     url: https://web.stanford.edu/class/cs101/hardware-1.html
   - title: "Stanford CS101: Running and Operating Systems"
@@ -27,6 +40,8 @@ sources:
     url: https://cs.emory.edu/~cheung/Courses/255/Syllabus/4-intro/SLIDES/s14a.html
   - title: "Wikipedia: Random-access memory (general background reference)"
     url: https://en.wikipedia.org/wiki/Random-access_memory
+  - title: "Wikipedia: DIMM (memory module, general background reference)"
+    url: https://en.wikipedia.org/wiki/DIMM
   - title: "Computer History Museum, Storage Engine: 1953, Whirlwind computer debuts core memory"
     url: https://www.computerhistory.org/storageengine/whirlwind-computer-debuts-core-memory/
   - title: "Computer History Museum, Storage Engine: 1970, Semiconductors compete with magnetic cores"
@@ -49,7 +64,7 @@ updated: 2026-10-31
 
 ## Why should I care?
 
-In [[what-is-a-computer]], you met a cook who keeps the food in use on the **table**, and the rest in the **fridge**. The table is the computer's **memory**, also called **RAM**. This page looks at that table more closely.
+In [[what-is-a-computer]], you met a cook who keeps the food in use on the **table**, and the rest in the **fridge**. The table is the computer's **memory**, also called **RAM**.
 
 You use RAM all the time. Every tab open in your browser keeps its data in RAM.
 
@@ -59,7 +74,7 @@ Think of a long wall of **numbered lockers**: locker 0, locker 1, locker 2, and 
 
 Think of the [[cpu|CPU]] (the part of the computer that follows a program's instructions) as the person who uses these lockers. It can say "read locker 5,000" or "put this paper in locker 12". It does not have to open lockers 1 to 4,999 first.
 
-**Where the analogy breaks down:** a real locker can be empty. A cell in RAM is never empty: it always holds some pattern of 0s and 1s. When the CPU puts something in a cell, the old content is replaced. And RAM, unlike a locker, loses everything when the power goes off.
+**Where the analogy breaks down:** a real locker can be empty. A cell in RAM is never empty: it always holds some pattern of 0s and 1s. And RAM, unlike a locker, loses everything when the power goes off.
 
 ## How it actually works
 
@@ -89,15 +104,19 @@ RAM holds two kinds of things: the **code** (the program's instructions) and the
 
 "Random access" means the computer can reach **any** cell in about the same time, wherever it is. It does not have to go through the cells in order. (Here, "random" does not mean "by chance".)
 
-Compare this with a music tape. To reach a song in the middle, the player must move along the tape, so the time depends on where the song is. In RAM, the place does not change the time much.
+Compare this with a music tape. To reach a song in the middle, the player must move along the tape, so the time depends on where the song is.
 
 ### Why RAM forgets
 
 Most RAM today is **DRAM** (Dynamic RAM). It stores each bit as an electric charge in a part called a **capacitor**: a very small container for charge. A [[transistor]] next to it works as a switch. It lets the computer read or change that charge.
 
-The charge slowly leaks away. So the computer must **refresh** it: read every bit and write it back, again and again, while the computer is on. When the power goes off, the refreshing stops and the bits are lost.
+The charge slowly leaks away. So the computer must **refresh** it: regularly read every bit and write it back. When the power goes off, the refreshing stops and the bits are lost.
 
 RAM is called **volatile**: it keeps its content only while it has power. If the power goes off while you are writing a document, you lose the changes you did not save.
+
+DRAM comes as **memory chips**. In many desktop computers and servers, they sit on a small board called a **memory module**. Electrical **contacts** along one edge connect it to the computer.
+
+![A memory module: a green board with eight black memory chips in a row, and gold contacts along its bottom edge.](images/ram-module.jpg)
 
 ### Fast, but costly
 
@@ -122,7 +141,7 @@ Your browser can show how much memory each tab uses. You need a computer with a 
    - If nothing happens in Chrome or Edge (for example on some Mac computers), open the browser menu (the three dots), then **More tools**, then **Task manager** (in Edge: **Browser Task Manager**).
 3. You can ignore every row except your tabs. Find the column called **Memory** or **Memory footprint**. It shows how much memory each item uses, in kilobytes (K or KB) or megabytes (MB).
 4. Find the row for the example page. It may show the page's title, "Example Domain", or its address. Write down its memory number.
-5. Open a new tab with a bigger page, for example `https://en.wikipedia.org/wiki/Computer`. Then go back to the list (the Task Manager window, or the Process Manager tab) and look again.
+5. Open a new tab with a bigger page, for example `https://en.wikipedia.org/wiki/Computer`. Then go back to the list and look again.
 6. Close the Wikipedia tab, go back to the list, and look once more.
 
 **What you should see:** in step 5, a new row appears with its own memory number. In step 6, that row disappears. The exact numbers differ on every computer.
@@ -136,17 +155,20 @@ Your browser can show how much memory each tab uses. You need a computer with a 
 
 ## Recap
 
-- RAM is a long row of numbered cells, usually one byte each. The number of a cell is its address.
+- RAM is a long row of numbered cells, usually one byte each.
 - The CPU reads and writes RAM. RAM holds the programs and data in use right now.
 - RAM is fast but volatile: it loses everything when the power goes off. Storage keeps files.
 
 ## Sources
 
+- Wikipedia, Memory refresh: https://en.wikipedia.org/wiki/Memory_refresh
+- Wikipedia, Dynamic random-access memory: https://en.wikipedia.org/wiki/Dynamic_random-access_memory
 - Stanford CS101, Computer Hardware: https://web.stanford.edu/class/cs101/hardware-1.html
 - Stanford CS101, Running and Operating Systems: https://web.stanford.edu/class/cs101/software-1.html
 - Emory University CS255, Structure of the computer memory: https://cs.emory.edu/~cheung/Courses/255/Syllabus/4-intro/SLIDES/s13a.html
 - Emory University CS255, The operations that the CPU can perform on the memory: https://cs.emory.edu/~cheung/Courses/255/Syllabus/4-intro/SLIDES/s14a.html
 - Wikipedia, Random-access memory (general background reference): https://en.wikipedia.org/wiki/Random-access_memory
+- Wikipedia, DIMM (general background reference): https://en.wikipedia.org/wiki/DIMM
 - Computer History Museum, 1953: Whirlwind computer debuts core memory: https://www.computerhistory.org/storageengine/whirlwind-computer-debuts-core-memory/
 - Computer History Museum, 1970: Semiconductors compete with magnetic cores: https://www.computerhistory.org/storageengine/semiconductors-compete-with-magnetic-cores/
 - Chrome for Developers, Fix memory problems: https://developer.chrome.com/docs/devtools/memory-problems

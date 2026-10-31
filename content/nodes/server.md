@@ -16,6 +16,15 @@ questions:
   - why do servers stay on all the time
   - what is a web server
 aliases: [servers, server computer, hardware server, software server, web server, server program, data center, rack server]
+images:
+  - file: rack-of-servers.jpg
+    alt: "A metal rack frame holding ten flat, wide server computers, stacked one above another."
+    source: https://commons.wikimedia.org/wiki/File:Rack_of_Cisco_Hyperflex_HXAF_240c_M5_nodes.jpg
+    author: "Btrs"
+    license: CC BY-SA 4.0
+    labels:
+      - { x: 22, y: 34, text: Server, side: left }
+      - { x: 88, y: 85.5, text: Rack, side: right }
 sources:
   - title: "MDN Web Docs: Server (glossary)"
     url: https://developer.mozilla.org/en-US/docs/Glossary/Server
@@ -90,7 +99,7 @@ But server computers are often different from your laptop:
 - **Flat boxes in racks.** Wikipedia says server cases "are usually flat and wide". They are made to fit in a **rack**: a standard frame that holds many electronic devices.
 - **Data centers.** MDN says a hardware server is often kept in a **data center**, a place that houses computer systems.
 
-*Diagram: three clients on the left (a laptop, a phone, another computer) each send a request across the network to one server computer on the right. Inside the server computer are its parts (CPU, RAM, storage, network connection) and two server programs: a web server and an email server.*
+![A metal rack frame holding ten flat, wide server computers, stacked one above another.](images/rack-of-servers.jpg)
 
 ```
   CLIENTS                              ONE SERVER COMPUTER
@@ -104,6 +113,8 @@ But server computers are often different from your laptop:
                                  │         network connection     │
                                  └────────────────────────────────┘
 ```
+
+*Diagram: three clients on the left (a laptop, a phone, another computer) each send a request across the network to one server computer on the right. Inside the server computer are its parts (CPU, RAM, storage, network connection) and two server programs: a web server and an email server.*
 
 ### Many programs, many clients
 

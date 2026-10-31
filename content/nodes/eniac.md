@@ -18,6 +18,23 @@ questions:
   - how big was eniac
   - why did early computers use vacuum tubes
 aliases: [ENIAC, Electronic Numerical Integrator and Computer, vacuum tube, vacuum tubes, ENIAC programmers, ENIAC women]
+images:
+  - file: eniac-room.jpg
+    alt: "ENIAC: tall panels covered in plugged-in cables, and two people at work."
+    source: https://commons.wikimedia.org/wiki/File:Glen_Beck_and_Betty_Snyder_program_the_ENIAC_in_building_328_at_the_Ballistic_Research_Laboratory.jpg
+    author: Unknown author
+    license: Public domain
+    labels:
+      - { x: 25, y: 33, text: Panels }
+      - { x: 15, y: 62, text: Cables }
+  - file: changing-a-tube-cropped.jpg
+    alt: "A man kneels in front of ENIAC holding a tube, with rows of vacuum tubes behind him."
+    source: https://commons.wikimedia.org/wiki/File:ENIAC-changing_a_tube_(cropped).jpg
+    author: M. Weik
+    license: Public domain
+    labels:
+      - { x: 28.6, y: 62, text: A tube, side: left }
+      - { x: 87, y: 33, text: Tubes, side: right }
 sources:
   - title: "Computer History Museum, Revolution: ENIAC"
     url: https://www.computerhistory.org/revolution/birth-of-the-computer/4/78
@@ -77,7 +94,11 @@ ENIAC was huge. According to Penn Engineering:
 - it used about **18,000** vacuum tubes,
 - it had its own power lines and used 150 kilowatts of electricity. (A kilowatt is a unit that measures how much electrical power something uses.)
 
+![ENIAC: tall panels covered in plugged-in cables, and two people at work.](images/eniac-room.jpg)
+
 The tubes were its biggest problem. According to the Computer History Museum, one tube failed roughly every day or two. Finding the broken tube among 18,000 was hard. To make tubes last longer, the engineers ran them at lower voltages than the tubes could take.
+
+![A man kneels in front of ENIAC holding a tube, with rows of vacuum tubes behind him.](images/changing-a-tube-cropped.jpg)
 
 ### The first programmers
 
@@ -85,7 +106,7 @@ To give ENIAC a new job, people **plugged in cables and set switches** by hand. 
 
 This work was done by six women who had been human computers. Penn Engineering names them: Kathleen McNulty Mauchly Antonelli, Jean Jennings Bartik, Frances (Betty) Snyder Holberton, Marlyn Wescoff Meltzer, Frances Bilas Spence, and Ruth Lichterman Teitelbaum. Penn calls them "among the very first programmers anywhere".
 
-ENIAC was **classified** (kept secret by the government) until after the war. It was unveiled at Penn in **February 1946**. On February 15, 1946, the story was on the front page of The New York Times, a newspaper in the United States. The Computer History Museum says: "To many, this marks the start of the electronic computer age."
+ENIAC was **classified** (kept secret by the government) until after the war. It was unveiled at Penn in **February 1946**. On February 15, 1946, the story was on the front page of The New York Times, a United States newspaper. The Computer History Museum says: "To many, this marks the start of the electronic computer age."
 
 ## Why it mattered
 
@@ -99,12 +120,12 @@ Penn Engineering says ENIAC's first contribution was that "it proved you could b
 
 ## 🔍 See it for yourself
 
-1. Open the Computer History Museum's [ENIAC page](https://www.computerhistory.org/revolution/birth-of-the-computer/4/78). Scroll down the page. You will see photos with captions. Look for the photo of Frances Bilas and Betty Jean Jennings at ENIAC's main control panels. (The captions say they were later called Frances Spence and Jean Bartik.) Look also for a photo of a person changing a vacuum tube.
-2. Open Penn Engineering's [ENIAC history page](https://www.engineering.upenn.edu/about/history-heritage/eniac/). Read about the six programmers. The page also says that four of ENIAC's 40 original panels are on display in the Moore School Building.
+1. Open the Computer History Museum's [ENIAC page](https://www.computerhistory.org/revolution/birth-of-the-computer/4/78). Scroll down: one photo shows Frances Bilas and Betty Jean Jennings at ENIAC's main control panels. (The caption says they were later called Frances Spence and Jean Bartik.)
+2. Open Penn Engineering's [ENIAC history page](https://www.engineering.upenn.edu/about/history-heritage/eniac/). Read about the six programmers. It also says four of ENIAC's 40 original panels are on display in the Moore School Building.
 
 ## Recap
 
-- ENIAC was built in the United States between 1943 and 1945 to calculate firing tables for the Army. It was shown to the public in February 1946.
+- ENIAC was built in the United States between 1943 and 1945 to calculate firing tables for the Army, and shown to the public in February 1946.
 - It used about 18,000 vacuum tubes as electronic switches. Tubes had no moving parts, so they were fast, but they were hot, used a lot of power and failed often.
 - Six women programmed ENIAC by plugging in cables and setting switches. They were among the very first programmers.
 

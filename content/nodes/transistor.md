@@ -16,6 +16,21 @@ questions:
   - why is the transistor important for computers
   - how many transistors are in a computer chip
 aliases: [transistors, point-contact transistor]
+images:
+  - file: first-transistor.jpg
+    alt: "The first transistor from 1947, in a museum case. A clear plastic frame shaped like a hook holds a bent wire. At the bottom, a small plastic wedge shaped like a triangle points down onto a small, flat, dark piece of germanium, which sits on a gold-coloured metal block."
+    source: https://commons.wikimedia.org/wiki/File:1st-Transistor.jpg
+    author: Unitronic
+    license: CC BY-SA 3.0
+    zoom:
+      x: 34
+      y: 54
+      w: 22
+      h: 26
+      text: "Close-up: the tip of the plastic wedge presses the two gold contacts onto the germanium"
+      labels:
+        - { x: 35, y: 60, text: Wedge, side: left }
+        - { x: 62, y: 74, text: Germanium, side: right }
 sources:
   - title: "Computer History Museum, The Silicon Engine: 1947 – Invention of the Point-Contact Transistor"
     url: https://www.computerhistory.org/siliconengine/invention-of-the-point-contact-transistor/
@@ -58,6 +73,8 @@ At Bell Labs, a group of scientists studied **semiconductors**: a group of mater
 The group was led by **William Shockley** and Stanley Morgan. Two members of the group, **John Bardeen** and **Walter Brattain**, did the key experiments. Their most intense period of work was from November 17 to December 23, 1947. This period is often called the "Miracle Month".
 
 They used a small, flat piece of very pure **germanium**, a type of semiconductor. They pressed two gold contacts onto it, very close together, held in place by a small plastic wedge. On **December 16, 1947**, their experiment worked. A weak electrical **signal** (a small, changing flow of electricity, such as a telephone signal) went into the device. It came out **stronger**. This was the first working transistor. The Computer History Museum says the device could make a signal up to 100 times stronger. This first kind is called a **point-contact transistor**: its gold contacts touch the germanium at tiny points.
+
+![The first transistor from 1947, in a museum case. A clear plastic frame shaped like a hook holds a bent wire. At the bottom, a small plastic wedge shaped like a triangle points down onto a small, flat, dark piece of germanium, which sits on a gold-coloured metal block.](images/first-transistor.jpg)
 
 About six months later, on **June 30, 1948**, Bell Labs announced the transistor to the public at a press conference in New York.
 

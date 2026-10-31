@@ -76,8 +76,8 @@ function resolveWikiLinks(markdown: string): string {
   });
 }
 
-// Width of the margin on each side of a labelled picture, in % of the callout box.
-const CALLOUT_MARGIN = 16;
+// Smallest width of the margin on each side of a labelled picture, in % of the callout box.
+const CALLOUT_MARGIN = 14;
 // The gap between an arrow's tip and the part it points at, in pixels at a typical figure width.
 const CALLOUT_GAP = 8;
 const CALLOUT_REF_WIDTH = 650;
@@ -89,7 +89,9 @@ type Label = NodeFrontmatter["images"][number]["labels"][number];
 // `aspect` is the picture's width divided by its height, used to aim the arrowheads.
 function withCallouts(inner: string, labels: Label[], aspect: number): string {
   if (!labels.length) return inner;
-  const M = CALLOUT_MARGIN;
+  // The margin grows with the longest label, so names like "Germanium" fit on a phone too.
+  const longest = Math.max(...labels.map((l) => l.text.length));
+  const M = Math.min(28, Math.max(CALLOUT_MARGIN, Math.round(longest * 2.1)));
   const boxAspect = aspect / (1 - (2 * M) / 100); // the box is wider than the picture by the margins
   const toBox = (x: number) => M + (x * (100 - 2 * M)) / 100;
   const parts = labels.map((l) => {

@@ -3,7 +3,9 @@
 //   npm run build:graph   → check, then write generated/graph.json
 // Exits with code 1 if there is any error.
 
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { imageSize } from "image-size";
+import { MAX_BYTES, MAX_WIDTH, MAX_WIDTH_ZOOM } from "./lib/images.ts";
 import { join } from "node:path";
 import { BANNED_WORDS, REQUIRED_HEADINGS, WORD_RANGE } from "../schema/node.ts";
 import {
@@ -127,8 +129,16 @@ function checkMedia(node: LoadedNode) {
     }
   }
   for (const file of listed) {
-    if (!existsSync(join(dir, file))) {
+    const path = join(dir, file);
+    if (!existsSync(path)) {
       issues.push({ level: "error", file: node.file, message: `images: content/images/${id}/${file} does not exist` });
+      continue;
+    }
+    // Pictures must load fast on slow phone connections.
+    const limit = images.find((i) => i.file === file)?.zoom ? MAX_WIDTH_ZOOM : MAX_WIDTH;
+    const { width = 0 } = file.endsWith(".svg") ? {} : imageSize(readFileSync(path));
+    if (width > limit || statSync(path).size > MAX_BYTES) {
+      issues.push({ level: "warning", file: node.file, message: `images: ${file} is ${width}px / ${Math.round(statSync(path).size / 1024)} KB; run npm run optimize-images` });
     }
     if (!used.has(file)) {
       issues.push({ level: "warning", file: node.file, message: `images: ${file} is listed but not used in the text` });
