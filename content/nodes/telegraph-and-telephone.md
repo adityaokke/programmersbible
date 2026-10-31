@@ -18,6 +18,25 @@ questions:
   - how did the first telephone work
   - what do the telegraph and telephone have to do with the internet
 aliases: [telegraph, electric telegraph, telephone, Morse code, What hath God wrought, telephone switchboard, telephone operator]
+images:
+  - file: telegraph-key-and-sounder.jpg
+    alt: "A telegraph set from about 1876. Left: the sounder, two coils of wire under a metal arm. Right: the key, a metal lever with a round knob."
+    source: https://commons.wikimedia.org/wiki/File:Telegraph_key_and_sounder,_Western_Electric_Manufacturing_Co,_Chicago,_c._1876_-_Wisconsin_Historical_Museum_-_DSC02817.JPG
+    author: "Daderot"
+    license: CC0 1.0
+    labels:
+      - { x: 21, y: 38, text: Electromagnet, side: left, ly: 20 }
+      - { x: 28, y: 70, text: Sounder, side: left, ly: 75 }
+      - { x: 80.5, y: 57, text: Key, side: right, ly: 45 }
+  - file: switchboard-operators.jpg
+    alt: "1940s: women operators with headsets at a long switchboard, with cords plugged into its sockets."
+    source: https://commons.wikimedia.org/wiki/File:Photograph_of_Women_Working_at_a_Bell_System_Telephone_Switchboard_-_NARA_-_1633445.jpg
+    author: "Department of Labor. Women's Bureau"
+    license: Public domain
+    labels:
+      - { x: 8, y: 50, text: Sockets, side: left, ly: 40 }
+      - { x: 22, y: 70, text: Cords, side: left, ly: 75 }
+      - { x: 55, y: 62, text: Operator, side: right, ly: 30 }
 sources:
   - title: "Linda Hall Library, Scientist of the Day: Samuel F. B. Morse"
     url: https://www.lindahall.org/about/news/scientist-of-the-day/samuel-f-b-morse/
@@ -101,6 +120,8 @@ The telegraph was a circuit with a very long wire:
 
 Like every circuit, the telegraph needed a closed loop, so the current also had a path back. The diagram leaves that return path out.
 
+![A telegraph set from about 1876. Left: the sounder, two coils of wire under a metal arm. Right: the key, a metal lever with a round knob.](images/telegraph-key-and-sounder.jpg)
+
 A short press made a dot. A longer press made a dash. Groups of dots and dashes stood for letters. This system is called **Morse code**. (Some people think Vail created the code. Others say Morse created it.)
 
 Telegraph lines spread. In the United States they grew along with the railroads. In 1866, a cable under the Atlantic Ocean, from Ireland to Newfoundland, made a permanent telegraph link between Europe and North America. By 1875, the Western Union company had 250,000 miles (about 400,000 km) of telegraph wire. That year, Americans sent 17 million messages over its lines.
@@ -116,6 +137,8 @@ Bell asked for his patent on February 14, 1876, and it was given to him on March
 ### Connecting many telephones
 
 Telephone lines were joined at a central place called an **exchange**. There, people called **operators** connected calls by hand. They plugged cords into sockets on a board called a **switchboard**, to join the caller's line to the line being called. The cord joined the two lines into one path for that call. By the late 1940s, automatic machines were replacing the human operators.
+
+![1940s: women operators with headsets at a long switchboard, with cords plugged into its sockets.](images/switchboard-operators.jpg)
 
 ## Why it mattered
 

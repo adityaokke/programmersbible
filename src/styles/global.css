@@ -196,6 +196,7 @@ figure.picture .closeup img { position: absolute; max-width: none; height: auto;
 }
 @media (max-width: 640px) { .callouts .callout { font-size: 0.75rem; padding: 0 0.15rem; } }
 figure.picture figcaption { margin-top: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+figure.picture .picture-caption { display: block; margin-bottom: 0.2rem; font-size: 0.95rem; color: var(--fg); }
 figure.diagram svg { max-width: 100%; height: auto; }
 /* On small screens a diagram shrinks to at most 80% of its size; a wider one scrolls sideways. */
 @media (max-width: 640px) {
