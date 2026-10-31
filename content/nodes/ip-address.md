@@ -123,15 +123,17 @@ Private addresses have no meaning on the public internet. Packets with a private
 
 To reach the internet, the router of your network uses **NAT** (Network Address Translation). In each packet that leaves your network, it replaces the private address with the network's **public address**, an address used on the internet. It keeps track of which device sent what, so each answer goes back to the right device. So many devices can share one public address. (This is simplified: an ISP can also share addresses in a similar way.)
 
-*Diagram: a phone and a laptop with private addresses connect to a home router. The router has one public address on the internet.*
-
-```
-   HOME NETWORK (private addresses)              THE INTERNET
-
-   phone   192.168.1.10 ---+
-                           +--- [router] ------- websites see only
-   laptop  192.168.1.11 ---+    one public       the router's public
-                                address          address
+```mermaid
+flowchart TD
+  accTitle: Many devices share one public address
+  accDescr: In a home network, a phone with the private address 192.168.1.10 and a laptop with the private address 192.168.1.11 both connect to the home router. The router has one public address and connects to the internet. Websites on the internet see only the router's public address.
+  subgraph home["Home network (private addresses)"]
+    phone["Phone<br/>192.168.1.10"]
+    laptop["Laptop<br/>192.168.1.11"]
+  end
+  phone --> router["Router<br/>one public address"]
+  laptop --> router
+  router --> net["The internet<br/>websites see only<br/>the public address"]
 ```
 
 ### Running out, and IPv6
