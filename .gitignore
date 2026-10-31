@@ -7,3 +7,6 @@ public/images/
 .env
 .env.*
 .dev.vars
+
+# Claude Code: personal settings stay local (agents and skills in .claude/ are shared)
+.claude/settings.local.json
