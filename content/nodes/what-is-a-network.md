@@ -4,6 +4,8 @@ title: "What is a Network?"
 type: concept
 part: network
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [what-is-a-computer]
 related: [packets, protocols, router, isp, wifi-and-mobile-networks]
 summary: "A network is a group of computers and other devices that are connected, by cables or by radio waves, so they can send information to each other."
@@ -30,8 +32,6 @@ sources:
   - title: "Leonard Kleinrock, The Day the Infant Internet Uttered its First Words"
     url: https://www.lk.cs.ucla.edu/internet_first_words.html
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -64,21 +64,28 @@ In a network, the crossroads is a device called a **switch**. The highways are l
 
 So networks use a device called a **network switch**. Each computer has one cable to the switch. When computer A sends a message to computer B, A sends it to the switch. The switch passes it on to B. With a switch, ten computers need only 10 cables.
 
-*Diagram: on the left, four computers each have a cable to every other computer, six cables in total. On the right, the same four computers each have one cable to a switch in the middle, four cables in total.*
+The two diagrams below show four computers. Without a switch, they need 6 cables (4 × 3 ÷ 2 = 6). With a switch, they need only 4.
 
+```mermaid
+flowchart TD
+  accTitle: Four computers without a switch
+  accDescr: Four computers, A, B, C and D. Each one has a cable to every other computer. That is six cables in total.
+  A --- B
+  A --- C
+  B --- D
+  C --- D
+  A --- D
+  B --- C
 ```
-   Without a switch:              With a switch:
-   every computer is wired        every computer has one
-   to every other one             cable to the switch
 
-     A ─────── B                     A       B
-     │ ╲     ╱ │                       ╲   ╱
-     │   ╲ ╱   │                       SWITCH
-     │   ╱ ╲   │                       ╱   ╲
-     │ ╱     ╲ │                     C       D
-     C ─────── D
-
-     6 cables                         4 cables
+```mermaid
+flowchart TD
+  accTitle: The same four computers with a switch
+  accDescr: The same four computers, A, B, C and D, each have one cable to a switch in the middle. That is four cables in total.
+  A --- S[Switch]
+  B --- S
+  S --- C
+  S --- D
 ```
 
 **A local network.** A network in a small area, such as a home, a school or an office building, is called a **local area network**, or **LAN**. On a LAN, devices can share things, for example a printer.
@@ -87,16 +94,17 @@ So networks use a device called a **network switch**. Each computer has one cabl
 
 MDN also says that the box called a "router" in a home is likely a switch, a router and a modem in one device. (A **modem** changes the information from your network into a form that the lines outside, such as telephone lines, can carry, and back again.)
 
-*Diagram: two homes, each with its own local network. Each home connects through its home router to an internet service provider. The providers are connected to each other. Together, all these networks are the internet.*
-
-```
-   Home 1 network                         Home 2 network
-  (laptop, phone)                        (computer, printer)
-         │                                       │
-    home router                             home router
-         │                                       │
-      ISP 1  ◄──────── other networks ────────►  ISP 2
-         └──────────── = the internet ───────────┘
+```mermaid
+flowchart TD
+  accTitle: The internet, a network of networks
+  accDescr: Two homes, each with its own local network. Home 1 has a laptop and a phone, home 2 has a computer and a printer. Each home connects through its home router to an internet service provider, ISP 1 and ISP 2. The providers are connected to each other through other networks. Together, all these networks are the internet.
+  subgraph net["The internet: all these networks together"]
+    direction TB
+    H1["Home 1<br/>laptop, phone"] --- R1[Home router] --- I1[ISP 1]
+    H2["Home 2<br/>computer, printer"] --- R2[Home router] --- I2[ISP 2]
+    I1 --- O[Other networks]
+    I2 --- O
+  end
 ```
 
 (This is simplified. Networks also need shared rules, called [[protocols]], and they send information in small pieces, called [[packets]]. You will learn both later.)
