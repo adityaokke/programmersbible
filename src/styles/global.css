@@ -159,6 +159,21 @@ figure.picture img { display: block; max-width: 100%; height: auto; border-radiu
 /* Callouts: margins beside the picture hold the labels; lines run from each label to its part. */
 .callouts { position: relative; display: block; padding: 0 var(--m); }
 .callouts img { width: 100%; }
+.photo { position: relative; display: block; }
+.photo > img { display: block; width: 100%; }
+/* The rectangle on the full photo that the close-up enlarges. */
+.zoom-box {
+  position: absolute;
+  border: 2px solid #fff;
+  outline: 2px solid #1d1d1f;
+  border-radius: 4px;
+}
+.closeup { overflow: hidden; border-radius: 6px; outline: 2px solid #1d1d1f; outline-offset: -2px; }
+figure.picture .closeup img { position: absolute; max-width: none; height: auto; border-radius: 0; }
+/* The close-up sits under the full photo, so the photo keeps its full width. */
+.picture-row, .picture-main { display: block; }
+.picture-zoom { display: block; max-width: 30rem; margin: 1rem auto 0; }
+.zoom-caption { display: block; margin-top: 0.3rem; font-size: 0.85rem; color: var(--muted); }
 .callouts svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .callouts line { vector-effect: non-scaling-stroke; }
 .callouts line.halo { stroke: #fff; stroke-width: 4; }

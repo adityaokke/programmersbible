@@ -1,9 +1,12 @@
 // Build-time access to the knowledge graph for the site.
 // Uses the same loader and schema as `npm run validate`.
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { imageSize } from "image-size";
 import { Marked } from "marked";
 import { createMermaidRenderer } from "mermaid-isomorphic";
-import { loadNodes, loadPaths, type Issue, type LoadedNode } from "../../scripts/lib/content.ts";
+import { IMAGES_DIR, loadNodes, loadPaths, type Issue, type LoadedNode } from "../../scripts/lib/content.ts";
 import type { NodeFrontmatter, PathFile } from "../../schema/node.ts";
 
 // Drafts are visible in `astro dev` and in preview builds (SHOW_DRAFTS=true).
@@ -76,6 +79,29 @@ function resolveWikiLinks(markdown: string): string {
 // Width of the margin on each side of a labelled picture, in % of the callout box.
 const CALLOUT_MARGIN = 16;
 
+type Label = NodeFrontmatter["images"][number]["labels"][number];
+
+// Callouts: labels sit in a margin beside the picture, with a line to a dot on the part,
+// so nothing covers the photo. Positions are in % of the whole callout box.
+function withCallouts(inner: string, labels: Label[]): string {
+  if (!labels.length) return inner;
+  const M = CALLOUT_MARGIN;
+  const toBox = (x: number) => M + (x * (100 - 2 * M)) / 100;
+  const parts = labels.map((l) => {
+    const side = l.side ?? (l.x < 50 ? "left" : "right");
+    return { ...l, side, px: toBox(l.x), lx: side === "left" ? M - 1 : 100 - M + 1, labelY: l.ly ?? l.y };
+  });
+  const lines = parts
+    // A white halo under a dark line keeps it visible on light and dark photos.
+    .map((p) => ["halo", "ink"].map((c) => `<line class="${c}" x1="${p.lx}" y1="${p.labelY}" x2="${p.px}" y2="${p.y}" />`).join(""))
+    .join("");
+  const dots = parts.map((p) => `<span class="dot" style="left:${p.px}%;top:${p.y}%"></span>`).join("");
+  const names = parts
+    .map((p) => `<span class="callout ${p.side}" style="${p.side === "left" ? `right:${100 - p.lx}%` : `left:${p.lx}%`};top:${p.labelY}%">${escapeHtml(p.text)}</span>`)
+    .join("");
+  return `<span class="callouts" style="--m:${M}%">${inner}<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>${dots}${names}</span>`;
+}
+
 const escapeHtml = (text: string) =>
   text.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
@@ -99,28 +125,25 @@ export async function renderBody(node: Node): Promise<string> {
         const caption = credit
           ? `<figcaption>Image: <a href="${escapeHtml(credit.source)}">${escapeHtml(credit.author)}</a>, ${escapeHtml(credit.license)}</figcaption>`
           : "";
-        const img = `<img src="/images/${node.id}/${file}" alt="${escapeHtml(text)}" loading="lazy" />`;
-        const labels = credit?.labels ?? [];
-        if (!labels.length) return `<figure class="picture">${img}${caption}</figure>`;
+        const src = `/images/${node.id}/${file}`;
+        const img = `<img src="${src}" alt="${escapeHtml(text)}" loading="lazy" />`;
+        const zoom = credit?.zoom;
+        const box = zoom
+          ? `<span class="zoom-box" style="left:${zoom.x}%;top:${zoom.y}%;width:${zoom.w}%;height:${zoom.h}%" aria-hidden="true"></span>`
+          : "";
+        const main = withCallouts(`<span class="photo">${img}${box}</span>`, credit?.labels ?? []);
+        if (!zoom) return `<figure class="picture">${main}${caption}</figure>`;
 
-        // Callouts: labels sit in a margin beside the picture, with a line to a dot on the part,
-        // so nothing covers the photo. Positions are in % of the whole callout box.
-        const M = CALLOUT_MARGIN;
-        const toBox = (x: number) => M + (x * (100 - 2 * M)) / 100;
-        const parts = labels.map((l) => {
-          const side = l.side ?? (l.x < 50 ? "left" : "right");
-          const y = l.ly ?? l.y;
-          return { ...l, side, px: toBox(l.x), lx: side === "left" ? M - 1 : 100 - M + 1, labelY: y };
-        });
-        const lines = parts
-          // A white halo under a dark line keeps it visible on light and dark photos.
-          .map((p) => [`halo`, `ink`].map((c) => `<line class="${c}" x1="${p.lx}" y1="${p.labelY}" x2="${p.px}" y2="${p.y}" />`).join(""))
-          .join("");
-        const dots = parts.map((p) => `<span class="dot" style="left:${p.px}%;top:${p.y}%"></span>`).join("");
-        const names = parts
-          .map((p) => `<span class="callout ${p.side}" style="${p.side === "left" ? `right:${100 - p.lx}%` : `left:${p.lx}%`};top:${p.labelY}%">${escapeHtml(p.text)}</span>`)
-          .join("");
-        return `<figure class="picture"><span class="callouts" style="--m:${M}%">${img}<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>${dots}${names}</span>${caption}</figure>`;
+        // The close-up is the same file, enlarged and shifted inside a window with the
+        // rectangle's shape, so it needs no extra image and stays in the same style.
+        const { width = 1, height = 1 } = imageSize(readFileSync(join(IMAGES_DIR, node.id, file)));
+        const scale = 100 / zoom.w;
+        const closeImg = `<img src="${src}" alt="" loading="lazy" style="width:${scale * 100}%;left:${-zoom.x * scale}%;top:${(-zoom.y * 100) / zoom.h}%" />`;
+        const close = withCallouts(
+          `<span class="photo closeup" style="aspect-ratio:${width * zoom.w}/${height * zoom.h}">${closeImg}</span>`,
+          zoom.labels,
+        );
+        return `<figure class="picture zoomed"><span class="picture-row"><span class="picture-main">${main}</span><span class="picture-zoom">${close}<span class="zoom-caption">${escapeHtml(zoom.text)}</span></span></span>${caption}</figure>`;
       },
     },
   });
