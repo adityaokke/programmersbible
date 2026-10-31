@@ -29,6 +29,10 @@ sources:
     url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_browsers_load_websites
   - title: "MDN Web Docs: Populating the page: how browsers work"
     url: https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/How_browsers_work
+  - title: "MDN Web Docs: HTTP (glossary)"
+    url: https://developer.mozilla.org/en-US/docs/Glossary/HTTP
+  - title: "MDN Web Docs: Protocol (glossary)"
+    url: https://developer.mozilla.org/en-US/docs/Glossary/Protocol
   - title: "MDN Web Docs: IP address (glossary)"
     url: https://developer.mozilla.org/en-US/docs/Glossary/IP_Address
   - title: "MDN Web Docs: World Wide Web (glossary)"
@@ -90,13 +94,13 @@ Pictures and videos come as separate files too. Remember this: the server sends 
 MDN describes these steps (simplified here):
 
 1. **You ask for a page.** You type an address into the address bar, or you click a link.
-2. **The browser finds the server.** A web address contains the server's name. In `info.cern.ch/hypertext/WWW/TheProject.html`, the name is `info.cern.ch`. But the browser needs the server's **IP address**: a number that identifies each device on the network. So the browser asks [[dns|DNS]], a kind of address book for the internet. DNS answers with the IP address.
+2. **The browser finds the server.** A web address contains the server's name. In `info.cern.ch/hypertext/WWW/TheProject.html`, the name is `info.cern.ch`. But the browser needs the server's **IP address**: a number that identifies each device on the network. So the browser asks [[dns|DNS]], a kind of address book for the internet. DNS answers with the IP address. (This is simplified. The full story is in [[dns|DNS]].)
 3. **The browser sends a request.** It uses [[http|HTTP]]: the set of rules that browsers and web servers use to send requests and responses. The first request is usually for the HTML file.
 4. **The server sends a response.** The response holds the HTML file.
-5. **The browser reads the HTML.** Inside, it may find links to more files: CSS files, JavaScript files, and media files such as pictures and video. The browser asks for each of them, with more requests. Some of these files may come from other servers.
+5. **The browser reads the HTML.** Inside, it may find links to more files: CSS files, JavaScript files, and media files such as pictures and video. The browser requests each of them. Some of these files may come from other servers.
 6. **The browser draws the page.** It puts all the pieces together. MDN calls this **rendering**. The step where the page appears on the screen is called **painting**.
 
-*Diagram: the browser and a web server. The browser sends a request for a page. The server sends back an HTML file. The browser reads it, asks for more files (CSS, JavaScript, pictures), and then draws the page on the screen. To keep it simple, the diagram shows only one server.*
+*Diagram: the browser and a web server. The browser sends a request for a page. The server sends back an HTML file. The browser reads it, asks for more files (CSS, JavaScript, pictures), and then draws the page on the screen. For simplicity, it shows only one server.*
 
 ```
    YOUR BROWSER                               WEB SERVER
@@ -125,7 +129,7 @@ In early 1993, the National Center for Supercomputing Applications (NCSA) at the
 
 ## 🧪 Try it in your browser
 
-You will see the code that a browser receives, before it turns them into a page. You need a computer with Chrome, Edge or Firefox. These steps only look. They change nothing.
+You will see the code that a browser receives, before it turns it into a page. You need a computer with Chrome, Edge or Firefox. These steps only look. They change nothing.
 
 1. Open this early CERN web page: [info.cern.ch/hypertext/WWW/TheProject.html](https://info.cern.ch/hypertext/WWW/TheProject.html).
    **What you should see:** a big heading, **World Wide Web**, and text with links, such as **hypermedia**.
@@ -136,7 +140,7 @@ You will see the code that a browser receives, before it turns them into a page.
    **What you should see:** the same page as plain text, in a new tab or window. Many words are inside angle brackets, such as `<BODY>` and `<H1>`.
 3. Near the top, find the line that starts with `<H1>World Wide Web</H1>`. In HTML, `H1` marks the highest-level heading on a page. The browser followed this instruction and drew the big heading you saw in step 1.
 4. Two lines below it, find `hypermedia</A>`. The text before it, from `<A` to `HREF="WhatIs.html">`, starts a link. (In HTML, `A` with `HREF` makes a link, and `HREF` says where the link goes.) The browser drew **hypermedia** as a link that you can click.
-5. Close the source tab or window when you are done.
+5. Close the source tab or window.
 
 **What happened:** the server did not send a picture of the page. It sent HTML code. Your browser read that code and built the page.
 
@@ -160,6 +164,8 @@ You will see the code that a browser receives, before it turns them into a page.
 - MDN Web Docs, How the web works: https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works
 - MDN Web Docs, How browsers load websites: https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_browsers_load_websites
 - MDN Web Docs, Populating the page: how browsers work: https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/How_browsers_work
+- MDN Web Docs, HTTP (glossary): https://developer.mozilla.org/en-US/docs/Glossary/HTTP
+- MDN Web Docs, Protocol (glossary): https://developer.mozilla.org/en-US/docs/Glossary/Protocol
 - MDN Web Docs, IP address (glossary): https://developer.mozilla.org/en-US/docs/Glossary/IP_Address
 - MDN Web Docs, World Wide Web (glossary): https://developer.mozilla.org/en-US/docs/Glossary/World_Wide_Web
 - MDN Web Docs, What is JavaScript?: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript
