@@ -34,6 +34,7 @@ They make a confused reader feel stupid. The validator rejects them in `review` 
 - **Every fact, date, name and number must be supported by a source.** No source → the claim does not go in.
 - **Background terms: one general reference is enough.** Basic textbook facts that a node explains along the way (what a conductor is, what a pixel is) still need a source, but one general reference per node can cover all of them: an encyclopedia, a museum or prize-committee education page, or a university course page. It must actually say each fact used. Key claims (dates, names, numbers, "first", and how the node's own topic works) still need their own specific source.
 - **Names exactly as the source writes them.** If the source says "P. Mockapetris" or "W. Buchholz", write that, or add a source that shows the full name. The same goes for job titles ("engineer", "chemist") and words like "popular" or "very large": if the source does not say it, leave it out.
+- **Each node carries its own sources.** A fact repeated from another node (a date, a number, a shortcut) still needs a source in *this* node's `sources`. Linking to the other node explains the idea; it does not support the fact.
 - **No made-up reasons.** If a source gives a name or a date but not *why*, do not add a "because". Write "This period is often called…", not "Because they discovered so much, people called it…".
 
 ### Structure and length
