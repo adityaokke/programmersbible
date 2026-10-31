@@ -10,3 +10,7 @@ public/images/
 
 # Private notes and plans: kept on the maintainer's computer, never committed
 private/
+
+# Claude Code: personal settings and notes stay local (agents and skills in .claude/ are shared)
+.claude/settings.local.json
+CLAUDE.local.md
