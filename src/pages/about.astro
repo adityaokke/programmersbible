@@ -1,0 +1,67 @@
+---
+import Base from "../layouts/Base.astro";
+import { nodes } from "../lib/content.ts";
+
+const REPO = "https://github.com/adityaokke/programmersbible";
+const published = nodes.filter((n) => n.status === "published").length;
+---
+
+<Base title="About" description="What Programmer's Bible is, who it is for, how each topic is written and checked, and how you can use it.">
+  <div class="narrow">
+    <h1>About Programmer's Bible</h1>
+
+    <p>
+      Programmer's Bible takes someone who knows only how to use a web browser and gives them the foundations every
+      programmer should have: what a computer is, how bits and bytes work, how computers and the internet came to be,
+      how a web page reaches your screen, and how to put your own website online.
+    </p>
+    <p>
+      Many new programmers skip these basics. This site is a reference that fills that gap, written for one reader:
+      someone who can use a browser and nothing more, often reading in their second language.
+    </p>
+
+    <h2>How it is organised</h2>
+    <p>
+      Every topic is one page. Each page says what to <strong>learn first</strong> and what it <strong>leads to</strong>,
+      so the topics form a map of knowledge. You can follow a guided path, such as the{" "}
+      <a href="/path/first-chapter">First Chapter</a>, explore the <a href="/map">map</a>, or{" "}
+      <a href="/search">search</a> for a question. There are {published} published topics so far.
+    </p>
+
+    <h2>How each topic is written and checked</h2>
+    <p>Topics are written with AI, and every topic goes through the same checks before it is published:</p>
+    <ol>
+      <li>Research first: every fact, date, name and number must come from a source. If no source supports a claim, the claim is left out.</li>
+      <li>A separate AI <strong>fact-checker</strong> checks each claim against its source.</li>
+      <li>An AI <strong>beginner reader</strong> reads the page as someone new to computers and points out anything confusing.</li>
+      <li>After the fixes, an AI <strong>reviewer</strong> checks the page again and decides whether it can be published.</li>
+    </ol>
+    <p>
+      Every page shows who reviewed it. "Reviewed by AI · Not yet checked by a human" means the AI checks above were
+      passed, but no person has checked it yet. When a person has checked a page, it shows their name. Step-by-step
+      projects are only published after a person has checked them.
+    </p>
+    <p>
+      AI can still make mistakes. That is why every page lists its sources at the end, so you can check them yourself.
+    </p>
+
+    <h2>Found a mistake?</h2>
+    <p>
+      Use the <strong>Report a problem</strong> link at the end of any page, or open an issue on{" "}
+      <a href={`${REPO}/issues/new?template=report-a-problem.yml`}>GitHub</a>. Reports about things that are wrong or
+      hard to understand are the most useful help you can give.
+    </p>
+
+    <h2>Free and open</h2>
+    <p>
+      Reading is free, with no account and no paywall. The text and diagrams are licensed under{" "}
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>: you may share and adapt
+      them, also commercially, if you give credit and share your version under the same license. Photos made by other
+      people keep their own licenses, which are shown under each photo. The code that builds the site is under the{" "}
+      <a href={`${REPO}/blob/main/LICENSE`}>MIT license</a>, and all of it is on <a href={REPO}>GitHub</a>.
+    </p>
+    <p>Programmer's Bible is made by Aditya Okke Sugiarso and contributors.</p>
+
+    <p class="small muted"><a href="/privacy">Privacy</a></p>
+  </div>
+</Base>
