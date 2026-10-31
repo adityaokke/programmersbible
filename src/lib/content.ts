@@ -83,6 +83,21 @@ const CALLOUT_GAP = 8;
 const CALLOUT_REF_WIDTH = 650;
 
 type Label = NodeFrontmatter["images"][number]["labels"][number];
+type Credit = NodeFrontmatter["images"][number];
+
+// Creative Commons licenses ask for the author, the source, a link to the license, and a note
+// when the picture was changed. Every picture here is resized; a close-up also crops it.
+function creditLine(image: Credit): string {
+  const cc = image.license.match(/^CC (BY(?:-SA)?) (\d\.\d)$/);
+  const deed = cc
+    ? `https://creativecommons.org/licenses/${cc[1]!.toLowerCase()}/${cc[2]}/`
+    : image.license === "CC0 1.0"
+      ? "https://creativecommons.org/publicdomain/zero/1.0/"
+      : undefined;
+  const license = deed ? `<a href="${deed}">${escapeHtml(image.license)}</a>` : escapeHtml(image.license);
+  const changes = cc ? `; resized${image.zoom ? ", with a cropped close-up" : ""}` : "";
+  return `Image: <a href="${escapeHtml(image.source)}">${escapeHtml(image.author)}</a>, ${license}${changes}`;
+}
 
 // Callouts: labels sit in a margin beside the picture, with an arrow to the part,
 // so nothing covers the photo. Positions are in % of the whole callout box.
@@ -144,7 +159,7 @@ export async function renderBody(node: Node): Promise<string> {
         const file = href.slice("images/".length);
         const credit = credits.get(file);
         const caption = credit
-          ? `<figcaption>Image: <a href="${escapeHtml(credit.source)}">${escapeHtml(credit.author)}</a>, ${escapeHtml(credit.license)}</figcaption>`
+          ? `<figcaption>${credit.caption ? `<span class="picture-caption">${escapeHtml(credit.caption)}</span>` : ""}${creditLine(credit)}</figcaption>`
           : "";
         const src = `/images/${node.id}/${file}`;
         const img = `<img src="${src}" alt="${escapeHtml(text)}" loading="lazy" />`;
