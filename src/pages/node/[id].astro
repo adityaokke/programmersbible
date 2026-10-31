@@ -14,6 +14,12 @@ const mapUrl = `/map?topic=${node.id}`;
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
 const related = byIds([...node.related, ...node.part_of, ...node.led_to]);
+// Opens a GitHub issue form with this topic already filled in.
+const reportUrl = `https://github.com/adityaokke/programmersbible/issues/new?${new URLSearchParams({
+  template: "report-a-problem.yml",
+  title: `Problem in "${node.title}"`,
+  topic: node.id,
+})}`;
 // "ai" means the ai-reviewer agent approved it; say plainly that no human has checked it yet.
 const reviewed = !node.reviewed_by
   ? undefined
@@ -75,6 +81,13 @@ const byline =
       }
 
       {readable && byline && <p class="small muted">{byline}</p>}
+      {
+        readable && (
+          <p class="small muted">
+            Found a mistake, or something you did not understand? <a href={reportUrl}>Report a problem</a>.
+          </p>
+        )
+      }
 
       {
         position && (
