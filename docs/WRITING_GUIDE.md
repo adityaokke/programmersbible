@@ -95,7 +95,7 @@ Pick the form that fits the idea:
 - Use it in the text as `![alt text](images/<file>)`, on its own line.
 - List it in the frontmatter `images` with `file`, `alt`, `source` (the image's own page), `author` (as the source writes it) and `license`. The site shows the credit under the picture, which CC BY needs.
 - Open the picture and check that it really shows what the alt text says.
-- **Point out the parts the text names** with `labels` (callouts): each label sits beside the picture with a line to the part. Give the part's position in percent of the picture (`x` from the left, `y` from the top). Use `side: left|right` and `ly` (the label's height) to keep lines from crossing each other or important parts. Build the site and look at the result before you finish.
+- **Point out the parts the text names** with `labels` (callouts): each label sits beside the picture, with an arrow pointing at the part. Give the part's position in percent of the picture (`x` from the left, `y` from the top). Use `side: left|right` and `ly` (the label's height) to keep lines from crossing each other or important parts. Build the site and look at the result before you finish.
 
   ```yaml
   labels:

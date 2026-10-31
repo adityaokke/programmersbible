@@ -178,15 +178,10 @@ figure.picture .closeup img { position: absolute; max-width: none; height: auto;
 .callouts line { vector-effect: non-scaling-stroke; }
 .callouts line.halo { stroke: #fff; stroke-width: 4; }
 .callouts line.ink { stroke: #1d1d1f; stroke-width: 1.5; }
-.callouts .dot {
-  position: absolute;
-  width: 0.6rem;
-  height: 0.6rem;
-  border-radius: 50%;
-  background: #1d1d1f;
-  border: 2px solid #fff;
-  transform: translate(-50%, -50%);
-}
+/* The arrowhead's tip sits on the part; the box is turned to follow the line. */
+.callouts .arrow { position: absolute; width: 0; height: 0; transform-origin: 0 0; }
+.callouts .arrow svg { position: absolute; left: -13px; top: -6px; width: 14px; height: 12px; overflow: visible; }
+.callouts .arrow path { fill: #1d1d1f; stroke: #fff; stroke-width: 1.5; stroke-linejoin: round; paint-order: stroke; }
 .callouts .callout {
   position: absolute;
   transform: translateY(-50%);
