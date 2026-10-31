@@ -34,6 +34,8 @@ sources:
     url: https://www.theregister.com/2005/04/13/moores_law_forty/
   - title: "MIT Technology Review: Intel Puts the Brakes on Moore's Law (2016)"
     url: https://www.technologyreview.com/2016/03/23/8768/intel-puts-the-brakes-on-moores-law/
+  - title: "MIT Technology Review: We're not prepared for the end of Moore's Law (2020)"
+    url: https://www.technologyreview.com/2020/02/24/905789/were-not-prepared-for-the-end-of-moores-law/
   - title: "Apple Newsroom: Apple introduces M4 chip (May 2024)"
     url: https://www.apple.com/newsroom/2024/05/apple-introduces-m4-chip/
   - title: "Caltech: About Caltech"
@@ -42,8 +44,8 @@ sources:
     url: https://en.wikipedia.org/wiki/Integrated_circuit
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-01
+updated: 2026-11-01
 ---
 
 > **In one sentence:** Moore's law is a prediction Gordon Moore made in 1965 and changed in 1975: the number of components on a chip would keep doubling at a steady pace, about every two years from 1975 on. It is an observation about an industry, not a law of nature.
@@ -52,7 +54,7 @@ updated: 2026-10-31
 
 Computers have become far more capable over the decades, and computing has become much cheaper. One part of that story is that chips have held more and more [[transistor|transistors]] every few years, for decades.
 
-Moore's law is the name for that pattern. You will often see it in news about computers, with the words "doubling every two years".
+Moore's law is the name for that pattern.
 
 ## Analogy
 
@@ -88,7 +90,7 @@ Real chips show this kind of growth. Intel's first [[microprocessor]], the 4004 
 
 **Computing power** means how much work a computer can do. The Computer History Museum says: "Doubling chip complexity doubled computing power without significantly increasing cost." Here, "chip complexity" means how many components a chip has.
 
-IEEE, an organization of engineers, describes the prediction this way: the number of components grows, while the cost of each function (each small job the chip does) goes down. So each new **generation** of chips (a new, improved family of chips) could do more, for about the same price. IEEE says that cheap, widespread computing changed the way people work, play and communicate.
+IEEE, an organization of engineers, describes the prediction this way: the number of components grows, while the cost of each function (each small job the chip does) goes down. So each new **generation** of chips (a new, improved family of chips) could do more, for about the same price.
 
 ## How it came to be
 
@@ -108,7 +110,7 @@ In 1965, **Gordon Moore** led the research work at Fairchild Semiconductor (his 
 
 On **April 19, 1965**, the magazine *Electronics* published his article "Cramming more components onto integrated circuits". ("Cramming" means pushing many things into a small space.) The pattern in his data meant a doubling **every year**. He predicted that by 1975, there might be "as many as 65,000 components on a single silicon chip". In a 2015 interview, Moore said he wrote the article to show that "this is the way the industry is going to get things really cheap."
 
-In **1975**, Moore was at Intel, a company he had helped to found. He looked at new data. At an IEEE meeting, he changed his prediction to "a doubling every two years, rather than every year." He named several reasons for the progress: better methods for printing patterns onto chips, bigger silicon discs (called **wafers**) that chips are made on, better production methods, and "circuit and device cleverness". (How chips are made is outside this page.)
+In **1975**, Moore was at Intel, a company he had helped to found. He looked at new data. At an IEEE meeting, he changed his prediction to "a doubling every two years, rather than every year." He named several reasons for the progress: better methods for printing patterns onto chips, bigger silicon discs (called **wafers**) that chips are made on, better production methods, and "circuit and device cleverness".
 
 Later, Carver Mead, a professor at Caltech (a science and engineering institute in California), gave the idea its name: **Moore's law**.
 
@@ -116,12 +118,14 @@ The museum says that "Meeting Moore's timetable became the goal for engineers wh
 
 ### Is it slowing down?
 
-The sources on this page, from 2015 and 2016, describe a slowdown. In 2015, Moore told IEEE Spectrum, a magazine from IEEE: "I guess I see Moore's Law dying here in the next decade or so, but that's not surprising." He also said that "those walls keep receding": limits he expected kept moving further away. In 2016, the magazine MIT Technology Review reported that Intel had "signaled a slowing of Moore's Law": the time between its new generations of chips would grow longer.
+Articles from 2015, 2016 and 2020 describe a slowdown. In 2015, Moore told IEEE Spectrum, a magazine from IEEE: "I guess I see Moore's Law dying here in the next decade or so, but that's not surprising." He also said "those walls keep receding": limits he expected kept moving further away. In 2016, the magazine MIT Technology Review reported that Intel had "signaled a slowing of Moore's Law": the time between its new generations of chips would grow longer.
+
+In 2020, MIT Technology Review wrote about the end of Moore's law: "it's been more a gradual decline than a sudden death." Charles Leiserson, a computer scientist at MIT, said: "It's over." He said Moore's law was about the rate of progress, and "we're no longer on that rate." Jim Keller, then Intel's head of silicon engineering, disagreed: the article reports he said Intel was on pace for the next 10 years.
 
 ## 🧪 Try it in your browser
 
 1. Open the Computer History Museum's page [Revolution: Moore's Law](https://www.computerhistory.org/revolution/digital-logic/12/267).
-2. Look through the pictures on the page for the one whose caption says it is the first page of the April 19, 1965 *Electronics* article.
+2. Find the picture captioned as the first page of the April 19, 1965 *Electronics* article.
 3. Look for the picture whose caption says the number of transistors on the largest microprocessors doubled about every two years from 1971 to 2010.
 4. Open the museum's [1965 Silicon Engine page](https://www.computerhistory.org/siliconengine/moores-law-predicts-the-future-of-integrated-circuits/). Look for the photo captioned "Cost vs. time sketch from Moore's 1964 notebook": a drawing he made the year before his article.
 
@@ -131,7 +135,7 @@ The sources on this page, from 2015 and 2016, describe a slowdown. In 2015, Moor
 
 **"Moore's law says every 18 months."** Moore's own numbers were every year (1965) and every two years (1975). In 2005, The Register, a technology news website, reported that Moore credited Intel executive (senior manager) David House with pointing out that the trend meant a doubling of **computing power** every 18 months. That is a different measure, and it was not Moore's figure.
 
-**"Moore's law means computers get twice as fast every two years."** Moore's law counts components on a chip. It does not measure speed, or computing power. More components gave computers more computing power, but Moore's law itself is about the count, not speed.
+**"Moore's law means computers get twice as fast every two years."** Moore's law counts components on a chip. It does not measure speed, or computing power.
 
 ## Recap
 
@@ -149,6 +153,7 @@ The sources on this page, from 2015 and 2016, describe a slowdown. In 2015, Moor
 - IEEE Spectrum, Gordon Moore: The Man Whose Name Means Progress (2015): https://spectrum.ieee.org/gordon-moore-the-man-whose-name-means-progress
 - The Register, Moore's Law at 40 (2005): https://www.theregister.com/2005/04/13/moores_law_forty/
 - MIT Technology Review, Intel Puts the Brakes on Moore's Law (2016): https://www.technologyreview.com/2016/03/23/8768/intel-puts-the-brakes-on-moores-law/
+- MIT Technology Review, We're not prepared for the end of Moore's Law (2020): https://www.technologyreview.com/2020/02/24/905789/were-not-prepared-for-the-end-of-moores-law/
 - Apple Newsroom, Apple introduces M4 chip (May 2024): https://www.apple.com/newsroom/2024/05/apple-introduces-m4-chip/
 - Caltech, About Caltech: https://www.caltech.edu/about
 - Wikipedia, Integrated circuit (general background reference): https://en.wikipedia.org/wiki/Integrated_circuit
