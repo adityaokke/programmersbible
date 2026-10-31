@@ -88,19 +88,14 @@ A program's instructions are kept in the computer's **memory** (RAM), which you 
 
 In the simplest picture, the CPU repeats one cycle, again and again:
 
+```mermaid
+flowchart TD
+  accTitle: The fetch, decode, execute cycle
+  accDescr: The three steps of the CPU's cycle. Step 1, fetch: get the next instruction from memory. Step 2, decode: work out what the instruction asks. Step 3, execute: do it, for example add two numbers. After step 3, the CPU goes back to step 1 and repeats.
+  F["1. Fetch<br/>get the next instruction<br/>from memory"] --> D["2. Decode<br/>work out what it asks"]
+  D --> E["3. Execute<br/>do it"]
+  E -- repeat --> F
 ```
- ┌──►  1. FETCH:   get the next instruction from memory
- │            │
- │            ▼
- │     2. DECODE:  work out what the instruction asks
- │            │
- │            ▼
- │     3. EXECUTE: do it (for example, add two numbers)
- │            │
- └────────────┘  repeat
-```
-
-*Diagram: the three steps of the CPU's cycle. After step 3, the CPU goes back to step 1.*
 
 After a fetch, the program counter usually moves on to the next instruction in memory. Some instructions, called **jumps**, change the program counter to point somewhere else. This is like "go to task 12".
 
