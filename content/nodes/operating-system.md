@@ -4,6 +4,8 @@ title: "Operating Systems"
 type: concept
 part: machine
 status: published
+reviewed_by: ai
+reviewed_at: 2026-10-31
 requires: [software, how-computer-parts-work-together]
 related: [files-and-folders, personal-computer, smartphone]
 summary: "An operating system is the main program that starts when a computer is switched on; it starts and stops the other programs, gives each one its own memory, and lets them share the CPU, storage and devices."
@@ -40,8 +42,6 @@ sources:
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -97,24 +97,19 @@ Input works this way too. Remember the key press: the operating system had put t
 
 The operating system also keeps track of where each file is in storage. You will meet that in [[files-and-folders|Files and Folders]].
 
-*Diagram: three layers. At the top, apps such as a browser and a music app. In the middle, the operating system, with device drivers at its bottom edge. At the bottom, the hardware: CPU, RAM, storage, and input and output devices. Apps ask the operating system when they need memory, files or devices.*
-
-```
- ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
- │   Browser    │ │  Music app   │ │   Chat app   │   APPS
- └──────┬───────┘ └──────┬───────┘ └──────┬───────┘
-        │                │                │
- ┌──────┴────────────────┴────────────────┴───────┐
- │              OPERATING SYSTEM                  │
- │ starts programs, shares RAM, files, devices    │
- │ ┌────────────────────────────────────────────┐ │
- │ │              device drivers                │ │
- │ └────────────────────────────────────────────┘ │
- └──────┬──────────┬──────────┬──────────┬────────┘
-        │          │          │          │
-     ┌──┴──┐   ┌───┴──┐  ┌────┴────┐ ┌───┴───────────┐
-     │ CPU │   │ RAM  │  │ STORAGE │ │ INPUT, OUTPUT │   HARDWARE
-     └─────┘   └──────┘  └─────────┘ └───────────────┘
+```mermaid
+flowchart TB
+  accTitle: Apps, the operating system and the hardware in three layers
+  accDescr: Three layers. At the top, apps such as a browser, a music app and a chat app. In the middle, the operating system, which starts programs and shares RAM, files and devices, with device drivers at its bottom edge. At the bottom, the hardware: CPU, RAM, storage, and input and output devices. Apps ask the operating system when they need memory, files or devices.
+  apps["Apps<br/>browser, music app,<br/>chat app"]
+  subgraph os["Operating system"]
+    jobs["starts programs,<br/>shares RAM, files, devices"]
+    drv["Device drivers"]
+  end
+  hw["Hardware<br/>CPU, RAM, storage,<br/>input and output"]
+  apps -- ask for memory, files, devices --> jobs
+  jobs --> drv
+  drv --> hw
 ```
 
 (This picture is simplified. The CPU also runs each app's own instructions directly, when the operating system gives that app its turn.)
