@@ -66,6 +66,8 @@ input[type="search"] {
 }
 
 .container { max-width: 70rem; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+.site-footer { border-top: 1px solid var(--line); padding: 1rem 1.25rem 2rem; font-size: 0.85rem; color: var(--muted); }
+.site-footer p { max-width: 70rem; margin: 0.4rem auto; }
 .narrow { max-width: 44rem; margin: 0 auto; }
 
 .button {

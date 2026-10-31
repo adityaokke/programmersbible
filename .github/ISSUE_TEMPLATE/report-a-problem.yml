@@ -1,0 +1,36 @@
+name: Report a problem
+description: Something is wrong, unclear or broken in a topic.
+title: "Problem in a topic"
+labels: ["reader report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Every report makes the site better for the next reader. You do not need to know anything about programming to write one.
+  - type: input
+    id: topic
+    attributes:
+      label: Which topic?
+      description: The address of the page, or its name.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Something is wrong (a fact, a date, a name)
+        - I did not understand something
+        - A "Try it" step did not work for me
+        - A picture or diagram is wrong or hard to read
+        - A link is broken
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened?
+      description: Copy the sentence if you can. If something is wrong, a link to a source helps a lot. For a "Try it" step, say which browser and device you used.
+    validations:
+      required: true
