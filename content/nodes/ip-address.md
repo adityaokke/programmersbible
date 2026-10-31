@@ -3,7 +3,7 @@ id: ip-address
 title: "IP Address"
 type: concept
 part: network
-status: review
+status: published
 requires: [tcp-ip]
 related: [dns, router, packets, isp]
 summary: "An IP address is a number that identifies a device on a network, so that packets can be delivered to that device."
@@ -66,6 +66,8 @@ sources:
   - title: "Wikipedia: IP address (general background reference)"
     url: https://en.wikipedia.org/wiki/IP_address
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -142,7 +144,7 @@ The newer version is **IPv6** (Internet Protocol, version 6). An IPv6 address is
 
 You do not need to remember these names and numbers. The Internet Protocol, with its 32-bit addresses, was described in **RFC 791** in **September 1981**, edited by Jon Postel. As you saw in [[arpanet]], the ARPANET switched to TCP/IP on **1 January 1983**.
 
-The first IPv6 standard, RFC 1883 by S. Deering and R. Hinden, appeared in **December 1995**.
+IPv6 was described in RFC 1883, by S. Deering and R. Hinden, in **December 1995**.
 
 ## 🧪 Try it in your browser
 

@@ -3,7 +3,7 @@ id: physical-internet
 title: "The Physical Internet: Cables, Undersea Lines, Data Centers"
 type: concept
 part: network
-status: review
+status: published
 requires: [isp]
 related: [what-is-a-network, wifi-and-mobile-networks, server, telegraph-and-telephone]
 summary: "The internet is a physical thing: glass fiber cables on land and under the oceans carry much of its data as light, and buildings called data centers hold the computers that run websites and apps."
@@ -42,6 +42,8 @@ sources:
   - title: "Wikipedia: Submarine communications cable (general background reference)"
     url: https://en.wikipedia.org/wiki/Submarine_communications_cable
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-10-31
 updated: 2026-10-31
 ---
 
@@ -87,7 +89,7 @@ Cables can break. TeleGeography says accidents, such as fishing boats and ships 
 
 A **data center**, IBM says, is a room, building or facility that houses computers, storage and network equipment. Inside, there are rows of **servers**: "powerful computers that deliver applications, services and data to end-user devices", such as your phone.
 
-Servers are stacked "on top of each other in a rack to save space". A **rack** is a tall frame that holds many servers. Switches, routers and fiber carry data between the servers, and out to users. A data center must keep running all the time, so it has cooling systems for the heat, batteries for short power cuts, and generators for longer ones.
+Servers are stacked "on top of each other in a rack to save space". A **rack** holds many servers, one on top of another. Switches, routers and fiber carry data between the servers, and out to users. A data center must keep running all the time, so it has cooling systems for the heat, batteries for short power cuts, and generators for longer ones.
 
 *Diagram: a web page travels from a data center on another continent through fiber to a station on the coast, travels along the seabed in a submarine cable with repeaters, reaches a station on your coast, then crosses your ISP's network to your home. Simplified: data often crosses several networks.*
 
@@ -133,7 +135,7 @@ You will see the real undersea cables of the world on a map. These steps change 
 ## Recap
 
 - Undersea cables and many links on land carry data as light, in hair-thin glass fibers.
-- Hundreds of submarine cables lie on the seabed and link the continents. Satellites carry only a very small part of international traffic.
+- TeleGeography tracks more than 600 active and planned submarine cables. Satellites carry only a very small part of international traffic.
 - Data centers are buildings full of servers in racks, with fiber links, cooling and backup power. Websites and apps run there.
 
 ## Sources

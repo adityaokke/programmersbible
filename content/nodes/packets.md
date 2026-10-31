@@ -25,6 +25,8 @@ sources:
     url: https://www.rfc-editor.org/rfc/rfc791
   - title: "Wikipedia: Packet switching (general background reference)"
     url: https://en.wikipedia.org/wiki/Packet_switching
+  - title: "Wikipedia: Ethernet (general background reference)"
+    url: https://en.wikipedia.org/wiki/Ethernet
   - title: "Internet Society: A Brief History of the Internet (Leiner, Cerf, Clark, Kahn, Kleinrock, Lynch, Postel, Roberts, Wolff)"
     url: https://www.internetsociety.org/internet/history-internet/brief-history-internet/
   - title: "IEEE Computer Society: Computer Pioneers, Donald W. Davies"
@@ -37,12 +39,18 @@ sources:
     url: https://developer.chrome.com/docs/devtools/network/reference
   - title: "Microsoft Edge DevTools: Inspect network activity"
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/
+  - title: "Microsoft Edge DevTools: Network features reference"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/reference
   - title: "Firefox DevTools User Docs: Network Monitor"
     url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html
   - title: "Firefox DevTools User Docs: Network Monitor toolbar"
     url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/toolbar/index.html
+  - title: "Firefox DevTools User Docs: Network request list"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_list/index.html
   - title: "Firefox source: Network Monitor text labels (netmonitor.ftl, the \"transferred\" summary)"
     url: https://raw.githubusercontent.com/mozilla-firefox/firefox/main/devtools/client/locales/en-US/netmonitor.ftl
+  - title: "Firefox source: Network Monitor text labels (netmonitor.properties, the \"Reload the page\" notice)"
+    url: https://raw.githubusercontent.com/mozilla-firefox/firefox/main/devtools/client/locales/en-US/netmonitor.properties
   - title: "NIST: Prefixes for binary multiples"
     url: https://physics.nist.gov/cuu/Units/binary.html
 author: ai
@@ -57,7 +65,7 @@ updated: 2026-10-31
 
 When you open a web page or send a photo, the data does not travel as one big block. It is cut into small pieces called **packets**. Each packet travels across the network by itself. At the other end, the pieces are put back together.
 
-Every page you have ever loaded arrived this way.
+The internet is built for this. The Internet Protocol, a set of rules for the internet, was designed for networks that send data in packets.
 
 ## Analogy
 
@@ -88,7 +96,7 @@ An **address** here is a number that names one computer on the network, like a h
 
 ### How big is a packet
 
-On standard **Ethernet**, a kind of wired network, one packet can be at most **1,500 bytes** long. Those 1,500 bytes include the header, so the data in each packet is a little less. Other kinds of networks have their own limits. On Ethernet, a photo of 3 million bytes needs at least 2,000 packets.
+**Ethernet** is a family of standards (shared technical rules) for wired computer networks. On standard Ethernet, one packet can be at most **1,500 bytes** long. Those 1,500 bytes include the header, so the data in each packet is a little less. Other kinds of networks have their own limits. On Ethernet, a photo of 3 million bytes needs at least 2,000 packets.
 
 *Diagram: one packet as a box: the header with the delivery information on the left, the payload with the data on the right.*
 
@@ -145,11 +153,11 @@ Your browser cannot show single packets. But it can show how much data a page ne
 
 1. In Chrome, Edge or Firefox, open a web page with pictures, for example a news site.
 2. Open the network tool:
-   - **Chrome and Edge:** press `Ctrl` + `Shift` + `J` (Mac: `Cmd` + `Option` + `J`). This opens the console. Click the tab named **Network**. In Edge, if you do not see it, click the **More tools** button and choose **Network**.
+   - **Chrome and Edge:** press `Ctrl` + `Shift` + `J` (Mac: `Cmd` + `Option` + `J`). This opens the browser's developer tools. Click the tab named **Network**. In Edge, if you do not see that tab, Microsoft's guide says to click the **More tools** button.
    - **Firefox:** press `Ctrl` + `Shift` + `E` (Mac: `Cmd` + `Option` + `E`).
 3. The list is empty at first. The tool only records while it is open. Reload the page with the browser's reload button.
-4. Rows appear. Each row is one file the browser asked for, such as a picture.
-5. Look at the bar at the very bottom of the tool. It shows how many requests (files the browser asked for) there were, and the size of the data, such as "850 kB" or "2.3 MB". kB means kilobytes and MB means megabytes. You may see two sizes: use the one marked **transferred**, the data that came over the network.
+4. Rows appear. Each row is one **request**: one thing the browser asked for, such as a picture.
+5. Look at the bar at the very bottom of the tool. It shows how many requests there were, and the size of the data, such as "850 kB" or "2.3 MB". kB means kilobytes and MB means megabytes. If you see two sizes, use the one marked **transferred**.
 6. Now a small calculation. 1 kB is about 1,000 bytes and 1 MB is about 1,000,000 bytes. So 2.3 MB is about 2.3 × 1,000,000 = 2,300,000 bytes. Divide by 1,500, the Ethernet packet limit: 2,300,000 ÷ 1,500 is about 1,533.3. If it all came over Ethernet, that is **at least 1,534 packets**. The real number is higher, because each packet also carries a header.
 7. When you are done, close the browser tab with the news site.
 
@@ -157,7 +165,7 @@ Your browser cannot show single packets. But it can show how much data a page ne
 
 ## Common misunderstandings
 
-- **"A file travels across the network in one piece."** No. Most files are too big for one packet, so they are cut into many.
+- **"A file travels across the network in one piece."** No. A file that is bigger than one packet is cut into more than one packet.
 - **"All packets of a message follow the same path."** Not always. Each packet is sent on its own, so packets can take different paths and arrive out of order.
 - **"If one packet is lost, the whole download fails."** Not usually. Often, the missing packet is noticed and sent again.
 
@@ -173,13 +181,17 @@ Your browser cannot show single packets. But it can show how much data a page ne
 - RFC 894, IP Datagrams over Ethernet Networks: https://www.rfc-editor.org/rfc/rfc894
 - RFC 791, Internet Protocol: https://www.rfc-editor.org/rfc/rfc791
 - Wikipedia, Packet switching (general background reference): https://en.wikipedia.org/wiki/Packet_switching
+- Wikipedia, Ethernet (general background reference): https://en.wikipedia.org/wiki/Ethernet
 - Internet Society, A Brief History of the Internet: https://www.internetsociety.org/internet/history-internet/brief-history-internet/
 - IEEE Computer Society, Computer Pioneers: Donald W. Davies: https://history.computer.org/pioneers/davies.html
 - Computer History Museum, Internet History 1960s: https://www.computerhistory.org/internethistory/1960s/
 - Chrome for Developers, Inspect network activity: https://developer.chrome.com/docs/devtools/network
 - Chrome for Developers, Network features reference: https://developer.chrome.com/docs/devtools/network/reference
 - Microsoft Edge DevTools, Inspect network activity: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/
+- Microsoft Edge DevTools, Network features reference: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/reference
 - Firefox DevTools User Docs, Network Monitor: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html
 - Firefox DevTools User Docs, Network Monitor toolbar: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/toolbar/index.html
+- Firefox DevTools User Docs, Network request list: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_list/index.html
 - Firefox source, Network Monitor text labels (netmonitor.ftl): https://raw.githubusercontent.com/mozilla-firefox/firefox/main/devtools/client/locales/en-US/netmonitor.ftl
+- Firefox source, Network Monitor text labels (netmonitor.properties): https://raw.githubusercontent.com/mozilla-firefox/firefox/main/devtools/client/locales/en-US/netmonitor.properties
 - NIST, Prefixes for binary multiples: https://physics.nist.gov/cuu/Units/binary.html

@@ -31,6 +31,8 @@ sources:
     url: https://www.technologyreview.com/2011/10/31/257406/who-coined-cloud-computing/
   - title: "AWS What's New: Announcing Amazon S3, Simple Storage Service (March 14, 2006)"
     url: https://aws.amazon.com/about-aws/whats-new/2006/03/announcing-amazon-s3---simple-storage-service
+  - title: "AWS What's New: Announcing Amazon Elastic Compute Cloud (Amazon EC2) - beta (August 24, 2006)"
+    url: https://aws.amazon.com/about-aws/whats-new/2006/08/24/announcing-amazon-elastic-compute-cloud-amazon-ec2---beta/
   - title: "AWS: Regions and Availability Zones"
     url: https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
   - title: "AWS documentation: AWS Regions"
@@ -115,11 +117,11 @@ NIST also names three "service models". They go from the most work for you to th
 
 You do not need to remember these names and dates.
 
-Before the term "cloud computing" existed, engineers already drew networks as clouds. MIT Technology Review says that "in engineering drawings, a cloud represented the network".
+By the time the term "cloud computing" appeared, engineers already drew networks as clouds. MIT Technology Review says that "in engineering drawings, a cloud represented the network".
 
 The earliest known printed use of "cloud computing" is in a Compaq business plan dated November 14, 1996. It is still uncertain who invented the term: George Favaloro, who worked at Compaq, or Sean O'Sullivan, founder of a company called NetCentric.
 
-On March 14, 2006, Amazon announced Amazon S3, "storage for the Internet", for developers (people who write programs). In the same year, it also released Amazon EC2.
+On March 14, 2006, Amazon announced Amazon S3, "storage for the Internet", for developers (people who write programs). In August 2006, it also announced Amazon EC2, at first as a test ("beta") version.
 
 ## 🧪 Try it in your browser
 
@@ -154,6 +156,7 @@ AWS publishes a list of its internet addresses. This is only one example: Google
 - Wikipedia, Cloud computing (general background reference): https://en.wikipedia.org/wiki/Cloud_computing
 - MIT Technology Review, Who Coined 'Cloud Computing'?: https://www.technologyreview.com/2011/10/31/257406/who-coined-cloud-computing/
 - AWS What's New, Announcing Amazon S3: https://aws.amazon.com/about-aws/whats-new/2006/03/announcing-amazon-s3---simple-storage-service
+- AWS What's New, Announcing Amazon EC2 (beta): https://aws.amazon.com/about-aws/whats-new/2006/08/24/announcing-amazon-elastic-compute-cloud-amazon-ec2---beta/
 - AWS, Regions and Availability Zones: https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
 - AWS documentation, AWS Regions: https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html
 - AWS documentation, AWS IP address ranges: https://docs.aws.amazon.com/vpc/latest/userguide/aws-ip-ranges.html

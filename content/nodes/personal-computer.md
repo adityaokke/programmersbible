@@ -47,6 +47,8 @@ sources:
     url: https://www.ibm.com/history/personal-computer
   - title: "Wikipedia: Altair 8800 (general background reference)"
     url: https://en.wikipedia.org/wiki/Altair_8800
+  - title: "Stanford CS101: Software: Running Programs"
+    url: https://web.stanford.edu/class/cs101/software-1.html
 author: ai
 reviewed_by: ai
 reviewed_at: 2026-10-31
@@ -71,17 +73,17 @@ Many early personal computers were built by **hobbyists**: people who build elec
 
 ### Was there an earlier one?
 
-Before 1975, a few small computers were already for sale. In 1986, The Computer Museum in Boston held a contest to find the first personal computer. The judges chose the **Kenbak-1**, designed in 1971 by John Blankenbaker. It was built before microprocessors, from many simpler chips. Only about 40 were sold. The first personal computer that used a microprocessor was the **Micral**, from France, in 1973. It used Intel's 8008 chip. So the story does not start in one single year.
+Before 1975, a few small computers were already for sale. In 1986, The Computer Museum in Boston held a contest to find the first personal computer. The judges chose the **Kenbak-1**, designed in 1971 by John Blankenbaker. It was built before microprocessors, from many simpler chips. Only about 40 were sold. The title "first personal computer using a microprocessor" went to the **Micral**, from France, in 1973. It used Intel's 8008 chip.
 
 ### The Altair 8800 (1975)
 
 In its January 1975 issue, the hobbyist magazine *Popular Electronics* put a new computer kit on its cover: the **Altair 8800**. It was made by a company called MITS. The museum says that within weeks, customers "inundated" MITS with orders. (To inundate means to flood.)
 
-The Altair used the Intel 8080 microprocessor. The museum gives its price as under $400. It came with 256 bytes of memory.
+The Altair used the Intel 8080 microprocessor. The museum's timeline for 1975 says it sold for $297, or $395 with a case. It came with 256 bytes of memory.
 
-In its basic form, you programmed the Altair with rows of switches on its front. You set the switches to one instruction, in [[binary]], and stored it in memory. Then you did the same for the next instruction, until the whole program was in. The only output was a pattern of small red lights.
+In its basic form, you programmed the Altair with rows of switches on its front. You set the switches to one instruction in [[binary]] and stored it in memory. Then you did the same for the next one, until the whole program was in. The only output was a pattern of red lights.
 
-Ed Roberts, a co-founder of MITS, invented the Altair. The museum's catalog says that many people credit the Altair with starting the personal computer revolution.
+Ed Roberts, a co-founder of MITS, invented it. The museum's catalog says that many people credit the Altair with starting the personal computer revolution.
 
 ### A new company: Microsoft
 
@@ -97,13 +99,13 @@ Steve Wozniak designed the Apple II. Apple Computer, which he founded with Steve
 
 ### The IBM PC (1981)
 
-On August 12, 1981, IBM showed its own personal computer, the **IBM PC**, at a hotel in New York. Don Estridge led the team that made it. It cost $1,565 and had 16 KB of RAM (about 16,000 bytes). It used an Intel 8088 microprocessor. The museum says it used Microsoft's MS-DOS [[operating-system|operating system]]: the main program that runs the computer and lets you start other programs.
+On August 12, 1981, IBM showed its own personal computer, the **IBM PC**, at a hotel in New York. Don Estridge led the team that made it. IBM says it was priced at $1,565, and for that it had 16 KB of RAM (about 16,000 bytes) and no disk drive. Adding a screen, two disk drives and a printer cost nearly $3,000 more. It used an Intel 8088 microprocessor. Microsoft provided its [[operating-system|operating system]]: a program that starts when the computer starts up and manages the other programs. It later became known as MS-DOS.
 
 *Diagram: a timeline of early personal computers, from the Kenbak-1 in 1971 to the IBM PC in 1981.*
 
 ```
 1971  Kenbak-1      judged "first personal computer" (no microprocessor)
-1973  Micral        first personal computer with a microprocessor
+1973  Micral        named first with a microprocessor
 1975  Altair 8800   kit on a magazine cover; Microsoft's BASIC
 1977  Apple II, TRS-80, Commodore PET   sold ready to use
 1981  IBM PC        businesses buy PCs in large numbers
@@ -125,7 +127,7 @@ Growing PC sales also created a fast-growing market for software (programs). It 
 2. Open the museum's [1975 timeline](https://www.computerhistory.org/timeline/1975/). The page is long. Press Ctrl+F (Command+F on a Mac) and type Altair to find the entry "MITS Altair 8800 kit appears in Popular Electronics". Read the entry and look at the photo of the Altair next to it.
 3. Open the museum's page [Personal Computers for the Masses](https://www.computerhistory.org/revolution/personal-computers/17/298). Look through the photo captions for the three computers of 1977: the TRS-80, the Commodore PET and the Apple II.
 
-**What this shows:** the Kenbak-1 and the Altair had switches and lights. The 1977 computers came ready to use, each with a keyboard. These pages also work on a phone, but finding words on a page works differently there.
+**What this shows:** the Kenbak-1 and the Altair had switches and lights. The 1977 computers came ready to use, each with a keyboard. On a phone, finding words on a page works differently.
 
 ## Recap
 
@@ -149,3 +151,4 @@ Growing PC sales also created a fast-growing market for software (programs). It 
 - Computer History Museum catalog, Altair 8800 Microcomputer: https://www.computerhistory.org/collections/catalog/X58.82/
 - IBM History, The IBM PC: https://www.ibm.com/history/personal-computer
 - Wikipedia, Altair 8800: https://en.wikipedia.org/wiki/Altair_8800
+- Stanford CS101, Software: Running Programs: https://web.stanford.edu/class/cs101/software-1.html
