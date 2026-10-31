@@ -112,14 +112,14 @@ Steve Wozniak designed the Apple II. Apple Computer, which he founded with Steve
 
 On August 12, 1981, IBM showed its own personal computer, the **IBM PC**, at a hotel in New York. Don Estridge led the team that made it. IBM says it was priced at $1,565, and for that it had 16 KB of RAM (about 16,000 bytes) and no disk drive. Adding a screen, two disk drives and a printer cost nearly $3,000 more. It used an Intel 8088 microprocessor. Microsoft provided its [[operating-system|operating system]]: a program that starts when the computer starts up and manages the other programs. It later became known as MS-DOS.
 
-*Diagram: a timeline of early personal computers, from the Kenbak-1 in 1971 to the IBM PC in 1981.*
-
-```
-1971  Kenbak-1      judged "first personal computer" (no microprocessor)
-1973  Micral        named first with a microprocessor
-1975  Altair 8800   kit on a magazine cover; Microsoft's BASIC
-1977  Apple II, TRS-80, Commodore PET   sold ready to use
-1981  IBM PC        businesses buy PCs in large numbers
+```mermaid
+flowchart TD
+  accTitle: Early personal computers, 1971 to 1981
+  accDescr: A timeline of early personal computers, from top to bottom. 1971, Kenbak-1, judged the first personal computer, with no microprocessor. 1973, Micral, named the first with a microprocessor. 1975, Altair 8800, a kit on a magazine cover, and Microsoft's BASIC. 1977, the Apple II, the TRS-80 and the Commodore PET, sold ready to use. 1981, IBM PC, businesses buy PCs in large numbers.
+  K["<b>1971 · Kenbak-1</b><br/>judged first personal computer<br/>(no microprocessor)"] --> M["<b>1973 · Micral</b><br/>named first with<br/>a microprocessor"]
+  M --> A["<b>1975 · Altair 8800</b><br/>kit on a magazine cover;<br/>Microsoft's BASIC"]
+  A --> R["<b>1977 · Apple II, TRS-80,<br/>Commodore PET</b><br/>sold ready to use"]
+  R --> I["<b>1981 · IBM PC</b><br/>businesses buy PCs<br/>in large numbers"]
 ```
 
 ## Why it mattered

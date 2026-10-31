@@ -137,15 +137,18 @@ Android is an operating system for phones and other devices. Open source means t
 
 On September 23, 2008, T-Mobile showed the **T-Mobile G1**, "the First Phone Powered by Android". It had a touch screen and also a real keyboard. It went on sale in the United States on October 22, 2008. On the same day, **Android Market**, Android's app store, opened with "over 50 apps".
 
-*Diagram: a timeline of the smartphone, from the IBM Simon in 1993 to the first Android phone in 2008.*
-
-```
-1993  IBM/BellSouth Simon   "the first smartphone"; touch screen
-1999  smartphones from companies around the world bring the Web
-2007  January 9: Apple shows the iPhone; June 29: on sale in the US
-2007  November 5: 34 companies announce Android
-2008  July: Apple's App Store opens with over 500 apps
-2008  October 22: T-Mobile G1, the first Android phone, and Android Market
+```mermaid
+flowchart TD
+  accTitle: A timeline of the smartphone, 1993 to 2008
+  accDescr: A timeline of the smartphone, from the IBM Simon in 1993 to the first Android phone in 2008, read from top to bottom. In 1993 came the IBM/BellSouth Simon, "the first smartphone", with a touch screen. From 1999, smartphones from companies around the world brought the Web. On January 9, 2007, Apple showed the iPhone; on June 29, 2007, it went on sale in the US; on November 5, 2007, 34 companies announced Android. In July 2008, Apple's App Store opened with over 500 apps. On October 22, 2008, came the T-Mobile G1, the first Android phone, and Android Market.
+  A["1993<br/>IBM/BellSouth Simon,<br/>called the first smartphone,<br/>with a touch screen"]
+  B["From 1999<br/>Smartphones from<br/>companies around<br/>the world bring the Web"]
+  C["Jan 9, 2007<br/>Apple shows the iPhone"]
+  D["Jun 29, 2007<br/>iPhone on sale in the US"]
+  E["Nov 5, 2007<br/>34 companies announce Android"]
+  F["July 2008<br/>App Store opens<br/>with over 500 apps"]
+  G["Oct 22, 2008<br/>T-Mobile G1, the first<br/>Android phone, and<br/>Android Market"]
+  A --> B --> C --> D --> E --> F --> G
 ```
 
 ## Why it mattered
