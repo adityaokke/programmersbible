@@ -83,18 +83,14 @@ The server ran on a computer called a NeXT, in his office. CERN says it had a la
 
 The first **website** (a group of web pages that belong together) was at the address `info.cern.ch`. CERN says it "was dedicated to the World Wide Web project itself".
 
-*Diagram: a browser on one computer and the web server at CERN, joined through the internet. The browser sends a request for a page. The server sends back the page, which contains links to more pages.*
-
-```
-  BROWSER (client)                              WEB SERVER at CERN
-  on a scientist's computer                     (info.cern.ch)
-
-        │   request: "send me this page"            │
-        │ ─────────────────────────────────────────►│
-        │                                           │
-        │   response: the page, with links         │
-        │ ◄───────────────────────────────────────── │
-                       (the internet)
+```mermaid
+sequenceDiagram
+  accTitle: A browser asks the web server at CERN for a page
+  accDescr: On the left is a web browser, the client, on a scientist's computer. On the right is the web server at CERN, at the address info.cern.ch. The two computers are joined through the internet. First the browser sends a request: send me this page. Then the server sends back the page, which contains links to more pages.
+  participant B as Browser
+  participant S as Server at CERN
+  B->>S: 1. Request: send me this page
+  S-->>B: 2. Response: the page, with links
 ```
 
 CERN says that "only a few users" had a NeXT computer, and the first browser ran on that kind of computer. So work started on a simpler browser, the **line-mode** browser, which "could run on any system". Nicola Pellow wrote it. She was a student, working at CERN for a short time as part of her studies.

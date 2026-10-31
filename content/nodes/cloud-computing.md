@@ -77,16 +77,22 @@ Microsoft describes the cloud as "an extensive network of remote servers around 
 
 Amazon Web Services (AWS), one cloud company, groups its data centers by place. It calls each group a **region**: "a physical location around the world where we cluster data centers". (The cables and buildings that carry the internet are the topic of [[physical-internet]].)
 
-*Diagram: your laptop and phone, on the left, send requests through the internet to server computers in a cloud company's data centers, in two regions, on the right, and get answers.*
-
-```
-  YOU                      THE INTERNET               A CLOUD COMPANY
-                                              ┌──────────────────────────┐
-  laptop ───┐                                 │ region A: data centers   │
-            ├──── requests and answers ──────►│  [server][server][server]│
-  phone ────┘                                 │ region B: data centers   │
-                                              │  [server][server][server]│
-                                              └──────────────────────────┘
+```mermaid
+flowchart TD
+  accTitle: Using the cloud through the internet
+  accDescr: Your laptop and your phone send requests through the internet to server computers of a cloud company and get answers back. The company's servers sit in data centers in two regions, region A and region B.
+  L[Your laptop] <--> N((The internet))
+  P[Your phone] <--> N
+  N <-- requests and answers --> SA
+  N <-- requests and answers --> SB
+  subgraph C[A cloud company]
+    SA["Region A:
+    data centers
+    with servers"]
+    SB["Region B:
+    data centers
+    with servers"]
+  end
 ```
 
 ### One computer, shared by many
