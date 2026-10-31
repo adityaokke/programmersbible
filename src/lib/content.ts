@@ -180,7 +180,8 @@ export async function renderBody(node: Node): Promise<string> {
     const [l, d] = [light![Number(i)]!, dark![Number(i)]!];
     if (l.status === "rejected") throw new Error(`${node.id}: mermaid diagram ${i} failed: ${l.reason}`);
     if (d.status === "rejected") throw new Error(`${node.id}: mermaid diagram ${i} failed: ${d.reason}`);
-    return `<figure class="diagram"><div class="diagram-light">${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
+    // The natural width lets small screens shrink a diagram only so far, then scroll instead.
+    return `<figure class="diagram" style="--w:${Math.round(l.value.width)}"><div class="diagram-light">${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
   });
   return html;
 }
