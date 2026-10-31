@@ -24,8 +24,15 @@ images:
     license: Public domain
     labels:
       - { x: 20, y: 30, text: Platter }
-      - { x: 50.5, y: 29.5, text: Head, side: right, ly: 12 }
       - { x: 52, y: 46, text: Arm, side: right }
+    zoom:
+      x: 44
+      y: 23
+      w: 13
+      h: 13
+      text: "Close-up: the head at the tip of the arm"
+      labels:
+        - { x: 50, y: 46, text: Head, side: right }
 sources:
   - title: "Stanford CS101: Computer Hardware"
     url: https://web.stanford.edu/class/cs101/hardware-1.html
