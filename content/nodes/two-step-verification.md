@@ -21,12 +21,8 @@ sources:
     url: https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/activate-2-step-verification-on-your-email
   - title: "NCSC: Setting up 2-Step Verification (2SV)"
     url: https://www.ncsc.gov.uk/guidance/setting-two-factor-authentication-2fa
-  - title: "CISA: Turn On MFA"
-    url: https://www.cisa.gov/secure-our-world/turn-mfa
   - title: "CISA: Require Multifactor Authentication"
     url: https://www.cisa.gov/secure-our-world/require-multifactor-authentication
-  - title: "CISA: More than a Password"
-    url: https://www.cisa.gov/mfa
   - title: "CISA: About CISA"
     url: https://www.cisa.gov/about
   - title: "FTC Consumer Advice: Use Two-Factor Authentication to Protect Your Accounts"
@@ -49,8 +45,8 @@ sources:
     url: https://www.w3.org/standards/
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-01
+updated: 2026-11-01
 ---
 
 > **In one sentence:** Two-step verification asks for a second proof after your password, such as a one-time code or a security key, so that someone who knows your password still cannot log in.
@@ -75,16 +71,16 @@ The US Federal Trade Commission (FTC) compares it to "using two locks on your do
 
 NIST, a US government agency that writes guidelines for logging in, lists three **authentication factors** (kinds of proof):
 
-- **Something you know**, such as a password or a PIN (a short secret number).
-- **Something you have**, such as a device. CISA, a US government security agency, gives the examples of "an authentication application or a confirmation text on your phone".
-- **Something you are**, such as "a fingerprint or face scan", CISA says.
+- **Something you know**, such as a password or a PIN (a personal identification number).
+- **Something you have**. The FTC gives the examples of "a one-time verification passcode you get by text, email, or from an authenticator app" and "a security key".
+- **Something you are**, such as "your fingerprint, your face", the FTC says.
 
-The FTC says two-step verification asks for proofs from "two of the three categories". So your password is one proof, and the second is of a different kind, such as something you have. CISA says: "Even if an unauthorized user steals your password, they won't be able to meet the second step requirement".
+The FTC says two-step verification asks for proofs from "two of the three categories". So your password is one proof, and the second is of a different kind, such as something you have. The NCSC says that with two-step verification, "even if a criminal knows your password, they won't be able to access your accounts".
 
 ### Common kinds of second step
 
 - **A code by text message or email.** The FTC says this **one-time code** is "only good for one log in and expires automatically".
-- **An authenticator app.** An **app** is a program on your [[smartphone]]. CISA says these apps "generate a new code every 30 seconds". The NCSC says they work without "needing a mobile signal": the phone does not need the phone network.
+- **An authenticator app.** An **app** is a program on your [[smartphone]]. CISA, a US government security agency, says: "An app generates a new code every 30 seconds." The NCSC says they work without "needing a mobile signal": the phone does not need the phone network.
 - **A prompt.** The FTC says an authenticator app may send "a push notification" (a message that pops up) to your phone when someone tries to log in. The FTC says you "can approve or deny the request with a tap".
 - **A security key.** The FTC says security keys "are physical devices". Some plug into the computer; others connect when you hold them close.
 
@@ -133,7 +129,6 @@ You will only read here. Do not change any settings, and never type a password.
 1. Open the NCSC page [Turn on 2-step verification (2SV)](https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/activate-2-step-verification-on-your-email).
 2. Read the first paragraphs. **What you should see:** the other names for it, "two-factor authentication (2FA)" and "multi-factor authentication (MFA)".
 3. Scroll down and look for the words "security settings". **What you should see:** the option to turn it on is "usually found in the security settings for the account".
-4. Open the CISA page [Turn On MFA](https://www.cisa.gov/secure-our-world/turn-mfa) and scroll down. **What you should see:** short steps that say to look under your account profile, then select the security settings, turn on MFA, and choose a method. Only read them for now.
 
 These steps work on a computer or a phone.
 
@@ -152,9 +147,7 @@ These steps work on a computer or a phone.
 
 - NCSC, Turn on 2-step verification (2SV): https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/activate-2-step-verification-on-your-email
 - NCSC, Setting up 2-Step Verification (2SV): https://www.ncsc.gov.uk/guidance/setting-two-factor-authentication-2fa
-- CISA, Turn On MFA: https://www.cisa.gov/secure-our-world/turn-mfa
 - CISA, Require Multifactor Authentication: https://www.cisa.gov/secure-our-world/require-multifactor-authentication
-- CISA, More than a Password: https://www.cisa.gov/mfa
 - CISA, About CISA: https://www.cisa.gov/about
 - FTC Consumer Advice, Use Two-Factor Authentication to Protect Your Accounts: https://consumer.ftc.gov/articles/use-two-factor-authentication-protect-your-accounts
 - NIST CSRC Glossary, multifactor authentication: https://csrc.nist.gov/glossary/term/multi_factor_authentication

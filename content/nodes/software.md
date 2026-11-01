@@ -41,8 +41,8 @@ sources:
     url: https://searchfox.org/firefox-main/source/toolkit/locales/en-US/toolkit/about/aboutProcesses.ftl
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-01
+updated: 2026-11-01
 ---
 
 > **In one sentence:** Software means the programs that run on a computer: a program usually waits in storage as a file of instructions, and when you open it, it is copied into memory (RAM) and the CPU carries it out.
@@ -99,7 +99,7 @@ flowchart TD
   R --> C
 ```
 
-(Programs can also be run by an interpreter. See below.)
+(Programs can also be run by an interpreter. See [[programming-languages]].)
 
 Stanford's course describes what happens. When you open a program, for example by double-clicking its file, its instructions are copied from storage into RAM. Then the [[cpu|CPU]] starts carrying them out. "Each program gets its own area of RAM", and a computer "can run multiple programs at the same time".
 
