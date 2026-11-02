@@ -24,6 +24,16 @@ const examples = [
       The foundations every programmer should know, from the first computers to your own website on your own domain.
     </p>
 
+    {/* Two equal ways in: the map of every topic, or the First Chapter in order. */}
+    <p class="ways-intro">
+      Every topic is on one <strong>map</strong>, with arrows from what you learn first to what it unlocks. Explore it,
+      or read the First Chapter step by step.
+    </p>
+    <div class="ways-in">
+      <a class="button" href="/map">🗺 Explore the map</a>
+      {firstNode && <a class="button" href="/path/first-chapter">▶ Start from the very beginning</a>}
+    </div>
+
     <h2>What do you want to understand?</h2>
     <form action="/search" method="get" role="search" aria-label="Ask a question">
       <input type="search" name="q" placeholder="e.g. how does a website get to my phone?" style="width: 100%" />
@@ -32,9 +42,6 @@ const examples = [
     <div class="chips">
       {examples.map((q) => <a href={`/search?q=${encodeURIComponent(q)}`}>{q}</a>)}
     </div>
-
-    <p>or</p>
-    {firstNode && <a class="button" href="/path/first-chapter">▶ Start from the very beginning</a>}
 
     {
       firstChapter && (
@@ -65,3 +72,11 @@ const examples = [
     }
   </div>
 </Base>
+
+<style>
+  .ways-intro { margin: 1.5rem 0 0.75rem; }
+  /* Two buttons of the same size, side by side; one above the other on a phone. */
+  .ways-in { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2rem; }
+  .ways-in .button { text-align: center; }
+  @media (max-width: 520px) { .ways-in { grid-template-columns: 1fr; } }
+</style>
