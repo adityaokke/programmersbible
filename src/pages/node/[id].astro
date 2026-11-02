@@ -14,7 +14,9 @@ const position = pathPosition(node.id);
 const mapUrl = `/map?topic=${node.id}`;
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
-const related = byIds([...node.related, ...node.part_of, ...node.led_to]);
+// A topic already under "Learn first" or "Leads to" is not listed again under "Related".
+const listed = new Set([...learnFirst, ...next].map((n) => n.id));
+const related = byIds([...new Set([...node.related, ...node.part_of, ...node.led_to])]).filter((n) => !listed.has(n.id));
 // Opens a GitHub issue form with this topic already filled in.
 const reportUrl = `https://github.com/adityaokke/programmersbible/issues/new?${new URLSearchParams({
   template: "report-a-problem.yml",
