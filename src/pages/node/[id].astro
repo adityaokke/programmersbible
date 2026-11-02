@@ -56,6 +56,22 @@ const byline =
   }
 
   <div class="node-layout">
+    {/* "On this page" is in one of three places, by screen width (see global.css): this left column
+        on wide screens, the top of the sidebar on medium ones, a box under the title on phones. */}
+    {
+      sections.length > 1 && (
+        <nav class="toc toc-side toc-left" aria-label="On this page">
+          <h2>On this page</h2>
+          <ul>
+            {sections.map((s) => (
+              <li>
+                <a href={`#${s.id}`}>{s.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
     {/* Search (Pagefind) indexes only published topics: their text, plus the other names and the
         questions each one answers, which count a little more. */}
     <article data-pagefind-body={readable ? "" : undefined} data-pagefind-ignore={readable ? undefined : "all"}>
@@ -127,11 +143,11 @@ const byline =
       }
     </article>
 
-    <aside class="sidebar" aria-label="On this page and related topics">
+    <aside class="sidebar" aria-label="Related topics">
       {
         sections.length > 1 && (
-          <nav class="toc toc-side" aria-labelledby="toc-title">
-            <h2 id="toc-title">On this page</h2>
+          <nav class="toc toc-side" aria-label="On this page">
+            <h2>On this page</h2>
             <ul>
               {sections.map((s) => (
                 <li>
@@ -191,14 +207,17 @@ const byline =
 <script>
   // Mark the section being read in "On this page": the last heading that has scrolled past the top third.
   const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc-side a")];
-  const headings = links.map((a) => document.getElementById(a.hash.slice(1))).filter((h) => h !== null);
+  const headings = [...new Set(links.map((a) => a.hash.slice(1)))]
+    .map((id) => document.getElementById(id))
+    .filter((h) => h !== null);
   function mark() {
     const line = innerHeight / 3;
-    let current = 0;
-    headings.forEach((h, i) => {
-      if (h.getBoundingClientRect().top < line) current = i;
-    });
-    links.forEach((a, i) => (i === current ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
+    let current = headings[0]!;
+    for (const h of headings) if (h.getBoundingClientRect().top < line) current = h;
+    for (const a of links) {
+      if (a.hash === `#${current.id}`) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    }
   }
   if (headings.length) {
     addEventListener("scroll", mark, { passive: true });
