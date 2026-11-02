@@ -4,7 +4,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { imageSize } from "image-size";
-import { Marked } from "marked";
+import { Marked, type Tokens } from "marked";
 import { createMermaidRenderer } from "mermaid-isomorphic";
 import { IMAGES_DIR, loadNodes, loadPaths, type Issue, type LoadedNode } from "../../scripts/lib/content.ts";
 import type { NodeFrontmatter, PathFile } from "../../schema/node.ts";
@@ -167,6 +167,11 @@ export async function renderBody(node: Node): Promise<string> {
   const marked = new Marked({
     gfm: true,
     renderer: {
+      // Sections get an id, so "On this page" can link to them.
+      heading({ tokens, depth, text }) {
+        if (depth !== 2) return false;
+        return `<h2 id="${sectionId(text)}">${this.parser.parseInline(tokens)}</h2>\n`;
+      },
       code({ text, lang }) {
         if (lang !== "mermaid") return false;
         diagrams.push(text);
@@ -228,6 +233,22 @@ export async function renderBody(node: Node): Promise<string> {
     return `<figure class="diagram${wide ? " wide" : ""}" style="--w:${Math.round(l.value.width)}">${hint}<div class="diagram-light"${wide ? ' tabindex="0"' : ""}>${l.value.svg}</div><div class="diagram-dark" aria-hidden="true">${d.value.svg}</div></figure>`;
   });
   return html;
+}
+
+/** "🧪 Try it in your browser" → "try-it-in-your-browser". */
+function sectionId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
+    .replace(/^-|-$/g, "");
+}
+
+/** The node's sections (its ## headings), for "On this page". */
+export function sectionsOf(node: Node): { id: string; title: string }[] {
+  return new Marked()
+    .lexer(node.body)
+    .filter((t): t is Tokens.Heading => t.type === "heading" && t.depth === 2)
+    .map((t) => ({ id: sectionId(t.text), title: t.text }));
 }
 
 /** Small search index embedded in the page: titles, aliases and questions. */

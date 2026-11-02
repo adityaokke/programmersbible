@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { byIds, isReadable, leadsTo, nodeUrl, nodes, pathPosition, renderBody, type Node } from "../../lib/content.ts";
+import { byIds, isReadable, leadsTo, nodeUrl, nodes, pathPosition, renderBody, sectionsOf, type Node } from "../../lib/content.ts";
 
 export function getStaticPaths() {
   return nodes.map((node) => ({ params: { id: node.id }, props: { node } }));
@@ -9,6 +9,7 @@ export function getStaticPaths() {
 const { node } = Astro.props as { node: Node };
 const readable = isReadable(node);
 const html = readable ? await renderBody(node) : "";
+const sections = readable ? sectionsOf(node) : [];
 const position = pathPosition(node.id);
 const mapUrl = `/map?topic=${node.id}`;
 const learnFirst = byIds(node.requires);
@@ -77,6 +78,21 @@ const byline =
       </p>
 
       {
+        sections.length > 1 && (
+          <details class="toc toc-top">
+            <summary>On this page</summary>
+            <ul>
+              {sections.map((s) => (
+                <li>
+                  <a href={`#${s.id}`}>{s.title}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
+
+      {
         readable ? (
           <Fragment set:html={html} />
         ) : (
@@ -109,11 +125,25 @@ const byline =
       }
     </article>
 
-    <aside class="sidebar" aria-label="Related topics">
+    <aside class="sidebar" aria-label="On this page and related topics">
+      {
+        sections.length > 1 && (
+          <nav class="toc toc-side" aria-labelledby="toc-title">
+            <h2 id="toc-title">On this page</h2>
+            <ul>
+              {sections.map((s) => (
+                <li>
+                  <a href={`#${s.id}`}>{s.title}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
       {
         learnFirst.length > 0 && (
-          <section>
-            <h2>📚 Learn first</h2>
+          <section class="links before">
+            <h2>← Learn first</h2>
             <ul>
               {learnFirst.map((n) => (
                 <li>
@@ -126,8 +156,8 @@ const byline =
       }
       {
         next.length > 0 && (
-          <section>
-            <h2>➡ Leads to</h2>
+          <section class="links after">
+            <h2>Leads to →</h2>
             <ul>
               {next.map((n) => (
                 <li>
@@ -140,8 +170,8 @@ const byline =
       }
       {
         related.length > 0 && (
-          <section>
-            <h2>🔗 Related</h2>
+          <section class="links related">
+            <h2>Related</h2>
             <ul>
               {related.map((n) => (
                 <li>
@@ -155,3 +185,21 @@ const byline =
     </aside>
   </div>
 </Base>
+
+<script>
+  // Mark the section being read in "On this page": the last heading that has scrolled past the top third.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc-side a")];
+  const headings = links.map((a) => document.getElementById(a.hash.slice(1))).filter((h) => h !== null);
+  function mark() {
+    const line = innerHeight / 3;
+    let current = 0;
+    headings.forEach((h, i) => {
+      if (h.getBoundingClientRect().top < line) current = i;
+    });
+    links.forEach((a, i) => (i === current ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
+  }
+  if (headings.length) {
+    addEventListener("scroll", mark, { passive: true });
+    mark();
+  }
+</script>
