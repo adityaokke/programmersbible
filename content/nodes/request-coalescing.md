@@ -78,6 +78,10 @@ sources:
     url: https://nodejs.org/api/worker_threads.html
   - title: "nginx: home page"
     url: https://nginx.org/en/
+  - title: "MDN Web Docs: Window.location"
+    url: https://developer.mozilla.org/en-US/docs/Web/API/Window/location
+  - title: "MDN Web Docs: Location.href"
+    url: https://developer.mozilla.org/en-US/docs/Web/API/Location/href
 author: ai
 updated: 2026-11-05
 ---
@@ -165,7 +169,7 @@ Promise.all([getProduct(7), getProduct(7), getProduct(7)]).then((answers) => {
 
 ### In Python
 
-Python has a part called `asyncio` for asynchronous code. A **task** is its name for a job that has been handed over to run. The steps are the same, with a Python dictionary as the list.
+Python has a part called `asyncio` for asynchronous code. A **task** is its name for a job that has been handed over to run. The steps are the same, with `in_flight` as the list.
 
 ```python
 import asyncio
@@ -260,7 +264,9 @@ There is a danger between steps 1 and 3: two callers might both find nothing in 
 
 The Node.js and Python programs are safe. In Node.js, an `await` pauses only the function it is in. In Python, it pauses only the task it is in. The function that checks and writes the list has no `await`, so it finishes those steps before any other caller can run. Node.js runs JavaScript in a single thread (doing one thing at a time). Python's event loop, the part of `asyncio` that runs the tasks, "runs one Task at a time". If you put an `await` between steps 1 and 3, the danger comes back.
 
-Goroutines can run on several threads, so two can reach the list at the same moment. The `singleflight` package makes sure "only one execution is in-flight for a given key at a time". (Here, the key is the `id`.) (Some Python and Node.js programs also use threads, which this page does not cover.)
+Goroutines can run on several threads, so two can reach the list at the same moment. The `singleflight` package makes sure "only one execution is in-flight for a given key at a time". (Here, the key is the `id`.)
+
+Some Python and Node.js programs also use threads, which this page does not cover.
 
 ### The same idea in caches
 
@@ -350,3 +356,5 @@ Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers fr
 - Firefox DevTools User Docs, All keyboard shortcuts: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
 - Node.js, Worker threads: https://nodejs.org/api/worker_threads.html
 - nginx, home page: https://nginx.org/en/
+- MDN Web Docs, Window.location: https://developer.mozilla.org/en-US/docs/Web/API/Window/location
+- MDN Web Docs, Location.href: https://developer.mozilla.org/en-US/docs/Web/API/Location/href
