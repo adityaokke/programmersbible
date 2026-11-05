@@ -32,8 +32,26 @@ sources:
     url: https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https
   - title: "GitHub Docs: What is GitHub Pages?"
     url: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
+  - title: "GitHub Docs: Troubleshooting 404 errors for GitHub Pages sites"
+    url: https://docs.github.com/en/pages/getting-started-with-github-pages/troubleshooting-404-errors-for-github-pages-sites
+  - title: "GitHub Docs: Creating an account on GitHub"
+    url: https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github
+  - title: "GitHub Docs: GitHub glossary"
+    url: https://docs.github.com/en/get-started/learning-about-github/github-glossary
+  - title: "MDN Web Docs: How much does it cost to do something on the Web?"
+    url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/How_much_does_it_cost
+  - title: "MDN Web Docs: 404 Not Found"
+    url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404
+  - title: "MDN Web Docs: HTML"
+    url: https://developer.mozilla.org/en-US/docs/Web/HTML
+  - title: "Google Public DNS: JSON API"
+    url: https://developers.google.com/speed/public-dns/docs/doh/json
+  - title: "RFC 1034, Domain Names: Concepts and Facilities"
+    url: https://www.rfc-editor.org/rfc/rfc1034
+  - title: "Google Chrome Help: Check if a site's connection is secure"
+    url: https://support.google.com/chrome/answer/95617?hl=en
 author: ai
-updated: 2026-10-30
+updated: 2026-11-05
 ---
 
 > **In one sentence:** Build a small web page with HTML, CSS and JavaScript, publish it for free with GitHub Pages, and connect it to your own domain name.
@@ -51,9 +69,9 @@ Everything happens in your browser. You do not need to install anything.
 
 ## What you'll need
 
-- A computer with a browser. (A phone works, but a computer is much more comfortable.)
+- A computer with a browser.
 - An **email address**, to create a free account.
-- About **one hour** for Part A. Part B takes about 30 minutes of work, plus waiting time (up to a day).
+- Some patience. GitHub can take up to 10 minutes to publish your site. In Part B, some steps can each take up to 24 hours, so Part B can take more than a day.
 - For Part B only: a **domain name**. You rent it from a company called a **registrar**, which sells domain names. You pay the registrar, usually once per year. Prices are different for each name and ending, so check the price before you buy.
 
 You will use **GitHub**, a website where people store and share code. GitHub has a free service called **GitHub Pages**, which [[web-hosting|hosts]] simple websites made of HTML, CSS and JavaScript files. "Hosts" means: GitHub keeps your files on its servers and sends them to anyone who visits your site.
@@ -69,12 +87,12 @@ A few new words:
 
 ### Part A: publish your page
 
-**1. Create a GitHub account.** Go to `https://github.com` and sign up. GitHub will ask you to confirm your email address, and may ask you to solve a small puzzle to prove you are a person. That is normal. Choose your **username** carefully: it will be part of your website's address.
+**1. Create a GitHub account.** Go to `https://github.com` and sign up. GitHub will ask you to confirm your email address. Choose your **username** carefully: it will be part of your website's address.
 
 **2. Create a repository.**
 
 - Click the **+** icon in the top-right corner, then **New repository**.
-- As the repository name, type **`yourusername.github.io`**, using your real username. For example, if your username is `sari-dev`, type `sari-dev.github.io`. GitHub uses this exact name to know that this repository is your website.
+- As the repository name, type **`yourusername.github.io`**, using your real username in small letters, even if it has capital letters. For example, if your username is `sari-dev`, type `sari-dev.github.io`. GitHub uses this exact name to know that this repository is your website.
 - Choose **Public**. This means anyone can see the files. With a free account, GitHub Pages needs a public repository.
 - Turn on **Add README**.
 - Click **Create repository**.
@@ -120,7 +138,7 @@ The code has three parts:
 - The [[css|CSS]] inside `<style>` sets the look: the font, the blue heading and the button size.
 - The [[javascript|JavaScript]] inside `<script>` makes the button do something: when you click it, a message appears.
 
-- Click the green **Commit changes...** button. A small window opens. Write a short message like `Add my first page`, then click **Commit changes** in that window.
+**Now save your page.** Click the green **Commit changes...** button. A small window opens. Write a short message like `Add my first page`. If the window asks where to commit, keep the current branch, **main**, and do not create a new branch: your site is published from main. Then click **Commit changes** in that window.
 
 ✅ **Checkpoint:** your repository now has two files: `README.md` and `index.html`.
 
@@ -131,7 +149,7 @@ The code has three parts:
 - Under **Build and deployment**, set **Source** to **Deploy from a branch**. ("Deploy" means "publish".)
 - Under **Branch**, choose **main**. Next to it, keep the folder as **/ (root)**, which means "the main folder of the repository". Click **Save**.
 
-✅ **Checkpoint:** the Pages settings now show that your site is being built. After a few minutes, reload the page: you should see a message with your site's address, such as "Your site is live at…".
+✅ **Checkpoint:** after a few minutes, reload the page. Under "GitHub Pages", you should see a **Visit site** button.
 
 **5. Visit your site.** It can take **up to 10 minutes** the first time. Then go to `https://yourusername.github.io`.
 
@@ -143,7 +161,7 @@ The code has three parts:
 
 **7. Recommended: verify your domain.** GitHub recommends that you prove the domain is yours **before** you connect it. This stops other people from using your domain on their GitHub site. Follow GitHub's guide "Verifying your custom domain for GitHub Pages" (linked in the sources below). You do this in your **profile** settings (click your picture in the top-right corner, then **Settings**, then **Pages**), not in the repository. It asks you to add one DNS record, in the same place as step 9.
 
-**8. Tell GitHub your domain.** In your repository, go to **Settings**, then **Pages**. Under **Custom domain**, type `www.yourname.com` and click **Save**.
+**8. Tell GitHub your domain.** In your repository, go to **Settings**, then **Pages**. Under **Custom domain**, type `www.yourname.com` and click **Save**. GitHub adds a file called `CNAME` to your repository. This is expected.
 
 **9. Tell DNS where your site is.** Log in to your registrar and open the **DNS settings** for your domain. In the [[dns|DNS]] lesson you **read** DNS records. Now you will **create** one. Add this record:
 
@@ -153,9 +171,9 @@ The code has three parts:
 
 A **CNAME** record says that one name is another name for a second name. Here it says: "`www.yourname.com` is another name for `yourusername.github.io`". So when a browser looks up `www.yourname.com`, DNS leads it to the GitHub Pages servers.
 
-Every registrar's page looks a little different. Some ask for `www` as the name, and some for the full `www.yourname.com`. If a `www` record already exists, edit it instead of adding a second one.
+Every registrar's page looks a little different, so the name field may not match this table exactly. If a `www` record already exists, edit it instead of adding a second one.
 
-*Optional:* to make the address **without** `www` (`yourname.com`) work too, create four **A** records. In most registrars, the name `@` means "the domain itself, with nothing in front". GitHub's documentation lists these four values: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`. Add all four.
+*Optional:* to make the address **without** `www` (`yourname.com`) work too, create four **A** records. GitHub's table uses the name `@` for "the domain itself, with nothing in front". If your registrar already set a default record for the domain itself, remove it first. GitHub's documentation lists these four values: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`. Add all four.
 
 **10. Wait, then turn on HTTPS.** DNS changes can take **up to 24 hours** to reach everyone. When your site works at your domain, go back to **Settings**, then **Pages**, and select **Enforce HTTPS**. This makes every visitor use the secure, encrypted version of your site. The option can take up to 24 hours to become available.
 
@@ -165,7 +183,7 @@ You are done when:
 
 - `https://yourusername.github.io` (Part A) or `https://www.yourname.com` (Part B) shows your page,
 - the button shows the message when you click it, and
-- the browser shows a **padlock** (or a similar "secure" sign) next to the address. This means [[https|HTTPS]] is working. GitHub turns on HTTPS automatically for `github.io` addresses. For your own domain, it works after step 10.
+- the address starts with `https://`, and the browser does not say "Not secure". This means [[https|HTTPS]] is working. GitHub turns on HTTPS automatically for `github.io` addresses. For your own domain, it works after step 10.
 
 Send the link to a friend. Your website is on the internet.
 
@@ -173,10 +191,11 @@ Send the link to a friend. Your website is on the internet.
 
 Problems like these happen to every programmer. Finding and fixing them is a normal part of the work.
 
-- **GitHub shows a "404" page** ("There isn't a GitHub Pages site here" or "File not found"). 404 is the HTTP status code for "not found". Wait 10 minutes and reload. Then check that the repository name is exactly `yourusername.github.io`, and the file name is exactly `index.html` (all small letters).
+- **GitHub shows a "404" page.** 404 is the HTTP status code for "not found". Wait 10 minutes and reload. Then check that the repository name is exactly `yourusername.github.io` and the file name is exactly `index.html` (both in small letters). Also check that `index.html` is on the **main** branch.
+- **You see your README text instead of your page:** check that the file name is exactly `index.html`.
 - **The page shows, but the button does nothing:** compare your `<script>` part with the code above. One missing bracket or quote can stop JavaScript from working. Copying the whole code again is often the fastest fix.
 - **Your domain does not show the site:** check your CNAME record with the DNS lookup tool from the DNS lesson: `https://dns.google/query?name=www.yourname.com&type=CNAME`. In the `"Answer"` part, the `"data"` should be `yourusername.github.io.`. If you made the change recently, wait a few hours.
-- **"Enforce HTTPS" cannot be selected:** wait. It can take up to 24 hours after the domain starts working.
+- **"Enforce HTTPS" cannot be selected:** wait. It can take up to 24 hours after the domain starts working. If it still fails, check for extra DNS records, or records that do not point to GitHub Pages.
 
 ## What you learned
 
@@ -187,7 +206,7 @@ This one project used almost everything in the course so far:
 - In Part B, you rented a [[domain-name|domain name]] and connected it to your site with a [[dns|DNS]] record.
 - Your site uses [[https|HTTPS]], so visitors connect securely.
 
-And when a friend opens your link, every step from "What Happens When You Type a URL" ([[what-happens-when-you-type-a-url]]) happens, ending with **your** page on **their** screen.
+And when a friend opens your link, every step from [[what-happens-when-you-type-a-url|What Happens When You Type a URL]] happens, ending with **your** page on **their** screen.
 
 ## Sources
 
@@ -199,3 +218,12 @@ And when a friend opens your link, every step from "What Happens When You Type a
 - GitHub Docs, Verifying your custom domain for GitHub Pages: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages
 - GitHub Docs, Securing your GitHub Pages site with HTTPS: https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https
 - GitHub Docs, What is GitHub Pages?: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
+- GitHub Docs, Troubleshooting 404 errors for GitHub Pages sites: https://docs.github.com/en/pages/getting-started-with-github-pages/troubleshooting-404-errors-for-github-pages-sites
+- GitHub Docs, Creating an account on GitHub: https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github
+- GitHub Docs, GitHub glossary: https://docs.github.com/en/get-started/learning-about-github/github-glossary
+- MDN Web Docs, How much does it cost to do something on the Web?: https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/How_much_does_it_cost
+- MDN Web Docs, 404 Not Found: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404
+- MDN Web Docs, HTML: https://developer.mozilla.org/en-US/docs/Web/HTML
+- Google Public DNS, JSON API: https://developers.google.com/speed/public-dns/docs/doh/json
+- RFC 1034, Domain Names, Concepts and Facilities: https://www.rfc-editor.org/rfc/rfc1034
+- Google Chrome Help, Check if a site's connection is secure: https://support.google.com/chrome/answer/95617?hl=en
