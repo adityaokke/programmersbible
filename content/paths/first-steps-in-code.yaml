@@ -1,0 +1,10 @@
+id: first-steps-in-code
+title: "First Steps in Code"
+description: "From your first variable to asynchronous code and threads, in JavaScript, Python and Go."
+sections:
+  - title: "The Basics"
+    nodes: [what-is-programming, variables, conditions, loops, functions, lists-and-dictionaries, packages]
+  - title: "Waiting and Doing Several Things"
+    nodes: [asynchronous-code, promises, threads, race-conditions]
+  - title: "Three Languages"
+    nodes: [nodejs, python, python-asyncio, go-language, goroutines]

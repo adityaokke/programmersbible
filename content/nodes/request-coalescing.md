@@ -4,7 +4,7 @@ title: "Request Coalescing: One Job for Many Requests"
 type: concept
 part: code
 status: review
-requires: [caching, javascript]
+requires: [caching, nodejs, python-asyncio, goroutines, race-conditions]
 related: [server, programming-languages]
 summary: "Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer."
 read_minutes: 7
@@ -83,7 +83,7 @@ sources:
   - title: "MDN Web Docs: Location.href"
     url: https://developer.mozilla.org/en-US/docs/Web/API/Location/href
 author: ai
-updated: 2026-11-05
+updated: 2026-11-06
 ---
 
 > **In one sentence:** Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer.
