@@ -3,7 +3,7 @@ id: caching
 title: "Caching: Saving a Copy for Next Time"
 type: concept
 part: web
-status: review
+status: published
 requires: [http, dns, browser-devtools]
 related: [what-happens-when-you-type-a-url, request-coalescing]
 summary: "A cache keeps a copy of an answer, so that the next request for the same thing can use the copy without asking the server."
@@ -42,6 +42,8 @@ sources:
   - title: "Firefox DevTools User Docs: Network request details"
     url: https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_details/index.html
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-11-05
 updated: 2026-11-05
 ---
 
