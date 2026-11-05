@@ -167,6 +167,8 @@ export const BANNED_WORDS = [
 ] as const;
 
 export const WORD_RANGE = { min: 600, max: 1200 } as const;
+/** Projects are step-by-step instructions, so they get more room. Code blocks are not counted. */
+export const PROJECT_WORD_RANGE = { min: 600, max: 1600 } as const;
 
 export const REQUIRED_HEADINGS: Record<(typeof NODE_TYPES)[number], string[]> = {
   concept: [

@@ -7,7 +7,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { imageSize } from "image-size";
 import { MAX_BYTES, MAX_WIDTH, MAX_WIDTH_ZOOM } from "./lib/images.ts";
 import { join } from "node:path";
-import { BANNED_WORDS, REQUIRED_HEADINGS, WORD_RANGE } from "../schema/node.ts";
+import { BANNED_WORDS, PROJECT_WORD_RANGE, REQUIRED_HEADINGS, WORD_RANGE } from "../schema/node.ts";
 import {
   IMAGES_DIR,
   ROOT,
@@ -102,11 +102,12 @@ function checkWriting(node: LoadedNode) {
 
   if (type !== "hub") {
     const words = countWords(node.body);
-    if (words < WORD_RANGE.min || words > WORD_RANGE.max) {
+    const range = node.data.type === "project" ? PROJECT_WORD_RANGE : WORD_RANGE;
+    if (words < range.min || words > range.max) {
       issues.push({
         level: "warning",
         file: node.file,
-        message: `${words} words (target ${WORD_RANGE.min}–${WORD_RANGE.max})`,
+        message: `${words} words (target ${range.min}–${range.max})`,
       });
     }
   }
