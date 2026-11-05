@@ -42,6 +42,7 @@ They make a confused reader feel stupid. The validator rejects them in `review` 
 - One idea per paragraph.
 - Use a diagram whenever an idea involves movement, layers or structure.
 - **600–1,200 words** (3–7 minutes). Longer → split it into two nodes.
+- **Projects: up to 1,600 words**, because step-by-step instructions need the room. Code blocks are not counted.
 
 ## Analogies
 
@@ -245,7 +246,7 @@ Before a node moves to `published`, the `ai-reviewer` agent (or a human reviewer
 - [ ] Every fact, date and number is checked against a source (claims table)
 - [ ] "Try it" steps work: checked against official docs by the AI reviewer, and in a real browser by a human reviewer
 - [ ] Diagrams and pictures have alt text; every photo has an allowed license and its credit
-- [ ] 600–1,200 words
+- [ ] 600–1,200 words (projects: up to 1,600)
 - [ ] Read as a real beginner, or by one
 
 Project nodes always need a human reviewer before they are published (`reviewed_by: ai` is rejected for `type: project`).
