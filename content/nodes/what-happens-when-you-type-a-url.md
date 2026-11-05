@@ -93,7 +93,7 @@ Imagine you want to order a catalogue from a shop in another city, by post.
 
 Example: you type `https://en.wikipedia.org/wiki/Computer` and press Enter.
 
-This simplified picture shows the steps below:
+This simplified picture shows the steps:
 
 ```mermaid
 sequenceDiagram
