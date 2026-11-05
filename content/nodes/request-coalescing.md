@@ -16,7 +16,7 @@ questions:
   - how do i avoid duplicate work in python asyncio
   - what is singleflight in go
   - what is request collapsing
-aliases: [in-flight deduplication, request collapsing, collapsed forwarding, request deduplication, singleflight, promise sharing, proxy_cache_lock]
+aliases: [in-flight deduplication, request collapsing, request deduplication, singleflight, promise sharing, proxy_cache_lock]
 sources:
   - title: "Fastly Documentation: Request collapsing"
     url: https://www.fastly.com/documentation/guides/concepts/edge-state/cache/request-collapsing/
@@ -26,8 +26,6 @@ sources:
     url: https://nginx.org/en/docs/http/ngx_http_proxy_module.html
   - title: "nginx: Changes in version 1.1.12 (26 December 2011)"
     url: https://nginx.org/en/CHANGES-1.2
-  - title: "Squid configuration: collapsed_forwarding"
-    url: https://www.squid-cache.org/Doc/config/collapsed_forwarding/
   - title: "HTTPower documentation: Dedup"
     url: https://httpower.hexdocs.pm/HTTPower.Middleware.Dedup.md
   - title: "Wiktionary: coalesce"
@@ -90,9 +88,11 @@ updated: 2026-11-06
 
 > **In one sentence:** Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer.
 
+Some "Learn first" topics are not written yet, but this page explains the words it needs.
+
 ## Why should I care?
 
-A **function** is a block of code that other code can make run. Imagine a function on your [[server]] that asks another computer for a product's details. Now 100 visitors open the same product page at the same time. Each visit runs your function, so the same slow work happens 100 times.
+A **function** is a block of code that other code can make run. Imagine a function on your [[server]] that asks another computer for a product's details. Now 100 visitors open one product page at once. Each visit runs your function, so the same slow work happens 100 times.
 
 [[caching|Caches]] have this problem too. Fastly, which runs caches, warns that the expiry of a very popular file can cause "an immediate flood of requests" to the server.
 
@@ -275,7 +275,6 @@ Some Python and Node.js programs also use threads, which this page does not cove
 A shared cache can do the same thing when a popular copy is missing. It sends one request to the server, and the others wait. You may also see these names:
 
 - **Request collapsing:** Fastly's name. RFC 9111, the HTTP caching standard from June 2022, says "collapse requests".
-- **Collapsed forwarding:** a setting in Squid, a cache program.
 - **In-flight request deduplication:** used by the HTTPower package.
 
 ### When to be careful
@@ -297,7 +296,7 @@ Type a tiny version of the same idea in the **console**, as in the JavaScript to
 
 1. In Chrome, Edge or Firefox, open `https://example.com`.
 2. Open the console: `Ctrl` + `Shift` + `J` on Windows (in Firefox: `Ctrl` + `Shift` + `K`), or `Cmd` + `Option` + `J` on Mac (in Firefox: `Cmd` + `Option` + `K`).
-3. Click the empty line at the bottom. Your browser may block pasting, so type each line below. The browser may add brackets or show suggestions. Keep typing, check that the line looks exactly like the one below, and press `Enter` at its end.
+3. Click the empty line at the bottom. Your browser may block pasting, so type each line below. The browser may add brackets or show suggestions. Keep typing, check that the line looks like the one below, and press `Enter` at its end.
 
 ```
 var jobs = 0; var job = null
@@ -332,7 +331,6 @@ Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers fr
 - RFC 9111, HTTP Caching (June 2022): https://www.rfc-editor.org/rfc/rfc9111
 - nginx documentation, ngx_http_proxy_module (proxy_cache_lock): https://nginx.org/en/docs/http/ngx_http_proxy_module.html
 - nginx, Changes in version 1.1.12 (26 December 2011): https://nginx.org/en/CHANGES-1.2
-- Squid configuration, collapsed_forwarding: https://www.squid-cache.org/Doc/config/collapsed_forwarding/
 - HTTPower documentation, Dedup: https://httpower.hexdocs.pm/HTTPower.Middleware.Dedup.md
 - Wiktionary, coalesce: https://en.wiktionary.org/wiki/coalesce
 - Node.js, About Node.js: https://nodejs.org/en/about

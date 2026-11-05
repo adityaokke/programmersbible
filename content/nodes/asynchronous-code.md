@@ -4,5 +4,5 @@ title: "Asynchronous Code: Not Stopping to Wait"
 type: concept
 part: code
 status: planned
-requires: [functions, server]
+requires: [callbacks, server]
 ---
