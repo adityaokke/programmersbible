@@ -1,4 +1,5 @@
 ---
+import MiniMap from "../../components/MiniMap.astro";
 import Base from "../../layouts/Base.astro";
 import { byIds, isReadable, leadsTo, nodeUrl, nodes, pathPosition, renderBody, sectionsOf, type Node } from "../../lib/content.ts";
 
@@ -11,7 +12,6 @@ const readable = isReadable(node);
 const html = readable ? await renderBody(node) : "";
 const sections = readable ? sectionsOf(node) : [];
 const position = pathPosition(node.id);
-const mapUrl = `/map?topic=${node.id}`;
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
 // A topic already under "Learn first" or "Leads to" is not listed again under "Related".
@@ -38,16 +38,11 @@ const byline =
 ---
 
 <Base title={node.title} description={node.summary} noindex={node.status !== "published"}>
-  {!position && (
-    <div class="breadcrumb">
-      <a href={mapUrl}>See on the map</a>
-    </div>
-  )}
   {
     position && (
       <div class="breadcrumb">
         <a href={`/path/${position.path.id}`}>{position.path.title}</a> › {position.section.title} › {position.index + 1} of{" "}
-        {position.total} · <a href={mapUrl}>See on the map</a>
+        {position.total}
         <div class="progress">
           <span style={`width: ${((position.index + 1) / position.total) * 100}%`} />
         </div>
@@ -95,6 +90,8 @@ const byline =
         )}
       </p>
 
+      <MiniMap node={node} learnFirst={learnFirst} next={next} />
+
       {
         sections.length > 1 && (
           <details class="toc toc-top">
@@ -119,7 +116,7 @@ const byline =
               <strong>This topic is being written.</strong> It will be published after it has been fact-checked and
               reviewed.
             </p>
-            {learnFirst.length > 0 && <p>While you wait, you can read what comes before it (listed on this page).</p>}
+            {learnFirst.length > 0 && <p>While you wait, you can read what comes before it (shown above).</p>}
           </div>
         )
       }
@@ -156,34 +153,6 @@ const byline =
               ))}
             </ul>
           </nav>
-        )
-      }
-      {
-        learnFirst.length > 0 && (
-          <section class="links before">
-            <h2>← Learn first</h2>
-            <ul>
-              {learnFirst.map((n) => (
-                <li>
-                  <a href={nodeUrl(n.id)}>{n.title}</a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      }
-      {
-        next.length > 0 && (
-          <section class="links after">
-            <h2>Leads to →</h2>
-            <ul>
-              {next.map((n) => (
-                <li>
-                  <a href={nodeUrl(n.id)}>{n.title}</a>
-                </li>
-              ))}
-            </ul>
-          </section>
         )
       }
       {
