@@ -3,7 +3,7 @@ id: what-happens-when-you-type-a-url
 title: "What Happens When You Type a URL"
 type: concept
 part: network
-status: review
+status: published
 requires: [dns, url, http, https, web-browser]
 related: [browser-devtools, html, packets]
 summary: "When you type a URL and press Enter, your browser finds the server's address with DNS, opens a connection, asks for the page with HTTP, receives the files, and draws them on your screen."
@@ -65,6 +65,8 @@ sources:
   - title: "Microsoft Edge DevTools: Network features reference"
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/network/reference
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-11-05
 updated: 2026-11-05
 ---
 

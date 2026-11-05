@@ -44,12 +44,20 @@ sources:
     url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404
   - title: "MDN Web Docs: HTML"
     url: https://developer.mozilla.org/en-US/docs/Web/HTML
-  - title: "Google Public DNS: JSON API"
-    url: https://developers.google.com/speed/public-dns/docs/doh/json
   - title: "RFC 1034, Domain Names: Concepts and Facilities"
     url: https://www.rfc-editor.org/rfc/rfc1034
   - title: "Google Chrome Help: Check if a site's connection is secure"
     url: https://support.google.com/chrome/answer/95617?hl=en
+  - title: "Google Public DNS: Troubleshooting"
+    url: https://developers.google.com/speed/public-dns/docs/troubleshooting
+  - title: "MDN Web Docs: What went wrong? Troubleshooting JavaScript"
+    url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_went_wrong
+  - title: "MDN Web Docs: Basic HTML syntax"
+    url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax
+  - title: "MDN Web Docs: What is JavaScript?"
+    url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript
+  - title: "GitHub Docs: About READMEs"
+    url: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes
 author: ai
 updated: 2026-11-05
 ---
@@ -80,7 +88,7 @@ A few new words:
 
 - A **repository** (or "repo") is a project folder on GitHub.
 - A **commit** is a saved change, with a short message that describes it. "Commit changes" means "save my changes".
-- A **README** is a short text file that describes a project. The `.md` at the end of `README.md` means it is written in a simple text format called Markdown.
+- A **README** is a short text file that describes a project. `README.md` is written in a simple text format called Markdown.
 - A **branch** is one version of the files in a repository. Your repository starts with one branch, called **main**. You do not need more for this project.
 
 ## Steps
@@ -173,7 +181,7 @@ A **CNAME** record says that one name is another name for a second name. Here it
 
 Every registrar's page looks a little different, so the name field may not match this table exactly. If a `www` record already exists, edit it instead of adding a second one.
 
-*Optional:* to make the address **without** `www` (`yourname.com`) work too, create four **A** records. GitHub's table uses the name `@` for "the domain itself, with nothing in front". If your registrar already set a default record for the domain itself, remove it first. GitHub's documentation lists these four values: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`. Add all four.
+*Optional:* to make the address **without** `www` (`yourname.com`) work too, create four **A** records. The table in GitHub's guide uses the name `@` for "the domain itself, with nothing in front". If your registrar already set a default record for the domain itself, remove it first. GitHub's documentation lists these four values: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`. Add all four.
 
 **10. Wait, then turn on HTTPS.** DNS changes can take **up to 24 hours** to reach everyone. When your site works at your domain, go back to **Settings**, then **Pages**, and select **Enforce HTTPS**. This makes every visitor use the secure, encrypted version of your site. The option can take up to 24 hours to become available.
 
@@ -183,7 +191,7 @@ You are done when:
 
 - `https://yourusername.github.io` (Part A) or `https://www.yourname.com` (Part B) shows your page,
 - the button shows the message when you click it, and
-- the address starts with `https://`, and the browser does not say "Not secure". This means [[https|HTTPS]] is working. GitHub turns on HTTPS automatically for `github.io` addresses. For your own domain, it works after step 10.
+- in Chrome, you see no "Not secure" warning next to the address. (Other browsers may show this differently.) This means [[https|HTTPS]] is working. GitHub turns on HTTPS automatically for `github.io` addresses. For your own domain, it works after step 10.
 
 Send the link to a friend. Your website is on the internet.
 
@@ -194,14 +202,14 @@ Problems like these happen to every programmer. Finding and fixing them is a nor
 - **GitHub shows a "404" page.** 404 is the HTTP status code for "not found". Wait 10 minutes and reload. Then check that the repository name is exactly `yourusername.github.io` and the file name is exactly `index.html` (both in small letters). Also check that `index.html` is on the **main** branch.
 - **You see your README text instead of your page:** check that the file name is exactly `index.html`.
 - **The page shows, but the button does nothing:** compare your `<script>` part with the code above. One missing bracket or quote can stop JavaScript from working. Copying the whole code again is often the fastest fix.
-- **Your domain does not show the site:** check your CNAME record with the DNS lookup tool from the DNS lesson: `https://dns.google/query?name=www.yourname.com&type=CNAME`. In the `"Answer"` part, the `"data"` should be `yourusername.github.io.`. If you made the change recently, wait a few hours.
-- **"Enforce HTTPS" cannot be selected:** wait. It can take up to 24 hours after the domain starts working. If it still fails, check for extra DNS records, or records that do not point to GitHub Pages.
+- **Your domain does not show the site:** check your CNAME record with the DNS lookup tool from the DNS lesson: `https://dns.google/query?name=www.yourname.com&type=CNAME`. In the `"Answer"` part, the `"data"` should be `yourusername.github.io`. It may end with a dot. If you made the change recently, wait a few hours.
+- **"Enforce HTTPS" cannot be selected:** wait. It can take up to 24 hours. If it still fails, check for extra DNS records, or records that do not point to GitHub Pages.
 
 ## What you learned
 
 This one project used almost everything in the course so far:
 
-- You wrote [[html|HTML]], [[css|CSS]] and [[javascript|JavaScript]], the three languages of web pages.
+- You used [[html|HTML]], [[css|CSS]] and [[javascript|JavaScript]], the three languages of web pages.
 - You put your files on a [[server]] through a [[web-hosting|web hosting]] service: GitHub's servers now send your page to every visitor.
 - In Part B, you rented a [[domain-name|domain name]] and connected it to your site with a [[dns|DNS]] record.
 - Your site uses [[https|HTTPS]], so visitors connect securely.
@@ -224,6 +232,10 @@ And when a friend opens your link, every step from [[what-happens-when-you-type-
 - MDN Web Docs, How much does it cost to do something on the Web?: https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/How_much_does_it_cost
 - MDN Web Docs, 404 Not Found: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404
 - MDN Web Docs, HTML: https://developer.mozilla.org/en-US/docs/Web/HTML
-- Google Public DNS, JSON API: https://developers.google.com/speed/public-dns/docs/doh/json
 - RFC 1034, Domain Names, Concepts and Facilities: https://www.rfc-editor.org/rfc/rfc1034
 - Google Chrome Help, Check if a site's connection is secure: https://support.google.com/chrome/answer/95617?hl=en
+- Google Public DNS, Troubleshooting: https://developers.google.com/speed/public-dns/docs/troubleshooting
+- MDN Web Docs, What went wrong? Troubleshooting JavaScript: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_went_wrong
+- MDN Web Docs, Basic HTML syntax: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax
+- MDN Web Docs, What is JavaScript?: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript
+- GitHub Docs, About READMEs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes
