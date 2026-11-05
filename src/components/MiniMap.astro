@@ -1,0 +1,94 @@
+---
+// A small piece of the map, around one topic: what to learn first, this topic, and what it leads to.
+// Plain HTML and CSS, with the map's colors, so it adds almost nothing to the page.
+import { nodeUrl, type Node } from "../lib/content.ts";
+
+interface Props {
+  node: Node;
+  learnFirst: Node[];
+  next: Node[];
+}
+
+const { node, learnFirst, next } = Astro.props;
+---
+
+<nav class="mini-map" aria-label="Where this topic is on the map" data-pagefind-ignore="all">
+  <div class="mini-map-row">
+    {
+      learnFirst.length > 0 && (
+        <>
+          <div class="group before">
+            <p id="mini-before">Learn first</p>
+            <ul aria-labelledby="mini-before">
+              {learnFirst.map((n) => (
+                <li>
+                  <a href={nodeUrl(n.id)}>{n.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span class="arrow" aria-hidden="true" />
+        </>
+      )
+    }
+    <div class="here" aria-current="page">{node.title}</div>
+    {
+      next.length > 0 && (
+        <>
+          <span class="arrow" aria-hidden="true" />
+          <div class="group after">
+            <p id="mini-after">Leads to</p>
+            <ul aria-labelledby="mini-after">
+              {next.map((n) => (
+                <li>
+                  <a href={nodeUrl(n.id)}>{n.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )
+    }
+  </div>
+  <a class="full" href={`/map?topic=${node.id}`}>🗺 See it on the full map</a>
+</nav>
+
+<style>
+  .mini-map {
+    margin: 1rem 0 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    overflow-wrap: normal;
+  }
+  .mini-map-row { display: flex; align-items: center; gap: 0.6rem; }
+  .group { flex: 1 1 0; min-width: 0; padding-left: 0.6rem; border-left: 3px solid; }
+  .group p { margin: 0 0 0.2rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .group ul { list-style: none; margin: 0; padding: 0; }
+  .group li + li { margin-top: 0.2rem; }
+  .before { border-color: var(--event); }
+  .before p { color: var(--event); }
+  .after { border-color: var(--accent); }
+  .after p { color: var(--accent); }
+  .here {
+    flex: 0 1 9rem;
+    padding: 0.5rem 0.6rem;
+    border: 2px solid var(--fg);
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .arrow::before { content: "→"; color: var(--muted); font-size: 1.1rem; }
+  .full { display: inline-block; margin-top: 0.6rem; }
+  /* On a phone, top to bottom. */
+  @media (max-width: 640px) {
+    .mini-map-row { flex-direction: column; align-items: stretch; gap: 0.3rem; }
+    .group { flex: none; }
+    .here { flex: none; }
+    .arrow { text-align: center; }
+    .arrow::before { content: "↓"; }
+  }
+</style>
