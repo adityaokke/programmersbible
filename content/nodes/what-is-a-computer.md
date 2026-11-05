@@ -15,6 +15,7 @@ questions:
   - what is a program
   - what is the difference between hardware and software
   - what did the word computer mean in the past
+  - are computers all 0s and 1s
 aliases: [computer, computers, input processing output, hardware and software, program, human computers]
 sources:
   - title: "Wikipedia: Computer"
@@ -27,6 +28,12 @@ sources:
     url: https://web.stanford.edu/class/cs101/software-1.html
   - title: "Stanford CS101: Bits and Bytes"
     url: https://web.stanford.edu/class/cs101/bits-bytes.html
+  - title: "Wikipedia: Binary number"
+    url: https://en.wikipedia.org/wiki/Binary_number
+  - title: "Computer History Museum, Revolution: How Do Digital Computers \"Think\"?"
+    url: https://www.computerhistory.org/revolution/digital-logic/12/269
+  - title: "Wikipedia: ENIAC"
+    url: https://en.wikipedia.org/wiki/ENIAC
   - title: "Computer History Museum, Revolution: Human Computers"
     url: https://www.computerhistory.org/revolution/calculators/1/65
   - title: "Computer History Museum blog: Hidden Figures No Longer (Caroline Evans, 2017)"
@@ -43,15 +50,15 @@ sources:
     url: https://support.mozilla.org/en-US/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-05
+updated: 2026-11-05
 ---
 
 > **In one sentence:** A computer is a machine that follows a list of instructions, called a program, to take in information, work with it, keep it, and give back a result.
 
 ## Why should I care?
 
-You are using a computer right now. If you read this on a laptop, that is a computer. If you read it on a phone, that is a computer too. Many smaller things also have a computer inside them: microwave ovens, remote controls, cameras and thermostats (the controls that keep a room warm or cool).
+You are using a computer right now. If you read this on a laptop, that is a computer. If you read it on a phone, that is a computer too. Many smaller things also have a computer inside them: microwave ovens, remote controls and thermostats (the controls that keep a room warm or cool).
 
 A programmer writes instructions for computers. So the first step is to know what a computer is and what it can do.
 
@@ -77,7 +84,7 @@ Every computer does four kinds of jobs:
 3. **Storing:** the computer **keeps** information, so it can use it now or later.
 4. **Output:** a result comes **out**. Letters appear on the screen, or a printer prints a page.
 
-In this picture, information flows from input, through processing, to output. Processing also sends information to memory and storage, and gets it back:
+This picture shows how the information moves:
 
 ```mermaid
 flowchart TD
@@ -92,9 +99,11 @@ The part that does the processing is called the **processor**, or **CPU** (short
 
 Each instruction is very small. The same course gives examples: "adding two numbers or testing if a number is equal to zero". A program such as the Firefox web browser is made of millions of these small instructions. When a computer follows a program's instructions, we say it **runs** the program. The course gives an example speed: 2 billion instructions per second.
 
-How can adding numbers help with words? Inside a computer, each letter is stored as a number. So comparing two words is really comparing numbers. You will see how in [[text-as-numbers]].
+How can small steps with numbers help with words? Inside a computer, each letter is stored as a number. So comparing two words is really comparing numbers. You will see how in [[text-as-numbers]].
 
-A computer stores information in two places, like the cook's table and fridge:
+Almost all of today's computers keep these numbers using only 0s and 1s. The same course says: "Everything in a computer is 0's and 1's." Each 0 or 1 is called a **bit**. Rows of bits can hold numbers or letters. Inside a computer, a bit is not a written digit. It is something physical, such as a level of electric charge. Writing numbers with only 0 and 1 is called **binary**. You will learn how this works in [[binary]] and [[bit]].
+
+Today's computers store information in two places, like the cook's table and fridge:
 
 - **Memory** (also called **RAM**, short for Random Access Memory) holds the program that is running and the information it is using right now. It is temporary: when the power is switched off, it is lost. You will learn more in [[ram]].
 - **Storage** keeps information for a long time, as files and folders. It keeps them even when the power is switched off. See [[storage]].
@@ -104,7 +113,7 @@ Two more words you will see often:
 - **Hardware** is the physical parts of a computer: the parts you can touch.
 - **Software** is the programs that run on the computer. See [[software]].
 
-The same course compares them to a piano (the hardware) and music (the software). One piano can play many songs. In the same way, one computer can run many different programs. For example, the same phone can run a camera program, a map program and a calculator program.
+The same course compares them to a piano (the hardware) and music (the software). One piano can play many songs. In the same way, one computer can run many different programs.
 
 ## How it came to be
 
@@ -116,14 +125,14 @@ In the following years, electronic computers took over the work of human compute
 
 ## 🧪 Try it in your browser
 
-You will watch your computer do all four jobs in a second or less.
+You will watch your computer do all four jobs.
 
 1. Stay on this page.
-2. On Windows and most other computers, press `Ctrl` + `F`. On a Mac, press `Command` (the `⌘` key) + `F`. This works in Chrome, Edge and Firefox. A small search box opens. On a phone in Chrome, tap the menu with three dots, then **Find in page**.
+2. On Windows and most other computers, hold down `Ctrl` and press `F`. On a Mac, hold down `Command` (the `⌘` key) and press `F`. This works in Chrome, Edge and Firefox. A small search box opens. On a phone in Chrome, tap the menu with three dots, then **Find in page**.
 3. Type the word `computer` into the box.
 4. Press `Enter`. (On a phone, tap the search button.)
 
-**What you should see:** your browser jumps to a place where the word "computer" appears on this page, and highlights it with a colour. Depending on your browser, it may also highlight the other places, and show a number: how many times it found the word.
+**What you should see:** your browser jumps to a place where the word "computer" appears on this page, and highlights it with a colour. Depending on your browser, it may also highlight the other places.
 
 **What happened:**
 
@@ -134,14 +143,14 @@ You will watch your computer do all four jobs in a second or less.
 
 ## Common misunderstandings
 
-- **"A computer is a box on a desk."** No. Laptops, phones and tablets are computers too. Small computers also run inside microwave ovens, remote controls, cameras and thermostats.
-- **"Computers think for themselves."** No. A computer follows instructions that people wrote. One computer course says a computer "requires a human to tell it what to do". It is fast, not wise.
-- **"A computer can only do one kind of job."** No. The same computer can run many different programs, like one piano playing many songs. A computer can even run several programs at the same time.
+- **"A computer is a box on a desk."** No. Laptops, phones and tablets are computers too.
+- **"Computers think for themselves."** No. A computer follows instructions that people wrote. The same course says a computer "requires a human to tell it what to do". It is fast, not wise.
+- **"A machine is a computer because it uses 0s and 1s."** Not quite. ENIAC, one of the early computers, did its calculations with the digits 0 to 9. What makes a machine a computer is that it can follow a program to work with information.
 
 ## Recap
 
 - A computer is a machine that follows a program: a list of very small instructions.
-- Every computer does four jobs: input, processing, storing and output.
+- Every computer does four jobs: input, processing, storing and output. Almost all of today's computers keep everything as 0s and 1s, called bits.
 - The word "computer" first meant a person who did calculations. Electronic computers took over that work in the middle of the 1900s.
 
 ## Sources
@@ -151,6 +160,9 @@ You will watch your computer do all four jobs in a second or less.
 - Stanford CS101, Introduction to Code: https://web.stanford.edu/class/cs101/code-1-introduction.html
 - Stanford CS101, Running and Operating Systems: https://web.stanford.edu/class/cs101/software-1.html
 - Stanford CS101, Bits and Bytes: https://web.stanford.edu/class/cs101/bits-bytes.html
+- Wikipedia, Binary number: https://en.wikipedia.org/wiki/Binary_number
+- Computer History Museum, Revolution: How Do Digital Computers "Think"?: https://www.computerhistory.org/revolution/digital-logic/12/269
+- Wikipedia, ENIAC: https://en.wikipedia.org/wiki/ENIAC
 - Computer History Museum, Revolution: Human Computers: https://www.computerhistory.org/revolution/calculators/1/65
 - Computer History Museum blog, Hidden Figures No Longer (Caroline Evans, 2017): https://computerhistory.org/blog/hidden-figures-no-longer/
 - Penn Engineering, Celebrating Penn Engineering History: ENIAC: https://www.engineering.upenn.edu/about/history-heritage/eniac/
