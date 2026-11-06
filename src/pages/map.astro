@@ -16,22 +16,31 @@ function reach(id: string, seen = new Set<string>()): Set<string> {
 }
 
 // One box per First Chapter part, titled by its path section ("Part 1: The Machine"), and one box
-// per other path ("More to Explore"), so the topics read after the First Chapter sit together.
+// per other path ("First Steps in Code"). More to Explore mixes many subjects, so its name says
+// little on a map: it gets one box per section ("Staying Safe Online") instead.
+const SPLIT_BY_SECTION = new Set(["more-to-explore"]);
+const slug = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 const firstChapter = allPaths.find((p) => p.id === "first-chapter");
 const inFirstChapter = new Set(firstChapter?.sections.flatMap((s) => s.nodes) ?? []);
-const otherPath = new Map(
-  allPaths.filter((p) => p !== firstChapter).flatMap((p) => p.sections.flatMap((s) => s.nodes.map((id) => [id, p] as const))),
+const otherGroup = new Map(
+  allPaths
+    .filter((p) => p !== firstChapter)
+    .flatMap((p) =>
+      p.sections.flatMap((s) => {
+        const group = SPLIT_BY_SECTION.has(p.id) ? { id: slug(s.title), title: s.title } : { id: p.id, title: p.title };
+        return s.nodes.map((id) => [id, group] as const);
+      }),
+    ),
 );
 const groupOf = (n: (typeof nodes)[number]) =>
-  inFirstChapter.has(n.id) ? n.part : (otherPath.get(n.id)?.id ?? n.part);
+  inFirstChapter.has(n.id) ? n.part : (otherGroup.get(n.id)?.id ?? n.part);
 const partTitles: Record<string, string> = {};
 for (const section of firstChapter?.sections ?? []) {
   const first = nodes.find((n) => n.id === section.nodes[0]);
   if (first) partTitles[first.part] ??= section.title;
 }
-for (const n of nodes) {
-  const path = otherPath.get(n.id);
-  if (!inFirstChapter.has(n.id) && path) partTitles[path.id] ??= path.title;
+for (const [id, group] of otherGroup) {
+  if (!inFirstChapter.has(id) && nodes.some((n) => n.id === id)) partTitles[group.id] ??= group.title;
 }
 
 const weights = new Map(nodes.map((n) => [n.id, reach(n.id).size]));
@@ -74,6 +83,51 @@ function crowdedDots(graph: cytoscape.Core) {
   return found;
 }
 
+// The layout mixes the boxes together. Keep the arrangement inside each box, and place the boxes in
+// rows, in reading order: First Chapter first, then the rest. This way boxes can never overlap.
+// Each box gets at least the width of its title, and the gaps leave room for titles, which keep
+// their size when the map is zoomed out.
+const COLUMN_GAP = 120;
+const ROW_GAP = 440;
+const TITLE_CHAR_WIDTH = 44;
+const MAP_SHAPE = 1.5; // width / height
+function placeBoxes(graph: cytoscape.Core) {
+  const groups = Object.entries(partTitles).map(([id, title]) => {
+    const dots = graph.getElementById(`part-${id}`).children();
+    const sides = (pick: (n: cytoscape.NodeSingular) => number) => dots.map(pick);
+    const x1 = Math.min(...sides((n) => n.position("x") - n.data("size") / 2));
+    const x2 = Math.max(...sides((n) => n.position("x") + n.data("size") / 2));
+    const y1 = Math.min(...sides((n) => n.position("y") - n.data("size") / 2));
+    const y2 = Math.max(...sides((n) => n.position("y") + n.data("size") / 2));
+    const inner = x2 - x1;
+    return { dots, x1, y1, inner, width: Math.max(inner, title.length * TITLE_CHAR_WIDTH), height: y2 - y1 };
+  });
+  const area = groups.reduce((sum, g) => sum + (g.width + COLUMN_GAP) * (g.height + ROW_GAP), 0);
+  const rowWidth = Math.max(Math.sqrt(area * MAP_SHAPE), ...groups.map((g) => g.width));
+  const rows: (typeof groups)[] = [[]];
+  let used = 0;
+  for (const g of groups) {
+    if (used + g.width > rowWidth && rows.at(-1)!.length > 0) {
+      rows.push([]);
+      used = 0;
+    }
+    rows.at(-1)!.push(g);
+    used += g.width + COLUMN_GAP;
+  }
+  let top = 0;
+  for (const row of rows) {
+    const width = row.reduce((sum, g) => sum + g.width + COLUMN_GAP, -COLUMN_GAP);
+    const height = Math.max(...row.map((g) => g.height));
+    let left = -width / 2;
+    for (const g of row) {
+      // Center the box in its slot.
+      g.dots.shift({ x: left + (g.width - g.inner) / 2 - g.x1, y: top + (height - g.height) / 2 - g.y1 });
+      left += g.width + COLUMN_GAP;
+    }
+    top += height + ROW_GAP;
+  }
+}
+
 // Lay the map out at build time with fixed seeds, so it looks the same on every visit and readers
 // can learn where things are. Try several seeds and keep the layout with the fewest crowded dots.
 function runLayout(seed: number) {
@@ -102,6 +156,7 @@ function runLayout(seed: number) {
     } as cytoscape.LayoutOptions)
     .run();
   Math.random = random;
+  placeBoxes(graph);
   return graph;
 }
 let layout = runLayout(1);
@@ -109,30 +164,6 @@ for (let seed = 2; seed <= 20; seed++) {
   const candidate = runLayout(seed);
   if (crowdedDots(candidate).length < crowdedDots(layout).length) layout = candidate;
 }
-// The layout can let part boxes overlap. Push them apart, moving every topic in a part together.
-const PART_GAP = 80;
-const partIds = Object.keys(partTitles).map((id) => `part-${id}`);
-for (let round = 0; round < 50; round++) {
-  let moved = false;
-  for (const [i, a] of partIds.entries()) {
-    for (const b of partIds.slice(i + 1)) {
-      const A = layout.getElementById(a).boundingBox();
-      const B = layout.getElementById(b).boundingBox();
-      const overlapX = Math.min(A.x2, B.x2) - Math.max(A.x1, B.x1) + PART_GAP;
-      const overlapY = Math.min(A.y2, B.y2) - Math.max(A.y1, B.y1) + PART_GAP;
-      if (overlapX <= 0 || overlapY <= 0) continue;
-      // Move B the shorter way out, away from A.
-      const shift =
-        overlapX < overlapY
-          ? { x: (B.x1 + B.x2 > A.x1 + A.x2 ? 1 : -1) * overlapX, y: 0 }
-          : { x: 0, y: (B.y1 + B.y2 > A.y1 + A.y2 ? 1 : -1) * overlapY };
-      layout.getElementById(b).children().shift(shift);
-      moved = true;
-    }
-  }
-  if (!moved) break;
-}
-
 // The arrows that would still pass through a dot bend around it, like a road around a building.
 // A bend is a list of control points: how far along the arrow (weight, 0 to 1) and how far to the
 // side (distance; positive is the same side as a positive offset above).
@@ -181,7 +212,7 @@ for (const [edge, dots] of crowded) {
   // side and wider bends, and keep the first one that is clear.
   const tries: Bend[] = [];
   for (const flip of [1, -1])
-    for (const widen of [1, 1.5, 2.2])
+    for (const widen of [1, 1.5, 2.2, 3, 4])
       tries.push({
         weights: dots.map((d) => Math.round(d.t * 100) / 100),
         distances: dots.map((d) => {
@@ -294,12 +325,13 @@ const data = {
     color: var(--muted);
     font-size: 1rem;
     font-weight: 700;
-    white-space: nowrap;
+    line-height: 1.15;
+    text-align: center;
     transition: font-size 0.2s, color 0.2s;
   }
-  #map-labels:global(.far) :global(.part-label) { color: var(--part); font-size: 1.4rem; }
+  #map-labels:global(.far) :global(.part-label) { color: var(--part); font-size: 1.15rem; }
   @media (max-width: 640px) {
-    #map-labels:global(.far) :global(.part-label) { font-size: 1.1rem; }
+    #map-labels:global(.far) :global(.part-label) { font-size: 0.85rem; }
   }
   .map-controls {
     position: absolute;
@@ -367,8 +399,28 @@ const data = {
   const v = (name: string) => css.getPropertyValue(name).trim();
   const dark = matchMedia("(prefers-color-scheme: dark)").matches;
   const partColor: Record<string, string> = dark
-    ? { machine: "#8fb0ff", network: "#5fd0c4", web: "#d3a6ff", code: "#f0b45c", "more-to-explore": "#f0b45c" }
-    : { machine: "#2b59c3", network: "#0f7f7a", web: "#7b45c4", code: "#9a5b00", "more-to-explore": "#9a5b00" };
+    ? {
+        machine: "#8fb0ff",
+        network: "#5fd0c4",
+        web: "#d3a6ff",
+        code: "#f0b45c",
+        "staying-safe-online": "#ff9d94",
+        "everyday-internet": "#f0b45c",
+        "modern-computing-and-history": "#c5d05a",
+        "how-busy-websites-keep-up": "#ff9ccb",
+        "first-steps-in-code": "#b3c0cc",
+      }
+    : {
+        machine: "#2b59c3",
+        network: "#0f7f7a",
+        web: "#7b45c4",
+        code: "#9a5b00",
+        "staying-safe-online": "#b3261e",
+        "everyday-internet": "#9a5b00",
+        "modern-computing-and-history": "#66700a",
+        "how-busy-websites-keep-up": "#b0276f",
+        "first-steps-in-code": "#51606f",
+      };
 
   // Zoom levels, as a multiple of the "show everything" zoom. Like towns on a street map, topics
   // appear one by one as you zoom in: each part's key topics always, the rest from 0.9× to 2.4×.
@@ -528,6 +580,8 @@ const data = {
     // map's left or right edge (small screens). Topic names then keep clear of them.
     for (const { part, el } of partLabels) {
       const b = part.renderedBoundingBox();
+      // A long title wraps instead of running into the next box.
+      el.style.maxWidth = `${Math.max(b.x2 - b.x1 + 10, width < 640 ? 90 : 190)}px`;
       const [w, h] = [el.offsetWidth, el.offsetHeight];
       const x1 = Math.max(0, Math.min(width - w, (b.x1 + b.x2) / 2 - w / 2));
       const spots = [b.y1 - 4 - h, b.y1 + 4, b.y2 + 4].map((y) => ({ x1, y1: y, x2: x1 + w, y2: y + h }));
@@ -550,7 +604,9 @@ const data = {
       const free = spots.find(isFree);
       const box = free ?? spots[0]!;
       l.el.style.transform = `translate(${Math.round(box.x1)}px, ${Math.round(box.y1)}px)`;
-      const onScreen = box.x2 > 0 && box.x1 < width && box.y2 > 0 && box.y1 < height;
+      // Zoomed out, a name cut off by the map's edge helps nobody (small screens): wait for more room.
+      const cutOff = layer.classList.contains("far") && (box.x1 < 0 || box.x2 > width);
+      const onScreen = !cutOff && box.x2 > 0 && box.x1 < width && box.y2 > 0 && box.y1 < height;
       const shown = !l.node.hasClass("lod-hidden") || l.node.hasClass("lit");
       // Names on a tapped topic's route always show, even if no spot is free.
       const visible = shown && onScreen && (!!free || l.node.hasClass("lit"));
