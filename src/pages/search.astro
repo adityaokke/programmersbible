@@ -92,7 +92,7 @@ const index = searchIndex();
       for (const e of index) {
         if (scored.has(e.id)) continue;
         const score = titleScore(e, qWords);
-        if (score > 0) scored.set(e.id, { hit: { url: `/node/${e.id}`, title: e.title, summary: e.readable ? e.summary : "Coming soon", readable: e.readable }, score });
+        if (score > 0) scored.set(e.id, { hit: { url: `/node/${e.id}`, title: e.title, summary: e.readable ? e.summary : "Not ready yet", readable: e.readable }, score });
       }
       return [...scored.values()].sort((a, b) => b.score - a.score).slice(0, MAX).map((s) => s.hit);
     }

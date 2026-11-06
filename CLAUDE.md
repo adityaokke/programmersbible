@@ -83,7 +83,7 @@ src/styles/           global.css (light and dark)
 ```
 
 - `schema/node.ts` is the contract between content and development. Change it first, then update both sides.
-- Production shows only `published` nodes; others render as "being written". `astro dev` and `SHOW_DRAFTS=true` show drafts.
+- Production shows only `published` nodes; others render as "not ready yet". `astro dev` and `SHOW_DRAFTS=true` show drafts.
 - TypeScript, strict mode, ES modules. Node ≥ 22.
 - Keep the site static-first: reading must never depend on the API or the database.
 - Before opening a PR, run `npm run validate` and `npm run typecheck`.
