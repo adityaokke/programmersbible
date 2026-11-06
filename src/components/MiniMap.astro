@@ -31,7 +31,7 @@ const { node, learnFirst, next } = Astro.props;
         </>
       )
     }
-    <div class="here" aria-current="page">{node.title}</div>
+    <div class="here" aria-current="page">You are here</div>
     {
       next.length > 0 && (
         <>
@@ -50,7 +50,7 @@ const { node, learnFirst, next } = Astro.props;
       )
     }
   </div>
-  <a class="full" href={`/map?topic=${node.id}`}>🗺 See it on the full map</a>
+  <a class="button full" href={`/map?topic=${node.id}`}>🗺 See this topic on the full map</a>
 </nav>
 
 <style>
@@ -74,7 +74,7 @@ const { node, learnFirst, next } = Astro.props;
   .after { border-color: var(--accent); }
   .after p { color: var(--accent); }
   .here {
-    flex: 0 1 9rem;
+    flex: none;
     padding: 0.5rem 0.6rem;
     border: 2px solid var(--fg);
     border-radius: 8px;
@@ -82,7 +82,7 @@ const { node, learnFirst, next } = Astro.props;
     text-align: center;
   }
   .arrow::before { content: "→"; color: var(--muted); font-size: 1.1rem; }
-  .full { display: inline-block; margin-top: 0.6rem; }
+  .mini-map .full { margin-top: 0.75rem; padding: 0.45rem 0.9rem; }
   /* On a phone, top to bottom. */
   @media (max-width: 640px) {
     .mini-map-row { flex-direction: column; align-items: stretch; gap: 0.3rem; }
