@@ -3,7 +3,7 @@ id: request-coalescing
 title: "Request Coalescing: One Job for Many Requests"
 type: concept
 part: code
-status: published
+status: review
 requires: [caching, nodejs, python-asyncio, goroutines, race-conditions]
 related: [server, programming-languages]
 summary: "Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer."
@@ -80,9 +80,13 @@ sources:
     url: https://developer.mozilla.org/en-US/docs/Web/API/Window/location
   - title: "MDN Web Docs: Location.href"
     url: https://developer.mozilla.org/en-US/docs/Web/API/Location/href
+  - title: "MDN Web Docs: Introducing workers"
+    url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Introducing_workers
+  - title: "Wikipedia: Process (computing)"
+    url: https://en.wikipedia.org/wiki/Process_(computing)
+  - title: "Hex: httpower package"
+    url: https://hex.pm/packages/httpower
 author: ai
-reviewed_by: ai
-reviewed_at: 2026-11-06
 updated: 2026-11-06
 ---
 
@@ -132,9 +136,13 @@ sequenceDiagram
   F-->>C: Same answer to A, B, C
 ```
 
-Here it is in three languages. Each program asks for product 7 three times at once, counts the jobs, and prints `3 answers from 1 job`. You do not need to run them. Follow the comments (after `//` or `#`), and look for the four steps. The "slow job" only waits for a tenth of a second.
+There is a danger between steps 1 and 3: two callers might both find nothing in the list, and both start the job.
 
-### In Node.js
+Here is the idea in three languages. You only need to read one. Each program asks for product 7 three times at once, counts the jobs, and prints (shows on the screen) `3 answers from 1 job`. You do not need to run them. Follow the comments (after `//` or `#`), and look for the four steps. The "slow job" only waits, to imitate slow work.
+
+<!-- tabs -->
+
+### Node.js
 
 **Node.js** is a program that runs [[javascript|JavaScript]] outside the browser, for example on a server. Its code is often **asynchronous**: it starts a slow job, and can still respond to other things while that job runs.
 
@@ -164,14 +172,19 @@ function getProduct(id) {
 }
 
 // Three callers at once. "then" runs when all the answers have arrived.
-Promise.all([getProduct(7), getProduct(7), getProduct(7)]).then((answers) => {
-  console.log(`${answers.length} answers from ${jobs} job`);
-});
+Promise.all([getProduct(7), getProduct(7), getProduct(7)])
+  .then((answers) => {
+    console.log(`${answers.length} answers from ${jobs} job`);
+  });
 ```
 
-### In Python
+**Why this is safe from that danger:** an `await` pauses only the function it is in. `getProduct` has no `await`, so it finishes steps 1 to 3 before any other caller can run. Node.js runs JavaScript in a single thread (doing one thing at a time). If you put an `await` between steps 1 and 3, the danger comes back.
 
-Python has a part called `asyncio` for asynchronous code. A **task** is its name for a job that has been handed over to run. The steps are the same, with `in_flight` as the list.
+Some Node.js programs also use several threads, which this page does not cover.
+
+### Python
+
+Python has a part called `asyncio` for **asynchronous** code: code that starts a slow job, and can still respond to other things while that job runs. A **task** is its name for a job that has been handed over to run. This program follows the same four steps, with `in_flight` as the list.
 
 ```python
 import asyncio
@@ -192,7 +205,7 @@ def get_product(product_id):
         return in_flight[product_id]
 
     # Step 3: start the job, and write it in the list.
-    # Step 4: the "done callback" removes it from the list when it finishes.
+    # Step 4: the "done callback" removes it from the list at the end.
     job = asyncio.create_task(load_product(product_id))
     job.add_done_callback(lambda _: in_flight.pop(product_id))
     in_flight[product_id] = job
@@ -202,13 +215,19 @@ def get_product(product_id):
 # (A real program needs more: here, cancelling one waiting caller cancels
 # the job for all of them. Python's asyncio.shield can prevent that.)
 async def main():
-    answers = await asyncio.gather(get_product(7), get_product(7), get_product(7))
+    answers = await asyncio.gather(
+        get_product(7), get_product(7), get_product(7)
+    )
     print(f"{len(answers)} answers from {jobs} job")
 
 asyncio.run(main())
 ```
 
-### In Go
+**Why this is safe from that danger:** an `await` pauses only the task it is in. `get_product` has no `await`, so it finishes steps 1 to 3 before any other caller can run. Python's event loop, the part of `asyncio` that runs the tasks, "runs one Task at a time". If you put an `await` that really waits between steps 1 and 3, the danger comes back.
+
+Some Python programs also use threads (a thread is a sequence of instructions that a program follows), which this page does not cover.
+
+### Go
 
 In the Go programming language, a **goroutine** is a function running at the same time as others. A package (ready-made code) called `singleflight` does all four steps for you.
 
@@ -260,43 +279,37 @@ func main() {
 }
 ```
 
-### Why a package helps in Go
+**Why a package helps with that danger:** goroutines can run on several threads (a thread is a sequence of instructions that a program follows), so two can reach the list at the same moment. The `singleflight` package makes sure "only one execution is in-flight for a given key at a time". (Here, the key is the `id`.)
 
-There is a danger between steps 1 and 3: two callers might both find nothing in the list, and both start the job.
-
-The Node.js and Python programs are safe. In Node.js, an `await` pauses only the function it is in. In Python, it pauses only the task it is in. The function that checks and writes the list has no `await`, so it finishes those steps before any other caller can run. Node.js runs JavaScript in a single thread (doing one thing at a time). Python's event loop, the part of `asyncio` that runs the tasks, "runs one Task at a time". If you put an `await` between steps 1 and 3, the danger comes back.
-
-Goroutines can run on several threads, so two can reach the list at the same moment. The `singleflight` package makes sure "only one execution is in-flight for a given key at a time". (Here, the key is the `id`.)
-
-Some Python and Node.js programs also use threads, which this page does not cover.
+<!-- /tabs -->
 
 ### The same idea in caches
 
 A shared cache can do the same thing when a popular copy is missing. It sends one request to the server, and the others wait. You may also see these names:
 
 - **Request collapsing:** Fastly's name. RFC 9111, the HTTP caching standard from June 2022, says "collapse requests".
-- **In-flight request deduplication:** used by the HTTPower package.
+- **In-flight request deduplication** (removing duplicates): used by the HTTPower package (ready-made code).
 
 ### When to be careful
 
 - **Failures are shared too.** If the job fails, every waiting caller gets the same failure. The next call starts a new job.
-- **Private answers.** A private answer must not be shared between people. So the `id` you look up must include everything that changes the answer. That may be the user, or the country if prices vary.
-- **Long waits.** A slow job makes everyone wait. Fastly warns that if a cache cannot share an answer, each waiting request must go to the server alone, one after another.
+- **Private answers.** A private answer must not be shared between people. So what you look up in the list must include everything that changes the answer. That may be the user, or the country if prices vary.
+- **Long waits.** A slow job makes everyone wait.
 - **One program only.** A second running copy of your program has its own list and its own job.
 
 ## How it came to be
 
-The nginx web server added a setting for this, `proxy_cache_lock`, in December 2011, so the idea in caches is at least that old.
+The nginx web server added a setting for this, `proxy_cache_lock`, in December 2011.
 
 ## 🧪 Try it in your browser
 
-Type a tiny version of the same idea in the **console**, as in the JavaScript topic. It keeps one job instead of a list. You need a computer with a keyboard.
+Type a tiny JavaScript version of the same idea in the **console**, as in the [[javascript|JavaScript]] topic. It keeps one job instead of a list. You need a computer with a keyboard.
 
 **Safety rule:** only type console code from a source you trust. This code only asks for the page you have open.
 
 1. In Chrome, Edge or Firefox, open `https://example.com`.
 2. Open the console: `Ctrl` + `Shift` + `J` on Windows (in Firefox: `Ctrl` + `Shift` + `K`), or `Cmd` + `Option` + `J` on Mac (in Firefox: `Cmd` + `Option` + `K`).
-3. Click the empty line at the bottom. Your browser may block pasting, so type each line below. The browser may add brackets or show suggestions. Keep typing, check that the line looks like the one below, and press `Enter` at its end.
+3. Click the empty line at the bottom. Your browser may block pasting, so type each line below. The browser may show suggestions, and the line may look different while you type. Keep typing, check that the line looks like the one below, and press `Enter` at its end.
 
 ```
 var jobs = 0; var job = null
@@ -312,7 +325,7 @@ Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers fr
 
 **What you should see:** after the last line, the message `3 answers from 1 job`. You can ignore other lines, such as `undefined`. If you see a red error, check your typing and try again.
 
-**Now run the last line again:** press the up arrow key, then `Enter`. You should see `3 answers from 2 job`. The count is a running total. The three new calls shared one new job, because the first had finished.
+**Now run the last line again:** press the up arrow key, then `Enter`. You should see `3 answers from 2 job`. The program always writes "job", even for 2. The count is a running total. The three new calls shared one new job, because the first had finished.
 
 ## Common misunderstandings
 
@@ -358,3 +371,6 @@ Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers fr
 - nginx, home page: https://nginx.org/en/
 - MDN Web Docs, Window.location: https://developer.mozilla.org/en-US/docs/Web/API/Window/location
 - MDN Web Docs, Location.href: https://developer.mozilla.org/en-US/docs/Web/API/Location/href
+- MDN Web Docs, Introducing workers: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Introducing_workers
+- Wikipedia, Process (computing): https://en.wikipedia.org/wiki/Process_(computing)
+- Hex, httpower package: https://hex.pm/packages/httpower

@@ -231,6 +231,10 @@ export async function renderBody(node: Node): Promise<string> {
 
   // A code block can scroll sideways; tabindex lets keyboard users reach it and scroll it too.
   let html = marked.parse(resolveWikiLinks(node.body), { async: false }).replaceAll("<pre>", '<pre tabindex="0">');
+  html = html.replace(/<!-- tabs -->([\s\S]*?)<!-- \/tabs -->/g, (_, inner: string) => {
+    const panels = inner.split(/(?=<h3>)/).filter((p) => p.trim());
+    return `<div class="code-tabs">${panels.map((p) => `<div class="tab-panel">${p}</div>`).join("")}</div>\n`;
+  });
   if (!diagrams.length) return html;
 
   const [light, dark] = await Promise.all(
