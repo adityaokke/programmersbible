@@ -60,6 +60,7 @@ They make a confused reader feel stupid. The validator rejects them in `review` 
 - **Numbered steps**, and **show the expected result**.
 - Must work in **Chrome, Edge and Firefox**. Give a phone alternative when possible.
 - Do not hard-code values that change over time (e.g. a site's IP address); say what kind of value the reader will see.
+- **Console steps state only what is documented.** Say "an error message", not "a red error". For a line with no result of its own, write "The console may also show `undefined`", and cite the Edge console page ("Prints out the result of your expression") with MDN's `eval` or `console.log` page. Do not say a reload removes a variable: tell the reader to reload and start again. Write "Some browsers may block pasting at first". Do not write "these lines are safe": say what the lines do. List `https://example.com` in `sources` if the page describes it.
 - Event nodes use "See it for yourself" instead: a museum page, archive, photo or video.
 
 ## Sources
