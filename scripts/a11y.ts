@@ -17,7 +17,7 @@ import { ROOT } from "./lib/content.ts";
 const PAGES = [
   "/", "/about", "/privacy", "/search?q=dns", "/timeline", "/map", "/404",
   "/path/first-chapter", "/path/more-to-explore",
-  "/node/dns", "/node/cpu", "/node/grace-hopper-and-compilers", "/node/javascript", "/node/byte",
+  "/node/request-coalescing", "/node/html", "/node/dns", "/node/cpu", "/node/grace-hopper-and-compilers", "/node/javascript", "/node/byte",
 ];
 
 const dist = join(ROOT, "dist");

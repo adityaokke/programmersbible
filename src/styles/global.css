@@ -124,9 +124,48 @@ article blockquote {
 article blockquote p { margin: 0; }
 article table { border-collapse: collapse; margin: 1rem 0; }
 article th, article td { border: 1px solid var(--line); padding: 0.35rem 0.75rem; text-align: left; }
-article code { font-family: var(--mono); font-size: 0.9em; background: var(--accent-soft); padding: 0.05rem 0.3rem; border-radius: 4px; }
-article pre { background: var(--card); border: 1px solid var(--line); padding: 1rem; border-radius: 8px; overflow-x: auto; }
-article pre code { background: none; padding: 0; }
+/* No ligatures: "=>" must look like what the reader types, not like one arrow. */
+article code { font-family: var(--mono); font-size: 0.9em; font-variant-ligatures: none; background: var(--accent-soft); padding: 0.05rem 0.3rem; border-radius: 4px; }
+article pre { background: var(--card); border: 1px solid var(--line); padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.82em; line-height: 1.5; tab-size: 4; }
+article pre code { background: none; padding: 0; font-size: inherit; }
+
+/* Code in a known language: its name, a Copy button (added by the page's script) and colors. */
+.code-block { margin: 1rem 0; }
+.code-block figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.4rem;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.code-block pre { margin: 0; border-radius: 0 0 8px 8px; }
+.code-block pre span { color: var(--shiki-light); }
+.copy-code {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+.copy-code:hover { border-color: var(--accent); }
+@media (prefers-color-scheme: dark) {
+  .code-block pre span { color: var(--shiki-dark); }
+}
+/* On a phone, long lines wrap, so a comment can be read without scrolling sideways.
+   The rest of a wrapped line is indented, so it does not look like a new line of code. */
+@media (max-width: 640px) {
+  .code-block pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .code-block pre .line { display: inline-block; width: 100%; padding-left: 1.5em; text-indent: -1.5em; }
+}
 
 .sidebar { font-size: 0.95rem; }
 .sidebar section { margin-bottom: 1.5rem; }
