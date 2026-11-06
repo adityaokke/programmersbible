@@ -368,6 +368,31 @@ const data = {
   #map-panel h2 { margin: 0.2rem 2rem 0.5rem 0; font-size: 1.25rem; line-height: 1.3; }
   #map-panel .close { position: absolute; top: 0.5rem; right: 0.5rem; width: 1.9rem; height: 1.9rem; }
   #map-panel [hidden] { display: none; }
+  /* Made by the script, so not reached by this page's scoped styles without :global. */
+  #map-panel :global(.go-to) {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    text-align: left;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  #map-panel :global(.pills) { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
+  #map-panel :global(.pills .go-to) {
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  #panel-requires :global(.pills .go-to) { border-color: var(--event); }
+  #map-panel :global(.pills .go-to:hover) { background: var(--accent-soft); }
+  /* On a phone the panel scrolls inside itself, so part of the map stays in view below it. */
+  @media (max-width: 640px) {
+    #map-panel { max-height: 58%; }
+  }
   /* Same colors as the arrows on the map. */
   .key-line { display: inline-block; width: 1rem; height: 3px; margin-right: 0.4rem; border-radius: 2px; vertical-align: 0.2rem; }
   .key-line.before { background: var(--event); }
@@ -671,6 +696,7 @@ const data = {
     frame = done ? 0 : requestAnimationFrame(glide);
   }
   function zoomTowards(factor: number, at: { x: number; y: number }) {
+    cy.stop();
     const from = frame ? target : cy.zoom();
     target = Math.min(cy.maxZoom(), Math.max(cy.minZoom(), from * factor));
     anchor = at;
@@ -679,6 +705,7 @@ const data = {
   function stopGlide() {
     cancelAnimationFrame(frame);
     frame = 0;
+    cy.stop(); // also any move still running, so the reader's own zoom or drag wins
   }
 
   // Cytoscape zooms only about 3% per mouse-wheel notch, so handle the wheel here:
@@ -714,7 +741,43 @@ const data = {
   const statusText: Record<string, string> = {
     published: "", review: " · Being written", draft: " · Being written", planned: " · Not written yet",
   };
-  const titles = (nodes: cytoscape.NodeCollection) => nodes.map((n) => n.data("title") as string).join(", ");
+
+  // Move the map to a topic at the same zoom, into the part of the map the panel does not cover.
+  // Nothing else changes: the tapped topic, its panel and what is lit stay as they are.
+  function moveTo(node: cytoscape.NodeSingular) {
+    stopGlide();
+    const map = root.getBoundingClientRect();
+    const box = panel.getBoundingClientRect();
+    const left = box.left - map.left;
+    const below = box.bottom - map.top;
+    const spot = left * map.height >= map.width * (map.height - below)
+      ? { x: left / 2, y: map.height / 2 }
+      : { x: map.width / 2, y: (below + map.height) / 2 };
+    const z = cy.zoom();
+    const p = node.position();
+    const pan = { x: spot.x - p.x * z, y: spot.y - p.y * z };
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) cy.pan(pan);
+    else cy.animate({ pan }, { duration: 400, easing: "ease-in-out-cubic" });
+  }
+
+  // A topic's name as a button that moves the map to that topic.
+  function goToButton(n: cytoscape.NodeSingular) {
+    const go = document.createElement("button");
+    go.type = "button";
+    go.className = "go-to";
+    go.textContent = n.data("title");
+    go.setAttribute("aria-label", `${n.data("title")}: show on the map`);
+    go.addEventListener("click", () => moveTo(n));
+    return go;
+  }
+
+  // "Learn first" and its topics, each name a pill-shaped button.
+  function listTopics(row: HTMLElement, label: string, nodes: cytoscape.NodeCollection) {
+    const pills = document.createElement("span");
+    pills.className = "pills";
+    pills.append(...nodes.map(goToButton));
+    row.replaceChildren(label, pills);
+  }
 
   function clearFocus() {
     cy.elements().removeClass("faded lit focus before after");
@@ -743,12 +806,11 @@ const data = {
     const d = node.data() as MapNode;
     const direct = { needs: needs.nodes(), unlocks: unlocks.nodes() };
     $("panel-kind").textContent = `${kind[d.type] ?? d.type}${d.year ? ` · ${d.year}` : ""}${statusText[d.status] ?? ""}`;
-    $("panel-title").textContent = d.title;
+    $("panel-title").replaceChildren(goToButton(node)); // back to this topic after moving to another
     $("panel-summary").textContent = d.summary;
-    $("panel-requires").textContent = direct.needs.length
-      ? `Learn first: ${titles(direct.needs)}`
-      : "Nothing to learn first: you can start here.";
-    $("panel-leads").textContent = direct.unlocks.length ? `Unlocks: ${titles(direct.unlocks)}` : "";
+    if (direct.needs.length) listTopics($("panel-requires"), "Learn first", direct.needs);
+    else $("panel-requires").textContent = "Nothing to learn first: you can start here.";
+    listTopics($("panel-leads"), "Unlocks", direct.unlocks);
     $("panel-leads-row").hidden = !direct.unlocks.length;
     const read = $("panel-read") as HTMLAnchorElement;
     read.href = d.url;
