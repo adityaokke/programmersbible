@@ -3,7 +3,7 @@ id: request-coalescing
 title: "Request Coalescing: One Job for Many Requests"
 type: concept
 part: code
-status: review
+status: published
 requires: [caching, nodejs, python-asyncio, goroutines, race-conditions]
 related: [server, programming-languages]
 summary: "Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer."
@@ -87,6 +87,8 @@ sources:
   - title: "Hex: httpower package"
     url: https://hex.pm/packages/httpower
 author: ai
+reviewed_by: ai
+reviewed_at: 2026-11-06
 updated: 2026-11-06
 ---
 
