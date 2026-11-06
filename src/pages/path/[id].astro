@@ -31,7 +31,7 @@ let number = 0;
                     {node.type === "event" && <span class="event-mark">🕰 </span>}
                     {node.type === "project" && "🏁 "}
                     <a href={nodeUrl(id)}>{node.title}</a>{" "}
-                    {!isReadable(node) && <span class="small muted">· coming soon</span>}
+                    {!isReadable(node) && <span class="small muted">· not ready yet</span>}
                   </span>
                 </li>
               );

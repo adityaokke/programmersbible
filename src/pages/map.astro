@@ -257,8 +257,7 @@ const data = {
     <li><span class="dot concept"></span> Topic</li>
     <li><span class="dot event"></span> History</li>
     <li><span class="dot project"></span> Project</li>
-    <li><span class="dot unread"></span> Being written</li>
-    <li><span class="dot planned"></span> Not written yet</li>
+    <li><span class="dot not-ready"></span> Not ready yet</li>
     <li>Bigger dot: more topics build on it. Arrows point from what you learn first to what it unlocks.</li>
   </ul>
 
@@ -401,8 +400,7 @@ const data = {
   .dot { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 50%; background: var(--accent); vertical-align: -0.05rem; }
   .dot.event { background: var(--event); transform: rotate(45deg); border-radius: 2px; }
   .dot.project { background: var(--ok); border-radius: 2px; }
-  .dot.unread { background: var(--accent-soft); border: 2px solid var(--accent); }
-  .dot.planned { background: transparent; border: 2px dashed var(--muted); }
+  .dot.not-ready { background: transparent; border: 2px dashed var(--muted); }
 </style>
 
 
@@ -490,9 +488,8 @@ const data = {
       },
       { selector: "node.event", style: { shape: "diamond" } },
       { selector: "node.project", style: { shape: "star", "background-color": v("--ok") } },
-      // Solid: ready to read. Light: being written. Dashed: not written yet.
-      { selector: "node.unread", style: { "background-opacity": 0.2, "border-width": 2, "border-color": "data(color)" } },
-      { selector: "node.planned", style: { "border-style": "dashed" } },
+      // Solid: ready to read. Light and dashed: not ready yet.
+      { selector: "node.unread", style: { "background-opacity": 0.2, "border-width": 2, "border-style": "dashed", "border-color": "data(color)" } },
       {
         selector: "node.part",
         style: {
@@ -571,7 +568,7 @@ const data = {
       el.textContent = d.title;
       const sum = document.createElement("div");
       sum.className = "sum";
-      sum.textContent = d.summary || (d.status === "planned" ? "Not written yet" : "Being written");
+      sum.textContent = d.readable ? d.summary : "Not ready yet";
       el.append(sum);
       layer.append(el);
       return { node, el, w: 0, h: 0 };
@@ -738,9 +735,6 @@ const data = {
   const panel = document.getElementById("map-panel")!;
   const $ = (id: string) => document.getElementById(id)!;
   const kind: Record<string, string> = { concept: "Topic", event: "History", project: "Project", hub: "Overview" };
-  const statusText: Record<string, string> = {
-    published: "", review: " · Being written", draft: " · Being written", planned: " · Not written yet",
-  };
 
   // Move the map to a topic at the same zoom, into the part of the map the panel does not cover.
   // Nothing else changes: the tapped topic, its panel and what is lit stay as they are.
@@ -805,7 +799,7 @@ const data = {
 
     const d = node.data() as MapNode;
     const direct = { needs: needs.nodes(), unlocks: unlocks.nodes() };
-    $("panel-kind").textContent = `${kind[d.type] ?? d.type}${d.year ? ` · ${d.year}` : ""}${statusText[d.status] ?? ""}`;
+    $("panel-kind").textContent = `${kind[d.type] ?? d.type}${d.year ? ` · ${d.year}` : ""}${d.readable ? "" : " · Not ready yet"}`;
     $("panel-title").replaceChildren(goToButton(node)); // back to this topic after moving to another
     $("panel-summary").textContent = d.summary;
     if (direct.needs.length) listTopics($("panel-requires"), "Learn first", direct.needs);

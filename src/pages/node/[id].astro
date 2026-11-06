@@ -79,7 +79,7 @@ const byline =
       <p class="small muted">
         {node.type === "event" && <span class="event-mark">🕰 {node.era_label ?? node.year} · </span>}
         {node.read_minutes && <>⏱ {node.read_minutes} min read</>}
-        {node.status !== "published" && (
+        {readable && node.status !== "published" && (
           <>
             {" "}
             <span class={`badge ${node.status}`}>{node.status}</span>
@@ -110,7 +110,7 @@ const byline =
         ) : (
           <div class="notice">
             <p>
-              <strong>This topic is being written.</strong> It will be published after it has been fact-checked and
+              <strong>This topic is not ready yet.</strong> It will be published after it has been fact-checked and
               reviewed.
             </p>
             {learnFirst.length > 0 && <p>While you wait, you can read what comes before it (shown above).</p>}
