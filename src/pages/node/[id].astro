@@ -43,9 +43,6 @@ const byline =
       <div class="breadcrumb">
         <a href={`/path/${position.path.id}`}>{position.path.title}</a> › {position.section.title} › {position.index + 1} of{" "}
         {position.total}
-        <div class="progress">
-          <span style={`width: ${((position.index + 1) / position.total) * 100}%`} />
-        </div>
       </div>
     )
   }
