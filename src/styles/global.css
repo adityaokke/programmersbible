@@ -160,6 +160,24 @@ article pre code { background: none; padding: 0; font-size: inherit; }
 @media (prefers-color-scheme: dark) {
   .code-block pre span { color: var(--shiki-dark); }
 }
+/* The same idea in several languages. Without a script, the panels simply follow each other. */
+.code-tabs { margin: 1.25rem 0; }
+.tab-list { display: flex; flex-wrap: wrap; gap: 0.25rem; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
+.tab-list button {
+  margin-bottom: -1px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-radius: 8px 8px 0 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.tab-list button:hover { color: var(--fg); }
+.tab-list button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+
 /* On a phone, long lines wrap, so a comment can be read without scrolling sideways.
    The rest of a wrapped line is indented, so it does not look like a new line of code. */
 @media (max-width: 640px) {

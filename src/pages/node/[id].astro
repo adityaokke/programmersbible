@@ -192,6 +192,51 @@ const byline =
     block.querySelector("figcaption")!.append(button);
   }
 
+  // Tabs for the same idea in several languages. The script makes them: without it, each panel
+  // shows under its own heading. A closed panel can still be found with the browser's search.
+  document.querySelectorAll<HTMLElement>(".code-tabs").forEach((group, g) => {
+    const panels = [...group.querySelectorAll<HTMLElement>(":scope > .tab-panel")];
+    const list = document.createElement("div");
+    list.className = "tab-list";
+    list.setAttribute("role", "tablist");
+    list.setAttribute("aria-label", "Choose a language");
+    const tabs = panels.map((panel, i) => {
+      const heading = panel.querySelector("h3")!;
+      const tab = document.createElement("button");
+      tab.type = "button";
+      tab.id = `tab-${g}-${i}`;
+      tab.textContent = heading.textContent;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-controls", (panel.id = `panel-${g}-${i}`));
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tab.id);
+      heading.hidden = true;
+      tab.addEventListener("click", () => show(i));
+      panel.addEventListener("beforematch", () => show(i));
+      return tab;
+    });
+    function show(chosen: number) {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute("aria-selected", String(i === chosen));
+        tab.tabIndex = panels[i]!.tabIndex = i === chosen ? 0 : -1; // a closed panel takes no keyboard focus
+        if (i === chosen) panels[i]!.removeAttribute("hidden");
+        else panels[i]!.setAttribute("hidden", "until-found");
+      });
+    }
+    // Arrow keys move between tabs; Tab moves on to the open panel.
+    list.addEventListener("keydown", (e) => {
+      const now = tabs.findIndex((t) => t.getAttribute("aria-selected") === "true");
+      const next = ({ ArrowRight: now + 1, ArrowLeft: now - 1 + tabs.length, Home: 0, End: tabs.length - 1 } as Record<string, number>)[e.key];
+      if (next === undefined) return;
+      e.preventDefault();
+      show(next % tabs.length);
+      tabs[next % tabs.length]!.focus();
+    });
+    list.append(...tabs);
+    group.prepend(list);
+    show(0);
+  });
+
   // Mark the section being read in "On this page": the last heading that has scrolled past the top third.
   const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc-side a")];
   const headings = [...new Set(links.map((a) => a.hash.slice(1)))]
