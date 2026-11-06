@@ -171,6 +171,27 @@ const byline =
 </Base>
 
 <script>
+  // A Copy button on each code block. Without scripts the code still reads the same, with no button.
+  for (const block of document.querySelectorAll<HTMLElement>(".code-block")) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy-code";
+    button.textContent = "Copy";
+    button.setAttribute("aria-label", `Copy this ${block.querySelector("figcaption")!.textContent} code`);
+    let reset = 0;
+    button.addEventListener("click", async () => {
+      clearTimeout(reset);
+      try {
+        await navigator.clipboard.writeText(block.querySelector("code")!.textContent!);
+        button.textContent = "Copied";
+      } catch {
+        button.textContent = "Could not copy";
+      }
+      reset = window.setTimeout(() => (button.textContent = "Copy"), 2000);
+    });
+    block.querySelector("figcaption")!.append(button);
+  }
+
   // Mark the section being read in "On this page": the last heading that has scrolled past the top third.
   const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc-side a")];
   const headings = [...new Set(links.map((a) => a.hash.slice(1)))]

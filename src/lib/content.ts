@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { imageSize } from "image-size";
 import { Marked, type Tokens } from "marked";
 import { createMermaidRenderer } from "mermaid-isomorphic";
+import { createHighlighter } from "shiki";
 import { IMAGES_DIR, loadNodes, loadPaths, type Issue, type LoadedNode } from "../../scripts/lib/content.ts";
 import type { NodeFrontmatter, PathFile } from "../../schema/node.ts";
 
@@ -160,8 +161,17 @@ function withCallouts(inner: string, labels: Label[], aspect: number): string {
 const escapeHtml = (text: string) =>
   text.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
+// Languages with colored code, and the name shown above their blocks. Colors are worked out here at
+// build time, so reading needs no script. These themes keep comments readable on the site's backgrounds.
+const CODE_LANGUAGES: Record<string, string> = { js: "JavaScript", python: "Python", go: "Go", html: "HTML" };
+const highlighter = createHighlighter({
+  themes: ["github-light-default", "github-dark-default"],
+  langs: Object.keys(CODE_LANGUAGES),
+});
+
 export async function renderBody(node: Node): Promise<string> {
   const diagrams: string[] = [];
+  const shiki = await highlighter;
   const credits = new Map(node.images.map((image) => [image.file, image]));
 
   const marked = new Marked({
@@ -173,6 +183,16 @@ export async function renderBody(node: Node): Promise<string> {
         return `<h2 id="${sectionId(text)}">${this.parser.parseInline(tokens)}</h2>\n`;
       },
       code({ text, lang }) {
+        if (lang && CODE_LANGUAGES[lang]) {
+          const code = shiki.codeToHtml(text, {
+            lang,
+            themes: { light: "github-light-default", dark: "github-dark-default" },
+            defaultColor: false,
+            transformers: [{ pre: (pre) => void delete pre.properties.style }],
+          });
+          return `<figure class="code-block"><figcaption data-pagefind-ignore>${CODE_LANGUAGES[lang]}</figcaption>${code}</figure>
+`;
+        }
         if (lang !== "mermaid") return false;
         diagrams.push(text);
         return `<!--diagram-${diagrams.length - 1}-->`;
