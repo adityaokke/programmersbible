@@ -109,8 +109,6 @@ input[type="search"] {
 .node-layout article pre { max-width: 100%; overflow-x: auto; overflow-wrap: normal; }
 
 .breadcrumb { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
-.progress { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 0.4rem; }
-.progress > span { display: block; height: 100%; background: var(--accent); }
 
 article { max-width: 44rem; }
 article h1 { font-size: 2.1rem; line-height: 1.2; margin: 0.2rem 0; }
@@ -157,7 +155,7 @@ article pre code { background: none; padding: 0; }
 .toc-left { display: none; }
 @media (min-width: 83rem) {
   .container:has(.node-layout) { max-width: 82.5rem; }
-  /* The path and progress bar line up with the text, not with the column beside it. */
+  /* The path line lines up with the text, not with the column beside it. */
   .container:has(.node-layout) .breadcrumb { margin-left: 16rem; }
   .node-layout { grid-template-columns: 13rem minmax(0, 44rem) 17rem; }
   .toc-left { display: block; position: sticky; top: 1rem; align-self: start; max-height: calc(100vh - 2rem); overflow-y: auto; font-size: 0.95rem; }
