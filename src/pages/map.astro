@@ -267,7 +267,10 @@ const data = {
     <div class="map-controls">
       <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
       <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
-      <button type="button" data-zoom="fit" aria-label="Show everything">⤢</button>
+      <button type="button" data-zoom="fit" aria-label="Show everything" title="Show everything">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8.2 8 3l6 5.2M4 7v6h8V7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </button>
+      <button type="button" id="map-full" aria-label="Full screen" title="Full screen" aria-pressed="false" hidden>⤢</button>
     </div>
     <aside id="map-panel" hidden>
       <button type="button" class="close" aria-label="Close">×</button>
@@ -292,6 +295,19 @@ const data = {
     border-radius: 12px;
     background: var(--card);
     overflow: hidden;
+  }
+  .map-wrap:fullscreen,
+  .map-wrap.is-full {
+    height: 100%;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+  }
+  /* Phones without the browser's full screen: fill the browser's window instead. */
+  .map-wrap.is-full {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
   }
   #map { position: absolute; inset: 0; }
   /* Names are page text on a layer above the map, like street-map labels: sharp and the same size at any zoom. */
@@ -546,6 +562,9 @@ const data = {
   let fitZoom = 1;
 
   function fitAll() {
+    // The limits belong to the old size: clear them first, or a new size is clamped to them.
+    cy.minZoom(1e-50);
+    cy.maxZoom(1e50);
     cy.fit(undefined, 40);
     fitZoom = cy.zoom();
     cy.minZoom(fitZoom * 0.85); // zooming out further only makes everything smaller
@@ -663,6 +682,7 @@ const data = {
   // Part titles grow or shrink with an animation when zooming past "far"; place them again at its end.
   layer.addEventListener("transitionend", placeLabels);
   addEventListener("resize", () => {
+    if (viewBeforeFull) return; // going in or out of full screen: settleFull does this.
     const before = view();
     cy.resize();
     fitAll();
@@ -674,7 +694,8 @@ const data = {
   function view(): View {
     const z = cy.zoom();
     const pan = cy.pan();
-    return { zoom: z / fitZoom, x: (root.clientWidth / 2 - pan.x) / z, y: (root.clientHeight / 2 - pan.y) / z };
+    // cy.width() is the size before the last cy.resize(), so a resize keeps the same center.
+    return { zoom: z / fitZoom, x: (cy.width() / 2 - pan.x) / z, y: (cy.height() / 2 - pan.y) / z };
   }
   function setView(v: View) {
     const z = Math.min(cy.maxZoom(), Math.max(cy.minZoom(), fitZoom * v.zoom));
@@ -816,7 +837,7 @@ const data = {
   panel.querySelector(".close")!.addEventListener("click", clearFocus);
   addEventListener("keydown", (e) => e.key === "Escape" && clearFocus());
 
-  document.querySelectorAll<HTMLButtonElement>(".map-controls button").forEach((b) =>
+  document.querySelectorAll<HTMLButtonElement>(".map-controls button[data-zoom]").forEach((b) =>
     b.addEventListener("click", () => {
       if (b.dataset.zoom === "fit") {
         stopGlide();
@@ -825,6 +846,46 @@ const data = {
       zoomTowards(b.dataset.zoom === "in" ? 2 : 1 / 2, { x: root.clientWidth / 2, y: root.clientHeight / 2 });
     }),
   );
+
+  // Full screen: the browser's own where it exists, otherwise filling the window.
+  const wrap = root.closest<HTMLElement>(".map-wrap")!;
+  const fullButton = document.querySelector<HTMLButtonElement>("#map-full")!;
+  fullButton.hidden = false;
+  function showFullState() {
+    const full = document.fullscreenElement === wrap || wrap.classList.contains("is-full");
+    const label = full ? "Exit full screen" : "Full screen";
+    fullButton.setAttribute("aria-label", label);
+    fullButton.title = label;
+    fullButton.setAttribute("aria-pressed", String(full));
+  }
+  // The view from just before the change, kept until the new size has settled.
+  let viewBeforeFull: View | null = null;
+  function settleFull() {
+    showFullState();
+    requestAnimationFrame(() => {
+      cy.resize();
+      fitAll();
+      if (viewBeforeFull) setView(viewBeforeFull);
+      viewBeforeFull = null;
+    });
+  }
+  function fillWindow(on: boolean) {
+    viewBeforeFull ??= view();
+    wrap.classList.toggle("is-full", on);
+    document.documentElement.style.overflow = on ? "hidden" : "";
+    settleFull();
+  }
+  fullButton.addEventListener("click", () => {
+    viewBeforeFull = view();
+    if (document.fullscreenElement) return void document.exitFullscreen();
+    if (wrap.classList.contains("is-full")) return fillWindow(false);
+    if (wrap.requestFullscreen) wrap.requestFullscreen().catch(() => fillWindow(true));
+    else fillWindow(true);
+  });
+  document.addEventListener("fullscreenchange", settleFull);
+  addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && wrap.classList.contains("is-full")) fillWindow(false);
+  });
 
   // Remember the view and the tapped topic in the address (like a street map), so pressing Back
   // after "Read", reloading or sharing the link returns to the same place.
