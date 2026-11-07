@@ -20,6 +20,17 @@ const fullTitle = title ? `${title} · Programmer's Bible` : "Programmer's Bible
 const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, "").replace(/(.)\/$/, "$1"), Astro.site);
 const shareImage = new URL("/og.png", Astro.site);
 const REPO = "https://github.com/adityaokke/programmersbible";
+// Tells search engines the site's name, on the home page only, as Google asks.
+const siteData =
+  canonical.pathname === "/"
+    ? JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Programmer's Bible",
+        alternateName: ["Programmers Bible"],
+        url: canonical.href,
+      })
+    : null;
 ---
 
 <!doctype html>
@@ -43,6 +54,7 @@ const REPO = "https://github.com/adityaokke/programmersbible";
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Programmer's Bible: from knowing how to use a browser to understanding how it all works." />
     <meta name="twitter:card" content="summary_large_image" />
+    {siteData && <script is:inline type="application/ld+json" set:html={siteData} />}
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
