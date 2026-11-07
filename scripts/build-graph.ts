@@ -75,9 +75,17 @@ for (const id of byId.keys()) visit(id, []);
 
 const STRICT = new Set(["review", "published"]);
 
+// A reader opens one tab, so only the first tab of each group counts as reading.
+function firstTabOnly(body: string): string {
+  return body.replace(/<!--\s*tabs\s*-->([\s\S]*?)<!--\s*\/tabs\s*-->/g, (_, inner: string) => {
+    const [before = "", first = ""] = inner.split(/^(?=### )/m);
+    return before + first;
+  });
+}
+
 function countWords(body: string): number {
   // The Sources section is a list of references, not reading time.
-  const text = stripCode(body).split(/^##\s+.*Sources\s*$/m)[0] ?? "";
+  const text = stripCode(firstTabOnly(body)).split(/^##\s+.*Sources\s*$/m)[0] ?? "";
   return text.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
 }
 

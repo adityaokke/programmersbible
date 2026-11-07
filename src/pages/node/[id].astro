@@ -194,6 +194,9 @@ const byline =
 
   // Tabs for the same idea in several languages. The script makes them: without it, each panel
   // shows under its own heading. A closed panel can still be found with the browser's search.
+  const tabGroups: { show: (label: string) => void }[] = [];
+  // Choosing a language switches every group on this page. Nothing is stored: see the privacy page.
+  const choose = (label: string) => tabGroups.forEach((g) => g.show(label));
   document.querySelectorAll<HTMLElement>(".code-tabs").forEach((group, g) => {
     const panels = [...group.querySelectorAll<HTMLElement>(":scope > .tab-panel")];
     const list = document.createElement("div");
@@ -211,7 +214,7 @@ const byline =
       panel.setAttribute("role", "tabpanel");
       panel.setAttribute("aria-labelledby", tab.id);
       heading.hidden = true;
-      tab.addEventListener("click", () => show(i));
+      tab.addEventListener("click", () => choose(tab.textContent ?? ""));
       panel.addEventListener("beforematch", () => show(i));
       return tab;
     });
@@ -229,12 +232,18 @@ const byline =
       const next = ({ ArrowRight: now + 1, ArrowLeft: now - 1 + tabs.length, Home: 0, End: tabs.length - 1 } as Record<string, number>)[e.key];
       if (next === undefined) return;
       e.preventDefault();
-      show(next % tabs.length);
+      choose(tabs[next % tabs.length]!.textContent ?? "");
       tabs[next % tabs.length]!.focus();
     });
     list.append(...tabs);
     group.prepend(list);
     show(0);
+    tabGroups.push({
+      show(label) {
+        const i = tabs.findIndex((t) => t.textContent === label);
+        if (i >= 0) show(i);
+      },
+    });
   });
 
   // Mark the section being read in "On this page": the last heading that has scrolled past the top third.

@@ -44,7 +44,7 @@ They make a confused reader feel stupid. The validator rejects them in `review` 
 
 - One idea per paragraph.
 - Use a diagram whenever an idea involves movement, layers or structure.
-- **600–1,200 words** (3–7 minutes). Longer → split it into two nodes.
+- **600–1,200 words** (3–7 minutes). Longer → split it into two nodes. In a tab group, only the first tab counts, because a reader opens one.
 - **Projects: up to 1,600 words**, because step-by-step instructions need the room. Code blocks are not counted.
 
 ## Analogies
