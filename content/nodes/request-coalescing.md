@@ -88,13 +88,11 @@ sources:
     url: https://hex.pm/packages/httpower
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-06
-updated: 2026-11-06
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer.
-
-Some "Learn first" topics are not written yet, but this page explains the words it needs.
 
 ## Why should I care?
 
