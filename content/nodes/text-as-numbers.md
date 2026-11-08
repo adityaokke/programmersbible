@@ -47,10 +47,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Computers store text by giving every character a number; ASCII was an early list of 128 characters, and Unicode is today's list for almost every writing system in the world.
@@ -132,20 +136,20 @@ The first volume of **Unicode 1.0** was published in **October 1991**.
 
 You will use the browser **console**, the tool from [[counting-systems]] where you type a short instruction and see the answer.
 
-**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The lines on this page are safe.
+**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The lines on this page only turn characters into numbers and numbers into characters.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. Click the empty line at the bottom.
-4. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. Click the line where you can type, below any messages.
+4. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    "A".codePointAt(0)
    ```
 
-   The `(0)` means "the first character": in code, counting often starts at 0. If the browser adds a bracket or quote mark by itself, that is fine.
+   The `(0)` means "the first character": in code, counting often starts at 0.
 
 5. You should see `65`: the code point of `A`. Change `"A"` to `"a"` and press `Enter` again. You should see `97`.
 6. Now go the other way. Type this line and press `Enter`:
@@ -189,3 +193,5 @@ You will use the browser **console**, the tool from [[counting-systems]] where y
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

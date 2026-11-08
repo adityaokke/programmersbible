@@ -47,10 +47,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A programming language lets people write a program in words and symbols they can read; then a compiler translates it into machine code, or an interpreter reads it and carries it out.
@@ -121,7 +125,7 @@ In 1957, IBM released **Fortran**, short for "formula translation". IBM soon mad
 
 Your browser contains a JavaScript interpreter. You will give it three short lines. You need a computer with a keyboard.
 
-**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste anything a stranger sends you. The lines below are safe.
+**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste anything a stranger sends you.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
@@ -129,13 +133,13 @@ Your browser contains a JavaScript interpreter. You will give it three short lin
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
 
    Ignore any messages already there.
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    (2 + 3) * 4
    ```
 
-   If the browser adds a bracket or a quote mark by itself while you type, that is fine. The answer may appear in grey before you press `Enter`. After you press `Enter`, you should see `20`. The `*` symbol means "multiply". The interpreter read your line and carried it out.
+   The console may show a preview of the answer while you type. After you press `Enter`, you should see `20`. The `*` symbol means "multiply". The interpreter read your line and carried it out.
 4. Type this line, with the quote marks, and press `Enter`:
 
    ```
@@ -149,7 +153,7 @@ Your browser contains a JavaScript interpreter. You will give it three short lin
    2 + * 3
    ```
 
-   You should see a red error message. It contains the word `SyntaxError`, plus some other words. This line breaks JavaScript's rules, so the interpreter cannot carry it out. Mistakes like this are normal: you fix the line and try again.
+   You should see an error message. It contains the word `SyntaxError`, plus some other words. This line breaks JavaScript's rules, so the interpreter cannot carry it out. Mistakes like this are normal: you fix the line and try again.
 6. Close the tab.
 
 **On a phone:** say out loud what a compiler and an interpreter each do, then check your answer against the diagram.
@@ -183,3 +187,5 @@ Your browser contains a JavaScript interpreter. You will give it three short lin
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

@@ -53,10 +53,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Compression stores information in fewer bytes: lossless compression gives back an exact copy (like PNG and ZIP files), while lossy compression throws away details people hardly notice (like JPEG and MP3 files).
@@ -139,13 +143,13 @@ flowchart TD
 
 You will compress some text with gzip in your browser's **console** (see [[browser-devtools]]) and see how many bytes are left.
 
-**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. This code is safe: it only works on text inside your own browser tab. You do not need to understand every word yet.
+**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. This code only works on text inside your own browser tab. You do not need to understand every word yet.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`. It makes a text with "ha" repeated 5,000 times:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. It makes a text with "ha" repeated 5,000 times:
 
    ```
    let text = "ha".repeat(5000)
@@ -159,14 +163,14 @@ You will compress some text with gzip in your browser's **console** (see [[brows
    ```
 
    You should see `10000`: the text is 10,000 bytes.
-5. Now compress it with gzip and show the size of the result in bytes. Type this line carefully and press `Enter`:
+5. Now compress it with gzip and show the size of the result in bytes. Type this line carefully and press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    new Response(new Blob([text]).stream().pipeThrough(new CompressionStream("gzip"))).blob().then(b => console.log(b.size))
    ```
 
-   If the browser adds a bracket or a quote mark by itself while you type, make sure the line still looks exactly like the one above. You may first see a line with the word `Promise` (it means "the answer is coming"). Then a small number appears, well under 100. It may differ a little between browsers. The text shrank from 10,000 bytes to a few dozen. It is one short pattern, repeated, so gzip can write it in a very short form, like "6 apples".
-   If you see red text instead, check the line letter by letter. Or reload the page and start again from step 3.
+   You may first see a line with the word `Promise` (it means "the answer is coming"). Then a small number appears, well under 100. It may differ a little between browsers. The text shrank from 10,000 bytes to a few dozen. It is one short pattern, repeated, so gzip can write it in a very short form, like "6 apples".
+   If you see an error message instead, check the line letter by letter. Or reload the page and start again from step 3.
 6. When you are done, close the tab.
 
 **On a phone:** on paper, draw 8 white squares and 4 black ones, and write them as runs ("8 white, 4 black"). Then try white and black taking turns.
@@ -202,3 +206,5 @@ You will compress some text with gzip in your browser's **console** (see [[brows
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

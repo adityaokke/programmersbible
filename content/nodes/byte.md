@@ -47,10 +47,12 @@ sources:
     url: https://web.stanford.edu/class/cs101/bits-bytes.html
   - title: "MDN Web Docs: String"
     url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-05
-updated: 2026-11-05
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A byte is a group of 8 bits, the unit computers use to measure storage.
@@ -115,22 +117,20 @@ Some technical documents, such as internet standards, use the word **octet** ins
 
 You will use a tool built into your browser called the **console**. It lets you type small pieces of code. (You will learn more about these tools in [[browser-devtools]].)
 
-**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. The code on this page is safe: it only reads text and shows numbers.
+**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. The code on this page only reads text and shows numbers.
 
-You do not need to understand the words in the code yet. You only need to read the result. You need a computer with a keyboard for this. If you see a red error message, nothing is broken: check your typing and try again.
+You do not need to understand the words in the code yet. You only need to read the result. You need a computer with a keyboard for this. If you see an error message, nothing is broken: check your typing and try again.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. Click on the empty line after the last message.
-4. **Type** this line exactly (typing is better than pasting: some browsers block pasting in the console), then press `Enter`:
+3. You may see some messages already. Click the line where you can type, below any messages.
+4. **Type** this line exactly (typing is better than pasting: some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    new TextEncoder().encode("Hello")
    ```
-
-   If the browser adds a bracket or a quote mark by itself while you type, make sure the line still looks exactly like the one above.
 
 5. You should see something like `Uint8Array(5) [72, 101, 108, 108, 111]`. The exact look is different in each browser. If you see extra words after the numbers, you can ignore them.
 
@@ -173,3 +173,4 @@ You should see something like `Uint8Array(4) [240, 159, 152, 128]`: one emoji, *
 - Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 - Stanford CS101, Bits and Bytes: https://web.stanford.edu/class/cs101/bits-bytes.html
 - MDN Web Docs, String: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript

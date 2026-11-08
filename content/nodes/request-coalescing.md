@@ -86,6 +86,10 @@ sources:
     url: https://en.wikipedia.org/wiki/Process_(computing)
   - title: "Hex: httpower package"
     url: https://hex.pm/packages/httpower
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
 reviewed_at: 2026-11-08
@@ -309,7 +313,7 @@ Type a tiny JavaScript version of the same idea in the **console**, as in the [[
 
 1. In Chrome, Edge or Firefox, open `https://example.com`.
 2. Open the console: `Ctrl` + `Shift` + `J` on Windows (in Firefox: `Ctrl` + `Shift` + `K`), or `Cmd` + `Option` + `J` on Mac (in Firefox: `Cmd` + `Option` + `K`).
-3. Click the empty line at the bottom. Your browser may block pasting, so type each line below. The browser may show suggestions, and the line may look different while you type. Keep typing, check that the line looks like the one below, and press `Enter` at its end.
+3. Click the line where you can type, below any messages. Some browsers may block pasting at first, so type each line below. The browser may show suggestions, and the line may look different while you type. Keep typing, check that the line looks like the one below, and press `Enter` at its end.
 
 ```
 var jobs = 0; var job = null
@@ -323,7 +327,7 @@ function ask() { if (!job) { jobs++; job = fetch(location.href).finally(() => jo
 Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers from " + jobs + " job"))
 ```
 
-**What you should see:** after the last line, the message `3 answers from 1 job`. You can ignore other lines, such as `undefined`. If you see a red error, check your typing and try again.
+**What you should see:** after the last line, the message `3 answers from 1 job`. You can ignore other lines, such as `undefined`. If you see an error message, check your typing and try again.
 
 **Now run the last line again:** press the up arrow key, then `Enter`. You should see `3 answers from 2 job`. The program always writes "job", even for 2. The count is a running total. The three new calls shared one new job, because the first had finished.
 
@@ -374,3 +378,5 @@ Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers fr
 - MDN Web Docs, Introducing workers: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Async_JS/Introducing_workers
 - Wikipedia, Process (computing): https://en.wikipedia.org/wiki/Process_(computing)
 - Hex, httpower package: https://hex.pm/packages/httpower
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

@@ -39,10 +39,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Kilobytes (kB), megabytes (MB), gigabytes (GB) and terabytes (TB) are bigger units for counting bytes; each step is usually 1,000 times bigger, but some systems use 1,024 instead.
@@ -119,13 +121,13 @@ In **December 1998**, the **International Electrotechnical Commission** (IEC), a
 
 You met the browser **console** in [[byte]]. Here you use it as a calculator. In the console, `**` means "to the power of": `2 ** 10` means ten 2s multiplied together (2 × 2 × 2 and so on). The sign `/` means "divided by".
 
-**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. The code on this page is safe: it only does arithmetic.
+**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. The code on this page only does arithmetic.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. That is normal. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. You may see some messages already. That is normal. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
 
    ```
    2 ** 10
@@ -176,3 +178,4 @@ You met the browser **console** in [[byte]]. Here you use it as a calculator. In
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript

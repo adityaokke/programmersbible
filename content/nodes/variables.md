@@ -96,8 +96,8 @@ sources:
     url: https://pkg.go.dev/cmd/go
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A variable is a name for a value, so your program can keep that value, use it later and sometimes replace it.
@@ -419,7 +419,7 @@ These steps use JavaScript, because your browser's console runs JavaScript. Ther
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
 
    Ignore any messages already there.
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    let score = 0

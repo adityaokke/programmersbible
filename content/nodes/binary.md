@@ -39,10 +39,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Binary is a way of writing numbers with only two digits, 0 and 1, and almost all modern computers use it.
@@ -137,20 +141,18 @@ In **1937**, **Claude Shannon**, a student at MIT (the Massachusetts Institute o
 
 You met the browser **console** in [[counting-systems]].
 
-**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The instructions on this page are safe: they only do arithmetic.
+**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The instructions on this page only change numbers to and from binary.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. Click the empty line at the bottom.
-4. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. You may see some messages already. Click the line where you can type, below any messages.
+4. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    (13).toString(2)
    ```
-
-   If the browser adds a bracket or a quote mark by itself while you type, make sure the line still looks exactly like the one above.
 
 5. You should see `1101`, maybe inside quote marks, like `'1101'` or `"1101"`. The quote marks mean the answer is text. This is 13 in binary.
 6. Now go the other way. Type this line and press `Enter`:
@@ -190,3 +192,5 @@ You met the browser **console** in [[counting-systems]].
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

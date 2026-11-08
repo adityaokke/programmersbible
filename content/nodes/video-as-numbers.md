@@ -45,10 +45,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-01
-updated: 2026-11-01
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A video is many still pictures, called frames, shown quickly one after another, plus sound; because this needs a huge number of bytes, video is compressed by storing mostly what changes from one frame to the next.
@@ -135,13 +137,13 @@ A **container** is the file format that holds everything together: the video, th
 
 You will count the bytes of HD video in your browser's **console** (see [[browser-devtools]]).
 
-**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. The lines here are safe: they only multiply numbers.
+**Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste code that a stranger sends you. The lines here only multiply numbers.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. That is normal. Click the empty line at the bottom. In the console, `*` means "multiply". **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. You may see some messages already. That is normal. Click the line where you can type, below any messages. In the console, `*` means "multiply". **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
 
    ```
    1920 * 1080 * 3
@@ -187,3 +189,4 @@ You will count the bytes of HD video in your browser's **console** (see [[browse
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript

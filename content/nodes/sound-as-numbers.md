@@ -41,10 +41,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A computer stores sound by measuring the sound wave thousands of times every second and saving each measurement as a number.
@@ -130,14 +132,14 @@ PCM later changed how people record and listen to music. On 8 March 1979, the co
 
 Let's ask your browser how many samples per second it uses. You met the browser **console** in [[counting-systems]].
 
-**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The lines on this page are safe: they play no sound and change nothing.
+**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The lines on this page play no sound and change nothing.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. Click the empty line at the bottom.
-4. **Type** this line exactly, with the same capital letters (some browsers block pasting in the console), then press `Enter`. You do not need to understand the words in it:
+3. You may see some messages already. Click the line where you can type, below any messages.
+4. **Type** this line exactly, with the same capital letters (some browsers may block pasting at first), then press `Enter`. You do not need to understand the words in it:
 
    ```
    new AudioContext().sampleRate
@@ -181,3 +183,4 @@ Let's ask your browser how many samples per second it uses. You met the browser 
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
