@@ -61,10 +61,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Input devices, such as a keyboard, mouse, microphone or touch screen, bring information into a computer; output devices, such as a screen, speakers or printer, give results back to the world.
@@ -147,7 +149,7 @@ You need a computer with a mouse (or a **touchpad**, the flat square on a laptop
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` (`⌘`) + `Option` (`⌥`) + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom of the console. **Type** this line yourself, exactly (some browsers do not allow pasting here), then press `Enter`. It tells the browser: "every time there is a click, write its position in the console".
+3. Click the line where you can type, below any messages. **Type** this line yourself, exactly (some browsers may block pasting at first), then press `Enter`. It tells the browser: "every time there is a click, write its position in the console".
 
    ```
    addEventListener("click", e => console.log(e.clientX, e.clientY))
@@ -159,7 +161,7 @@ You need a computer with a mouse (or a **touchpad**, the flat square on a laptop
    addEventListener("keydown", e => console.log(e.key))
    ```
 
-   After each line, the console may show the word `undefined`. That is normal. If you see a red error message, check each character and try again.
+   After each line, the console may show the word `undefined`. That is normal. If you see an error message, check each character and try again.
 5. Now click a few empty places on the page, away from the text and the link.
 6. Press the `B` key. Then hold `Shift` and press `B` again.
 7. When you are done, close the tab.
@@ -200,3 +202,4 @@ You need a computer with a mouse (or a **touchpad**, the flat square on a laptop
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript

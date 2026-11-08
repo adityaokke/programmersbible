@@ -49,10 +49,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: What are self-XSS attacks?"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** JavaScript is the programming language that web browsers run to give a page its behavior: it can change the page while you look at it and react when you click or type.
@@ -109,7 +113,7 @@ In November 1996, Netscape began working with Ecma International, an organizatio
 
 ## 🧪 Try it in your browser
 
-You need a computer with Chrome, Edge or Firefox. Your changes affect only your own copy of the page, and the lines below are safe.
+You need a computer with Chrome, Edge or Firefox. Your changes affect only your own copy of the page.
 
 **Safety rule:** only type code in the console that you understand or that comes from a source you trust. Never paste anything a stranger sends you.
 
@@ -118,20 +122,20 @@ You need a computer with Chrome, Edge or Firefox. Your changes affect only your 
 2. Open the **console**, the place where you can type JavaScript:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (browsers may block pasting at first), then press `Enter`:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    document.querySelector("h1").textContent = "Hello from JavaScript!"
    ```
 
-   **What you should see:** the heading on the page now says **Hello from JavaScript!** Here, `document` means the page. `querySelector("h1")` finds the first `h1` heading. `textContent =` replaces its text. While you type, the browser may add a bracket or quote mark by itself, or show a list of suggestions. Keep typing.
+   **What you should see:** the heading on the page now says **Hello from JavaScript!** Here, `document` means the page. `querySelector("h1")` finds the first `h1` heading. `textContent =` replaces its text.
 4. Now add behavior. Type this line and press `Enter`:
 
    ```
    document.querySelector("h1").addEventListener("click", function () { alert("You clicked!") })
    ```
 
-   This attaches an event listener to the heading. `"click"` names the event to wait for. `function () { ... }` holds the code to run on each click: `alert` shows a message. The console may show `undefined`, which means "no value to show". That is normal. If you see a red error instead, look for a typo and type the line again.
+   This attaches an event listener to the heading. `"click"` names the event to wait for. `function () { ... }` holds the code to run on each click: `alert` shows a message. The console may show `undefined`, which means "no value to show". That is normal. If you see an error message instead, look for a typo and type the line again.
 5. Click the heading on the page.
    **What you should see:** a small box with the words **You clicked!** Click **OK** to close it.
 6. Click your browser's reload button.
@@ -167,3 +171,5 @@ You need a computer with Chrome, Edge or Firefox. Your changes affect only your 
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, What are self-XSS attacks?: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

@@ -48,10 +48,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A digital image is a grid of tiny colored squares called pixels, and each pixel's color is stored as numbers, usually three numbers for red, green and blue.
@@ -136,20 +140,18 @@ The first image they scanned was a photo of Kirsch's three-month-old son, **Wald
 
 You will type three numbers and see the color they make. You will use the **console**, the tool you met in [[counting-systems]].
 
-**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The instruction on this page is safe: it only shows a colored message. You do not need to understand the words in the code yet.
+**Safety rule:** only type instructions in the console that you understand or that come from a source you trust. Never paste anything a stranger sends you. The instruction on this page only shows a colored message. You do not need to understand the words in the code yet.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. You may see some messages already. Click the empty line at the bottom.
-4. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. You may see some messages already. Click the line where you can type, below any messages.
+4. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    console.log("%cHello", "background: rgb(255, 0, 0); font-size: 40px")
    ```
-
-   If the browser adds a bracket or a quote mark by itself while you type, make sure the line still looks exactly like the one above.
 
 5. You should see the word **Hello** in large letters on a **red** background. Other words may also appear. That is normal.
 6. Press the `↑` (up arrow) key. The same line comes back. Move inside it with the `←` and `→` keys. Change only the three numbers inside `rgb( )` to `255, 255, 0`, then press `Enter`. The background is now **yellow**: red light plus green light.
@@ -187,3 +189,5 @@ You will type three numbers and see the color they make. You will use the **cons
 - Microsoft Edge DevTools, Console features reference: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/reference
 - Firefox DevTools User Docs, Keyboard shortcuts: https://firefox-source-docs.mozilla.org/devtools-user/keyboard_shortcuts/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

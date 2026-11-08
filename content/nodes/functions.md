@@ -117,8 +117,8 @@ sources:
     url: https://developer.mozilla.org/en-US/docs/Glossary/Compile
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A function is a block of code that runs when called, and it can take values in and give one value back.
@@ -611,7 +611,7 @@ These steps use JavaScript, the language the browser's console runs. In JavaScri
 2. Open the **console**:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`.
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`.
 
    ```
    function add(a, b) { const sum = a + b; return sum }

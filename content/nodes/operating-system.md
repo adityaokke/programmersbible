@@ -4,8 +4,6 @@ title: "Operating Systems"
 type: concept
 part: machine
 status: published
-reviewed_by: ai
-reviewed_at: 2026-10-31
 requires: [software, how-computer-parts-work-together]
 related: [files-and-folders, personal-computer, smartphone]
 summary: "An operating system is the main program that starts when a computer is switched on; it starts and stops the other programs, gives each one its own memory, and lets them share the CPU, storage and devices."
@@ -41,8 +39,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
-updated: 2026-10-31
+reviewed_by: ai
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** An operating system is the main program that starts when a computer is switched on; it starts and stops the other programs, gives each one its own memory, and lets them share the CPU, storage and devices.
@@ -132,7 +134,7 @@ Your browser can tell you which operating system it runs on. You need a computer
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
 
    ```
    navigator.userAgent
@@ -170,3 +172,4 @@ The numbers in this text may not match your exact system. MDN says some browsers
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript

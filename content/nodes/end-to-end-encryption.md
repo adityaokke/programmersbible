@@ -54,10 +54,12 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** With end-to-end encryption, a message is locked on the sender's device and can only be unlocked on the receiver's device, so the service that carries it cannot read it.
@@ -133,7 +135,7 @@ You will play the "session key" part of the steps above: encrypt and decrypt a s
 2. Open the **console**, the part of the browser's built-in tools where you can type commands:
    - **Chrome and Edge:** press `Ctrl` + `Shift` + `J` (Mac: `Cmd` + `Option` + `J`)
    - **Firefox:** press `Ctrl` + `Shift` + `K` (Mac: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** each line below yourself, exactly, with the same capital letters, and press `Enter` after each one. (Browsers may block pasting here.) After each line, the console shows a short description of what was made. If you see red text, look for a typo and type the line again.
+3. Click the line where you can type, below any messages. **Type** each line below yourself, exactly, with the same capital letters, and press `Enter` after each one. (Some browsers may block pasting at first.) After each line, the console shows a short description of what was made. If you see an error message, look for a typo and type the line again.
 
    This line makes a new random secret key. `AES-GCM` is the name of a cipher.
 
@@ -196,3 +198,4 @@ You will play the "session key" part of the steps above: encrypt and decrypt a s
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript

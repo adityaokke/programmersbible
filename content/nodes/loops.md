@@ -100,8 +100,8 @@ sources:
     url: https://raw.githubusercontent.com/mozilla-firefox/firefox/main/toolkit/components/aboutprocesses/content/aboutProcesses.js
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A loop runs the same block of code again and again, so you write the steps once and the computer repeats them.
@@ -435,7 +435,7 @@ Type carefully. A typo such as `i--` (which subtracts 1) instead of `i++` can ma
 2. Open the **console**:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Ignore any messages already there. Click the empty line at the bottom. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    for (let i = 1; i <= 5; i++) { console.log(i); }

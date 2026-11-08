@@ -75,8 +75,8 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Programming means writing exact instructions for a computer, then running and fixing them, because a computer follows what you wrote, not what you meant.
@@ -237,9 +237,7 @@ You need a computer with Chrome, Edge or Firefox. In the console, `Enter` runs t
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-
-   Ignore any messages already there.
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
 
    ```
    console.log("Hello")

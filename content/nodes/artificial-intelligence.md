@@ -53,10 +53,14 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
   - title: "Chrome for Developers: Self-XSS protection (paste warning in the console)"
     url: https://developer.chrome.com/blog/self-xss
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+  - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
+    url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Artificial intelligence (AI) means programs that do tasks we connect with human thinking; in machine learning, a part of AI, a program called a model is trained on many examples, and chatbots use large language models that predict text one piece at a time.
@@ -132,28 +136,27 @@ In 1956, a summer meeting called the Dartmouth Summer Research Project on Artifi
 
 You will build a tiny "next word" guesser in your browser's **console** (see [[browser-devtools]]).
 
-**Safety rule:** only type code in the console that comes from a source you trust. Never paste code that a stranger sends you. This code is safe: it only works on text inside your own browser tab. You do not need to understand every symbol; the steps say what each line does.
+**Safety rule:** only type code in the console that comes from a source you trust. Never paste code that a stranger sends you. This code only works on text inside your own browser tab. You do not need to understand every symbol; the steps say what each line does.
 
 1. In Chrome, Edge or Firefox, open any ordinary web page, for example `https://example.com`.
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter`. It splits a sentence into a list of words. Between the last two quote marks, there is one space:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`. It splits a sentence into a list of words. Between the last two quote marks, there is one space:
 
    ```
    let words = "the cat sat on the mat and the cat ate the fish".split(" ")
    ```
 
    You will see `undefined`. That is normal: it means "done, nothing to show".
-4. Type this line and press `Enter`. It keeps every word that comes right after "the". `=>` is `=` then `>`, and `===` is three equals signs:
+4. Type this line and press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing. This line keeps every word that comes right after "the". `=>` is `=` then `>`, and `===` is three equals signs:
 
    ```
    words.filter((w, i) => words[i - 1] === "the")
    ```
 
-   If the browser adds a bracket or a quote mark by itself, make sure the line still looks exactly like the one above.
    **What you should see:** a list of 4 words: `cat`, `mat`, `cat`, `fish`. It may look like `(4) ['cat', 'mat', 'cat', 'fish']` or `Array(4) [ "cat", "mat", "cat", "fish" ]`. Both are fine.
-   If you see red text, reload the page and start again from step 2.
+   If you see an error message, reload the page and start again from step 2.
 5. Count: "cat" comes 2 times, the others once. To guess the word after "the", you would pick "cat".
 6. Close the tab when you are done.
 
@@ -192,3 +195,5 @@ You will build a tiny "next word" guesser in your browser's **console** (see [[b
 - Microsoft Edge DevTools, Keyboard shortcuts: https://learn.microsoft.com/en-us/microsoft-edge/devtools/shortcuts/
 - Firefox DevTools User Docs, Web Console: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 - Chrome for Developers, Self-XSS protection: https://developer.chrome.com/blog/self-xss
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
+- Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html

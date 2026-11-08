@@ -116,8 +116,8 @@ sources:
     url: https://pkg.go.dev/fmt
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** A condition is a test in your code that gives true or false, and if and else use that answer to choose which code runs.
@@ -563,7 +563,7 @@ You need a computer with Chrome, Edge or Firefox.
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
 
    Ignore any messages already there.
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter`:
 
    ```
    let score = 70

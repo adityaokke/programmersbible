@@ -64,10 +64,12 @@ sources:
     url: https://support.apple.com/en-us/121029
   - title: "Apple Support: Mac keyboard shortcuts"
     url: https://support.apple.com/en-us/102650
+  - title: "Microsoft Edge DevTools: Run JavaScript in the Console"
+    url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-08
+updated: 2026-11-08
 ---
 
 > **In one sentence:** Storage is the part of a computer that keeps programs and files even when the power is off; most computers use a hard disk drive (HDD), which stores bits as magnetic patterns on spinning disks, or a solid-state drive (SSD), which stores them in flash memory chips with no moving parts.
@@ -150,7 +152,7 @@ You will use the browser **console**, the tool from [[byte]]. You need a compute
 2. Open the console:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the empty line at the bottom. **Type** this line yourself (some browsers block pasting in the console), then press `Enter` (on a Mac keyboard: `Return`):
+3. Click the line where you can type, below any messages. **Type** this line yourself (some browsers may block pasting at first), then press `Enter` (on a Mac keyboard: `Return`):
 
    ```
    navigator.storage.estimate().then(console.log)
@@ -197,3 +199,4 @@ You will use the browser **console**, the tool from [[byte]]. You need a compute
 - Apple Support, How iOS and macOS report storage capacity: https://support.apple.com/en-us/102119
 - Apple Support, iPhone 16 Tech Specs: https://support.apple.com/en-us/121029
 - Apple Support, Mac keyboard shortcuts: https://support.apple.com/en-us/102650
+- Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
