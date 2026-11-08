@@ -76,6 +76,8 @@ Then fix what they found:
 
 If you change facts, run the fact-checker again on the changed claims. Run `npm run validate` again.
 
+**Fix lists you write for a writer are held to the same rules as the node.** Wording you suggest needs a source too. Check it against docs/WRITING_GUIDE.md before you send it (for example, the console rules: "no result of its own", "The console may also show `undefined`"). Prefer "make X match source Y" over dictating a sentence. Reviewers have rejected coordinator wording several times: an unsourced "only", a "shows no value" that broke the console rule, and sentences about stack traces with no source.
+
 ## 5. AI review
 
 For each node, launch the **ai-reviewer** agent (several nodes can run in parallel). Give it the node file path, the claims table with the fact-checker's verdicts, and the beginner-reader's notes with what you changed. Do not give it your reasoning or ask it to approve.
