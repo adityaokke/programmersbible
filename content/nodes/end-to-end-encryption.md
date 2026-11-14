@@ -58,8 +58,8 @@ sources:
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** With end-to-end encryption, a message is locked on the sender's device and can only be unlocked on the receiver's device, so the service that carries it cannot read it.
@@ -162,7 +162,7 @@ You will play the "session key" part of the steps above: encrypt and decrypt a s
    new TextDecoder().decode(await crypto.subtle.decrypt(opts, key, box))
    ```
 
-   **What you should see:** `"Hello"` (or `'Hello'`). Only the key could turn the numbers back into your word.
+   **What you should see:** the word Hello. Only the key could turn the numbers back into your word.
 6. Close the tab.
 
 ## Common misunderstandings

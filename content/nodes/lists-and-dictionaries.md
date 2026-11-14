@@ -85,8 +85,8 @@ sources:
     url: https://example.com
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** A list keeps many values in order and finds them by position number. A dictionary keeps values under names called keys.
@@ -434,7 +434,7 @@ These steps use JavaScript, because your browser's console runs it. In JavaScrip
    fruits[0]
    ```
 
-   **What you should see:** `apple`. If it has quote marks around it, they mark a string.
+   **What you should see:** the word apple.
 5. Read the length:
 
    ```
@@ -469,7 +469,7 @@ These steps use JavaScript, because your browser's console runs it. In JavaScrip
    fruits[2]
    ```
 
-   **What you should see:** `cherry`.
+   **What you should see:** the word cherry.
 10. Create a dictionary:
 
     ```

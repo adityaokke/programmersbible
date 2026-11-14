@@ -41,8 +41,8 @@ sources:
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** A bit is one binary digit, a 0 or a 1: the smallest thing a computer can store, and also the unit used to measure information.
@@ -136,8 +136,8 @@ You met the browser **console** in [[binary]]: a tool where you type a short ins
 
    `*` is the star key. The `**` means "to the power of". You should see `8`: the number of patterns 3 bits can make.
 4. Type `2 ** 8` and press `Enter`. You should see `256`: the number of patterns 8 bits can make.
-5. Type `(7).toString(2)` and press `Enter`. You should see `111`, maybe inside quote marks. Read as a binary number, seven is the biggest number 3 bits can hold.
-6. Type `(8).toString(2)` and press `Enter`. You should see `1000`. The number 8 needs a fourth bit, as you saw above.
+5. Type `(7).toString(2)` and press `Enter`. You should see the digits 111. Read as a binary number, seven is the biggest number 3 bits can hold.
+6. Type `(8).toString(2)` and press `Enter`. You should see the digits 1000. The number 8 needs a fourth bit, as you saw above.
 7. When you are done, close the tab.
 
 **On a phone:** on paper, write all 8 patterns of 3 bits, from `000` to `111`. Then write each pattern twice more: once with a 0 in front, once with a 1 in front. Count the new patterns: you get 16.

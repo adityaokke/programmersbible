@@ -45,8 +45,8 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** Binary is a way of writing numbers with only two digits, 0 and 1, and almost all modern computers use it.
@@ -154,15 +154,15 @@ You met the browser **console** in [[counting-systems]].
    (13).toString(2)
    ```
 
-5. You should see `1101`, maybe inside quote marks, like `'1101'` or `"1101"`. The quote marks mean the answer is text. This is 13 in binary.
+5. You should see the digits 1101. The answer is text. This is 13 in binary.
 6. Now go the other way. Type this line and press `Enter`:
 
    ```
    parseInt("1101", 2)
    ```
 
-7. You should see `13`, without quote marks: this answer is a number. The `2` in both lines means "base 2".
-8. Try your own numbers: change `13` in step 4 to 255. You get `11111111`: eight 1s.
+7. You should see `13`: this answer is a number. The `2` in both lines means "base 2".
+8. Try your own numbers: change `13` in step 4 to 255. You get the digits 11111111: eight 1s.
 9. When you are done, close the tab.
 
 **On a phone:** write the worths 8, 4, 2, 1 on paper and convert a few numbers by hand.

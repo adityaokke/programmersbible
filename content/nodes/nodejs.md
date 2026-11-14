@@ -95,8 +95,8 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-07
-updated: 2026-11-07
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** Node.js is a runtime: a program that runs JavaScript outside the browser, using Chrome's V8 engine and adding its own tools for files and web servers.
@@ -246,21 +246,21 @@ You need a computer with Chrome, Edge or Firefox. You will not run Node.js here.
    typeof document
    ```
 
-   **What you should see:** the word `object`. Quote marks may appear around it, here and in the next steps. `typeof` gives the kind of value a name holds.
+   **What you should see:** the word object. `typeof` gives the kind of value a name holds.
 4. Type this new line and press `Enter`:
 
    ```
    typeof require
    ```
 
-   **What you should see:** the word `undefined`. Here it is the answer from `typeof`: this name has no value on this page. MDN says `typeof` works on a name that does not exist, "instead of throwing an error". Using a missing name directly is different, as `console.log(document.title)` was in Node.js above.
+   **What you should see:** the word undefined. Here it is the answer from `typeof`: this name has no value on this page. MDN says `typeof` works on a name that does not exist, "instead of throwing an error". Using a missing name directly is different, as `console.log(document.title)` was in Node.js above.
 5. Type this new line and press `Enter`:
 
    ```
    typeof fetch
    ```
 
-   **What you should see:** the word `function`.
+   **What you should see:** the word function.
 6. Compare your answers with the Node.js column. These are Node.js's answers in a `.js` file with these lines, each inside `console.log`, and nothing else.
 
    | Line | Your browser | Node.js |

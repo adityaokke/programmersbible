@@ -81,8 +81,8 @@ sources:
     url: https://example.com
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** An object keeps related values and the functions that work on them together, as one thing.
@@ -305,7 +305,7 @@ These steps use JavaScript, because the browser's console runs JavaScript. You n
    phone.owner
    ```
 
-   **What you should see:** `Ana`. If it has quote marks around it, they mark a string.
+   **What you should see:** the name Ana.
 5. Read the volume:
 
    ```
@@ -340,7 +340,7 @@ These steps use JavaScript, because the browser's console runs JavaScript. You n
    phone["owner"]
    ```
 
-   **What you should see:** `Ana` again.
+   **What you should see:** the name Ana again.
 
 If you see an error message at any step, reload the page, delete anything left on the typing line, and start again from step 3.
 

@@ -429,7 +429,7 @@ These steps use JavaScript, because the browser's console runs it. In `"Hello".l
 2. Open the **console**:
    - **Windows:** press `Ctrl` + `Shift` + `J` (in Firefox: `Ctrl` + `Shift` + `K`)
    - **Mac:** press `Cmd` + `Option` + `J` (in Firefox: `Cmd` + `Option` + `K`)
-3. Click the line where you can type, below any messages. In each step below, **type** the line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing. When a result is a string, it may have quote marks around it: they mark a string.
+3. Click the line where you can type, below any messages. In each step below, **type** the line yourself (some browsers may block pasting at first), then press `Enter`. The browser may show suggestions, and the line may look different while you type. Keep typing.
 
    ```
    "Hello".length
@@ -442,14 +442,14 @@ These steps use JavaScript, because the browser's console runs it. In `"Hello".l
    "Hello"[0]
    ```
 
-   **What you should see:** `H`.
+   **What you should see:** the letter H.
 5. Make a capital-letter copy:
 
    ```
    "Hello".toUpperCase()
    ```
 
-   **What you should see:** `HELLO`.
+   **What you should see:** the word HELLO, in capital letters.
 6. Search for some text:
 
    ```
@@ -463,14 +463,14 @@ These steps use JavaScript, because the browser's console runs it. In `"Hello".l
    "Hello".slice(1, 4)
    ```
 
-   **What you should see:** `ell`.
+   **What you should see:** the letters ell.
 8. Put a value into text. The first and last characters are backticks (`` ` ``), not quote marks:
 
    ```
    `2 + 3 = ${2 + 3}`
    ```
 
-   **What you should see:** `2 + 3 = 5`. The code inside `${...}` was worked out first.
+   **What you should see:** the text 2 + 3 = 5. The code inside `${...}` was worked out first.
 9. Check that the original string does not change. Semicolons (`;`) let you put several instructions on one line:
 
    ```
