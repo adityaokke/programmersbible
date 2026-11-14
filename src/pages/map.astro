@@ -258,6 +258,7 @@ const data = {
     <li><span class="dot event"></span> History</li>
     <li><span class="dot project"></span> Project</li>
     <li><span class="dot not-ready"></span> Not ready yet</li>
+    <li id="legend-read" hidden><span class="dot read"></span> Read by you: tap one to see all of them and how they connect</li>
     <li>Bigger dot: more topics build on it. Arrows point from what you learn first to what it unlocks.</li>
   </ul>
 
@@ -449,6 +450,7 @@ const data = {
   .dot.event { background: var(--event); transform: rotate(45deg); border-radius: 2px; }
   .dot.project { background: var(--ok); border-radius: 2px; }
   .dot.not-ready { background: transparent; border: 2px dashed var(--muted); }
+  .dot.read { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ok); }
 </style>
 
 
@@ -572,8 +574,13 @@ const data = {
       { selector: ".faded", style: { opacity: 0.12 } },
       // Arrows into the tapped topic (learn first) and out of it (unlocks) get their own colors.
       { selector: "edge.lit", style: { opacity: 1, width: 2.5, "arrow-scale": 1 } },
+      // Tapping a read topic lights up every read topic, and the arrows between them, in the same color.
+      // It comes before "before" and "after", so the tapped topic's own arrows keep their colors.
+      { selector: "edge.trail", style: { "line-color": v("--ok"), "target-arrow-color": v("--ok") } },
       { selector: "edge.before", style: { "line-color": v("--event"), "target-arrow-color": v("--event") } },
       { selector: "edge.after", style: { "line-color": v("--accent"), "target-arrow-color": v("--accent") } },
+      // Topics the signed-in reader has marked as read: a ring in the "ok" color.
+      { selector: "node.is-read", style: { "border-width": 3, "border-style": "solid", "border-color": v("--ok") } },
       { selector: "node.focus", style: { "border-width": 3, "border-style": "solid", "border-color": v("--fg") } },
       // Topics not shown at this zoom fade away and are not drawn, unless they are part of a tapped topic's route.
       { selector: ".lod-hidden", style: { opacity: 0, events: "no" } },
@@ -830,7 +837,7 @@ const data = {
   }
 
   function clearFocus() {
-    cy.elements().removeClass("faded lit focus before after");
+    cy.elements().removeClass("faded lit focus before after trail");
     panel.hidden = true;
     selected = null;
     saveView();
@@ -845,8 +852,15 @@ const data = {
     const needs = node.incomers();
     const unlocks = node.outgoers();
     cy.batch(() => {
-      cy.elements().removeClass("lit focus before after").addClass("faded");
-      const lit = node.union(needs).union(unlocks);
+      cy.elements().removeClass("lit focus before after trail").addClass("faded");
+      let lit = node.union(needs).union(unlocks);
+      // A read topic also lights up the reader's whole trail: every read topic and the arrows between them.
+      if (readTopics.has(node.id())) {
+        const readNodes = cy.nodes(".is-read");
+        const trail = readNodes.edgesWith(readNodes);
+        trail.addClass("trail");
+        lit = lit.union(readNodes).union(trail);
+      }
       lit.union(lit.nodes().parents()).removeClass("faded").addClass("lit");
       needs.edges().addClass("before");
       unlocks.edges().addClass("after");
@@ -970,6 +984,14 @@ const data = {
   loadProgress().then((progress) => {
     if (!progress) return;
     for (const [id, p] of Object.entries(progress.nodes)) if (p.status === "read") readTopics.add(id);
+    cy.batch(() => readTopics.forEach((id) => cy.getElementById(id).addClass("is-read")));
+    if (readTopics.size) {
+      $("legend-read").hidden = false;
+      // The ring keeps the same size on screen at every zoom, so read topics stand out even zoomed out.
+      const ring = () => cy.nodes(".is-read").style("border-width", 2.5 / cy.zoom());
+      ring();
+      cy.on("zoom", ring);
+    }
     for (const l of labels) {
       if (!readTopics.has(l.node.id())) continue;
       const check = document.createElement("span");
