@@ -30,6 +30,8 @@ const examples = [
       <a class="button" href="/map">🗺 Explore the map</a>
       {firstNode && <a class="button" href="/path/first-chapter">▶ Start from the very beginning</a>}
     </div>
+    {/* Signed-in readers: the last topic they were reading (filled in by the script below). */}
+    <p class="continue" id="continue-reading" hidden></p>
 
     <h2>What do you want to understand?</h2>
     <form action="/search" method="get" role="search" aria-label="Ask a question">
@@ -48,4 +50,21 @@ const examples = [
   .ways-in { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2rem; }
   .ways-in .button { text-align: center; }
   @media (max-width: 520px) { .ways-in { grid-template-columns: 1fr; } }
+  .continue { margin: -1rem 0 2rem; padding: 0.75rem 1rem; border: 1px solid var(--line); border-left: 4px solid var(--ok); border-radius: 10px; background: var(--card); }
 </style>
+
+<script>
+  import { loadProgress, loadTopics } from "../scripts/account.ts";
+
+  loadProgress().then(async (progress) => {
+    if (!progress?.lastTopic) return;
+    const title = (await loadTopics())[progress.lastTopic];
+    const box = document.getElementById("continue-reading");
+    if (!title || !box) return;
+    const link = document.createElement("a");
+    link.href = `/node/${progress.lastTopic}`;
+    link.textContent = title;
+    box.replaceChildren("Continue reading: ", link);
+    box.hidden = false;
+  });
+</script>

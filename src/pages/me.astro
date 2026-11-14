@@ -1,0 +1,185 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Your account" description="Your reading progress on Programmer's Bible: topics you have read, download your data, sign out or delete your account." noindex>
+  <div class="narrow">
+    <h1>Your account</h1>
+
+    {/* Shown to readers who are not signed in (and when the account cannot be loaded). */}
+    <div id="me-out">
+      <p>You are not signed in. You can read everything without an account.</p>
+      <p>
+        Signing in with Google lets you mark topics as read and continue where you left off, on any device.
+      </p>
+      <p><a class="button" href="/signin?return=%2Fme">Sign in</a></p>
+    </div>
+    <p id="me-loading" class="muted" role="status" hidden>Loading your account…</p>
+    {/* Before the first paint, so a signed-in reader does not see "You are not signed in" flash by. */}
+    <script is:inline>
+      if (document.cookie.split("; ").includes("pb_signed_in=1")) {
+        document.getElementById("me-out").hidden = true;
+        document.getElementById("me-loading").hidden = false;
+      }
+    </script>
+    <p id="me-deleted" class="notice" role="status" hidden>
+      Your account and your reading progress have been deleted. Thank you for reading. You can keep reading
+      everything without an account.
+    </p>
+
+    <div id="me-in" hidden>
+      <p>Signed in with Google as <strong id="me-name"></strong> (<span id="me-email"></span>).</p>
+
+      <h2>Topics you have read</h2>
+      <p id="read-none" class="muted" hidden>
+        None yet. At the end of each topic, use the <strong>Mark as read</strong> button.
+      </p>
+      <p id="read-count" class="small muted" hidden></p>
+      <ul id="read-list" class="node-list"></ul>
+
+      <h2>Your data</h2>
+      <p>
+        The site keeps your name, email address and profile picture from Google, and which topics you have opened or
+        marked as read. See the <a href="/privacy">privacy page</a>.
+      </p>
+      <p class="actions">
+        <a class="button" href="/api/progress/export" download>Download my data</a>
+        <button type="button" class="plain" id="sign-out">Sign out</button>
+      </p>
+      <p id="sign-out-status" class="small muted" role="status"></p>
+
+      <h2>Delete your account</h2>
+      <p>This deletes your account and all your reading progress from the site. It cannot be undone.</p>
+      <p><button type="button" class="plain danger" id="delete-start" aria-expanded="false" aria-controls="delete-confirm">Delete my account…</button></p>
+      <div id="delete-confirm" class="notice" hidden>
+        <p><strong>Are you sure?</strong> Your account and the list of topics you have read will be gone for good.</p>
+        <p class="actions">
+          <button type="button" class="plain danger strong" id="delete-yes">Yes, delete my account</button>
+          <button type="button" class="plain" id="delete-no">Cancel</button>
+        </p>
+        <p id="delete-status" class="small" role="status"></p>
+        <p id="delete-again" hidden>
+          <button type="button" class="plain" id="sign-in-again">Sign in again</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  .plain {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--fg);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .plain:hover { border-color: var(--accent); }
+  .plain:disabled { opacity: 0.7; cursor: progress; }
+  .danger { border-color: #b3261e; color: #b3261e; }
+  .danger.strong { background: #b3261e; color: #fff; }
+  @media (prefers-color-scheme: dark) {
+    .danger { border-color: #ff9d94; color: #ff9d94; }
+    .danger.strong { background: #ff9d94; color: #15161a; }
+  }
+</style>
+
+<script>
+  import { loadProgress, loadTopics, signedInHere, signInWithGoogle, type Progress } from "../scripts/account.ts";
+
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+  const show = (id: string, on: boolean) => ($(id).hidden = !on);
+
+  if (signedInHere()) {
+    show("me-out", false);
+    show("me-loading", true);
+    loadProgress().then((progress) => {
+      show("me-loading", false);
+      if (progress) showAccount(progress);
+      else show("me-out", true);
+    });
+  }
+
+  async function showAccount(progress: Progress) {
+    $("me-name").textContent = progress.user.name;
+    $("me-email").textContent = progress.user.email;
+    show("me-in", true);
+
+    const titles = await loadTopics();
+    // Newest first, as the server sends them; topics no longer on the site are left out.
+    const read = Object.entries(progress.nodes).filter(([id, p]) => p.status === "read" && titles[id]);
+    show("read-none", read.length === 0);
+    if (read.length) {
+      $("read-count").textContent = read.length === 1 ? "1 topic, most recent first." : `${read.length} topics, most recent first.`;
+      show("read-count", true);
+    }
+    $("read-list").replaceChildren(
+      ...read.map(([id]) => {
+        const li = document.createElement("li");
+        const check = document.createElement("span");
+        check.className = "num";
+        check.style.color = "var(--ok)";
+        check.setAttribute("aria-hidden", "true");
+        check.textContent = "✓";
+        const link = document.createElement("a");
+        link.href = `/node/${id}`;
+        link.textContent = titles[id]!;
+        li.append(check, link);
+        return li;
+      }),
+    );
+  }
+
+  const post = (path: string) =>
+    fetch(path, { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: "{}" });
+
+  $("sign-out").addEventListener("click", async () => {
+    $<HTMLButtonElement>("sign-out").disabled = true;
+    const ok = await post("/api/auth/sign-out").then((r) => r.ok, () => false);
+    if (ok) location.href = "/";
+    else {
+      $<HTMLButtonElement>("sign-out").disabled = false;
+      $("sign-out-status").textContent = "Could not sign out. Please try again.";
+    }
+  });
+
+  // Deleting takes two steps: "Delete my account…", then "Yes, delete my account".
+  const start = $<HTMLButtonElement>("delete-start");
+  start.addEventListener("click", () => {
+    show("delete-confirm", true);
+    start.setAttribute("aria-expanded", "true");
+    $("delete-yes").focus();
+  });
+  $("delete-no").addEventListener("click", () => {
+    show("delete-confirm", false);
+    start.setAttribute("aria-expanded", "false");
+    start.focus();
+  });
+  $("delete-yes").addEventListener("click", async () => {
+    const yes = $<HTMLButtonElement>("delete-yes");
+    yes.disabled = true;
+    $("delete-status").textContent = "Deleting…";
+    const ok = await post("/api/auth/delete-user").then((r) => r.ok, () => false);
+    if (ok) {
+      show("me-in", false);
+      show("me-deleted", true);
+      const link = document.getElementById("account-link") as HTMLAnchorElement | null;
+      if (link) {
+        link.textContent = "Sign in";
+        link.href = "/signin";
+        link.removeAttribute("aria-label");
+      }
+      return;
+    }
+    yes.disabled = false;
+    // Better Auth asks for a recent sign-in (within a day) before deleting an account.
+    $("delete-status").textContent =
+      "Could not delete your account yet. For your safety, this needs a recent sign-in: please sign in again, then delete it from this page.";
+    show("delete-again", true);
+  });
+  $("sign-in-again").addEventListener("click", () => signInWithGoogle("/me"));
+</script>

@@ -66,7 +66,11 @@ const byline =
     }
     {/* Search (Pagefind) indexes only published topics: their text, plus the other names and the
         questions each one answers, which count a little more. */}
-    <article data-pagefind-body={readable ? "" : undefined} data-pagefind-ignore={readable ? undefined : "all"}>
+    <article
+      data-pagefind-body={readable ? "" : undefined}
+      data-pagefind-ignore={readable ? undefined : "all"}
+      data-topic={readable ? node.id : undefined}
+    >
       <h1>{node.title}</h1>
       {
         readable && (
@@ -171,6 +175,8 @@ const byline =
 </Base>
 
 <script>
+  import { loadProgress, saveProgress, type Progress } from "../../scripts/account.ts";
+
   // A Copy button on each code block. Without scripts the code still reads the same, with no button.
   for (const block of document.querySelectorAll<HTMLElement>(".code-block")) {
     const button = document.createElement("button");
@@ -263,5 +269,123 @@ const byline =
   if (headings.length) {
     addEventListener("scroll", mark, { passive: true });
     mark();
+  }
+
+  // ---- Signed-in readers only: progress. Signed out (or if the API fails), none of this appears. ----
+
+  const article = document.querySelector<HTMLElement>("article[data-topic]");
+  if (article) {
+    const topic = article.dataset.topic!;
+    loadProgress().then((progress) => {
+      if (!progress) return;
+      saveProgress(topic, {}); // a visit: this becomes the "Continue reading" topic on the home page
+      addReadToggle(topic, progress, article);
+      followSections(topic, progress, article);
+    });
+  }
+
+  // "Mark as read": a toggle button near the end of the topic.
+  function addReadToggle(topic: string, progress: Progress, article: HTMLElement) {
+    let read = progress.nodes[topic]?.status === "read";
+    const box = document.createElement("div");
+    box.className = "reading-progress";
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "toggle-read";
+    button.innerHTML = '<span class="check" aria-hidden="true"></span>Mark as read';
+    const note = document.createElement("span");
+    note.className = "small muted";
+    note.setAttribute("role", "status");
+    const show = () => {
+      button.setAttribute("aria-pressed", String(read));
+      button.querySelector(".check")!.textContent = read ? "✓" : "";
+    };
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      const ok = await saveProgress(topic, { status: read ? "visited" : "read" });
+      button.disabled = false;
+      if (ok) read = !read;
+      show();
+      note.textContent = !ok
+        ? "Could not save. Please try again."
+        : read
+          ? "Marked as read. You will see a ✓ next to it in the lists."
+          : "No longer marked as read.";
+    });
+    show();
+    box.append(button, note);
+    const pager = article.querySelector(".pager");
+    if (pager) pager.before(box);
+    else article.append(box);
+  }
+
+  // Remember the last section the reader reached, and offer to go back there. Never scrolls by itself.
+  function followSections(topic: string, progress: Progress, article: HTMLElement) {
+    const sections = [...article.querySelectorAll<HTMLElement>("h2[id]")];
+    if (!sections.length) return;
+    // The section being read: the last heading that has scrolled past the top third of the window.
+    const current = () => {
+      let found: HTMLElement | null = null;
+      for (const h of sections) if (h.getBoundingClientRect().top < innerHeight / 3) found = h;
+      return found;
+    };
+
+    const saved = progress.nodes[topic]?.lastHeading;
+    const target = saved ? sections.find((h) => h.id === saved) : undefined;
+    let pill: HTMLElement | null = null;
+    // Offer it only when the reader is above that section and did not open a link to a section.
+    if (target && !location.hash && target.getBoundingClientRect().top > innerHeight / 3) {
+      pill = document.createElement("div");
+      pill.className = "resume";
+      const go = document.createElement("button");
+      go.type = "button";
+      go.className = "go";
+      go.textContent = `Continue from “${target.textContent?.trim()}”`;
+      const close = document.createElement("button");
+      close.type = "button";
+      close.className = "close";
+      close.setAttribute("aria-label", "Hide this");
+      close.textContent = "×";
+      go.addEventListener("click", () => {
+        const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+        target.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
+        target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+        hidePill();
+      });
+      close.addEventListener("click", hidePill);
+      pill.append(go, close);
+      document.body.append(pill);
+    }
+    function hidePill() {
+      pill?.remove();
+      pill = null;
+    }
+
+    // Save at most every 5 seconds, and when the page is closed or hidden.
+    const start = current()?.id ?? null;
+    let lastSaved = saved ?? null;
+    let pending: string | null = null;
+    let timer = 0;
+    const flush = (closing = false) => {
+      clearTimeout(timer);
+      timer = 0;
+      if (!pending || pending === lastSaved) return;
+      lastSaved = pending;
+      saveProgress(topic, { lastHeading: pending }, closing);
+      pending = null;
+    };
+    const check = () => {
+      const h = current();
+      // Where the page opened is not "reached" yet: wait until the reader moves to another section.
+      if (!h || h.id === start) return;
+      if (target && sections.indexOf(h) >= sections.indexOf(target)) hidePill();
+      pending = h.id;
+      if (!timer) timer = window.setTimeout(flush, 5000);
+    };
+    const observer = new IntersectionObserver(check, { rootMargin: "0px 0px -66% 0px" });
+    sections.forEach((h) => observer.observe(h));
+    addEventListener("pagehide", () => flush(true));
+    document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && flush(true));
   }
 </script>
