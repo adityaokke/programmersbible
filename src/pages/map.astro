@@ -258,7 +258,7 @@ const data = {
     <li><span class="dot event"></span> History</li>
     <li><span class="dot project"></span> Project</li>
     <li><span class="dot not-ready"></span> Not ready yet</li>
-    <li id="legend-read" hidden><span class="dot read"></span> Read by you: tap one to see all of them and how they connect</li>
+    <li id="legend-read" hidden><span class="dot read"></span> Read by you. The ✓ button lights up all of them and the arrows between them.</li>
     <li>Bigger dot: more topics build on it. Arrows point from what you learn first to what it unlocks.</li>
   </ul>
 
@@ -271,6 +271,7 @@ const data = {
       <button type="button" data-zoom="fit" aria-label="Show everything" title="Show everything">
         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 8.2 8 3l6 5.2M4 7v6h8V7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
+      <button type="button" id="map-read" aria-pressed="false" aria-label="Highlight the topics I have read" title="Highlight the topics I have read" hidden>✓</button>
       <button type="button" id="map-full" aria-label="Full screen" title="Full screen" aria-pressed="false" hidden>⤢</button>
     </div>
     <button type="button" id="map-hint" hidden>
@@ -337,9 +338,7 @@ const data = {
   }
   #map-labels :global(.map-label.key) { font-size: 0.875rem; }
   #map-labels :global(.map-label .read-check) { color: var(--ok); font-weight: 700; }
-  #map-labels :global(.map-label .sum) { display: none; margin-top: 0.15rem; color: var(--muted); font-size: 0.72rem; }
   #map-labels:global(.detail) :global(.map-label) { max-width: 12rem; }
-  #map-labels:global(.detail) :global(.map-label .sum) { display: block; }
   #map-labels :global(.map-label.faded) { opacity: 0.15; }
   #map-labels :global(.map-label.off) { opacity: 0; }
   #map-labels :global(.part-label) {
@@ -365,6 +364,7 @@ const data = {
     flex-direction: column;
     gap: 0.35rem;
   }
+  #map-read[aria-pressed="true"] { border-color: var(--ok); background: var(--ok); color: var(--bg); }
   .map-controls button,
   #map-panel .close {
     width: 2.2rem;
@@ -504,7 +504,7 @@ const data = {
   const FIRST = 0.9;
   const ALL = 2.4;
   const PARTS_ONLY = 1.3; // below this: part names stand out
-  const DETAIL = 3.4; // from this: each topic shows its summary
+  const DETAIL = 3.4; // from this: topic names get more room
   // Ranked inside each part, so every part shows its own key topics first.
   const rank = new Map<string, number>();
   for (const p of data.parts) {
@@ -627,10 +627,6 @@ const data = {
       const el = document.createElement("div");
       el.className = rank.get(d.id)! < 0 ? "map-label key" : "map-label";
       el.textContent = d.title;
-      const sum = document.createElement("div");
-      sum.className = "sum";
-      sum.textContent = d.readable ? d.summary : "Not ready yet";
-      el.append(sum);
       layer.append(el);
       return { node, el, w: 0, h: 0 };
     });
@@ -699,7 +695,7 @@ const data = {
     }
   }
 
-  // The more you zoom in, the more topics and links are drawn; at the closest zoom, their summaries too.
+  // The more you zoom in, the more topics and links are drawn; at the closest zoom, names get more room.
   function applyZoomLevel() {
     const r = cy.zoom() / fitZoom;
     cy.batch(() => {
@@ -841,7 +837,27 @@ const data = {
     panel.hidden = true;
     selected = null;
     saveView();
+    showReadTrail();
   }
+
+  // The ✓ button (signed-in readers): light up every topic read and the arrows between them.
+  let readTrailOn = false;
+  function showReadTrail() {
+    if (!readTrailOn) return;
+    const readNodes = cy.nodes(".is-read");
+    const trail = readNodes.edgesWith(readNodes);
+    cy.batch(() => {
+      cy.elements().removeClass("lit focus before after trail").addClass("faded");
+      readNodes.union(trail).union(readNodes.parents()).removeClass("faded").addClass("lit");
+      trail.addClass("trail");
+    });
+  }
+  const readButton = document.querySelector<HTMLButtonElement>("#map-read")!;
+  readButton.addEventListener("click", () => {
+    readTrailOn = !readTrailOn;
+    readButton.setAttribute("aria-pressed", String(readTrailOn));
+    clearFocus();
+  });
 
   cy.on("tap", (e) => {
     if (e.target === cy) clearFocus();
@@ -853,14 +869,7 @@ const data = {
     const unlocks = node.outgoers();
     cy.batch(() => {
       cy.elements().removeClass("lit focus before after trail").addClass("faded");
-      let lit = node.union(needs).union(unlocks);
-      // A read topic also lights up the reader's whole trail: every read topic and the arrows between them.
-      if (readTopics.has(node.id())) {
-        const readNodes = cy.nodes(".is-read");
-        const trail = readNodes.edgesWith(readNodes);
-        trail.addClass("trail");
-        lit = lit.union(readNodes).union(trail);
-      }
+      const lit = node.union(needs).union(unlocks);
       lit.union(lit.nodes().parents()).removeClass("faded").addClass("lit");
       needs.edges().addClass("before");
       unlocks.edges().addClass("after");
@@ -987,6 +996,7 @@ const data = {
     cy.batch(() => readTopics.forEach((id) => cy.getElementById(id).addClass("is-read")));
     if (readTopics.size) {
       $("legend-read").hidden = false;
+      readButton.hidden = false;
       // The ring keeps the same size on screen at every zoom, so read topics stand out even zoomed out.
       const ring = () => cy.nodes(".is-read").style("border-width", 2.5 / cy.zoom());
       ring();
