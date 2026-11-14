@@ -87,6 +87,7 @@ src/styles/           global.css (light and dark)
 - TypeScript, strict mode, ES modules. Node ≥ 22.
 - Keep the site static-first: reading must never depend on the API or the database.
 - Before opening a PR, run `npm run validate` and `npm run typecheck`.
+- **Accounts (optional, progressive enhancement):** `api/` is the Worker (Hono; only `/api/*` runs it): `/api/auth/*` is Better Auth (Google only), `/api/progress` is reading progress. D1 binding `DB`; schema in `db/schema.ts`, migrations in `db/migrations` (`npm run db:generate`, `npm run db:migrate:local`). Secrets: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` (locally in `.dev.vars`, see `.dev.vars.example`). Local run: `npm run build`, then `npm run dev:worker`. Pages ask the API only when the `pb_signed_in` cookie exists. Setup: [SETUP-ACCOUNTS.md](SETUP-ACCOUNTS.md).
 
 ## Licenses
 

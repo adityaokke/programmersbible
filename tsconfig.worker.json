@@ -1,0 +1,19 @@
+{
+  // The Worker (api/) and the database schema (db/) run on Cloudflare, not in Node or a browser,
+  // so they are checked with Cloudflare's types. `npm run typecheck` checks both projects.
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2023"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["api", "db", "drizzle.config.ts"]
+}

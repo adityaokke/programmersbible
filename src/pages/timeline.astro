@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { nodes, nodeUrl } from "../lib/content.ts";
+import { isReadable, nodes, nodeUrl } from "../lib/content.ts";
 
 const events = nodes.filter((n) => n.type === "event" && n.year !== undefined).sort((a, b) => a.year! - b.year!);
 ---
@@ -12,7 +12,7 @@ const events = nodes.filter((n) => n.type === "event" && n.year !== undefined).s
     <ol class="timeline">
       {
         events.map((e) => (
-          <li>
+          <li data-node={isReadable(e) ? e.id : undefined}>
             <span class="when">{e.era_label ?? e.year}</span>
             <a href={nodeUrl(e.id)}>{e.title}</a>
             {e.summary && <div class="small muted">{e.summary}</div>}
@@ -22,3 +22,10 @@ const events = nodes.filter((n) => n.type === "event" && n.year !== undefined).s
     </ol>
   </div>
 </Base>
+
+<script>
+  import { loadProgress, markReadTopics } from "../scripts/account.ts";
+
+  // Signed-in readers: a ✓ on each event they have marked as read.
+  loadProgress().then((progress) => progress && markReadTopics(progress));
+</script>

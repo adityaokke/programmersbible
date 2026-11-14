@@ -335,6 +335,7 @@ const data = {
     transition: opacity 0.25s;
   }
   #map-labels :global(.map-label.key) { font-size: 0.875rem; }
+  #map-labels :global(.map-label .read-check) { color: var(--ok); font-weight: 700; }
   #map-labels :global(.map-label .sum) { display: none; margin-top: 0.15rem; color: var(--muted); font-size: 0.72rem; }
   #map-labels:global(.detail) :global(.map-label) { max-width: 12rem; }
   #map-labels:global(.detail) :global(.map-label .sum) { display: block; }
@@ -453,6 +454,7 @@ const data = {
 
 <script>
   import cytoscape from "cytoscape";
+  import { loadProgress } from "../scripts/account.ts";
 
   type MapNode = {
     id: string; title: string; type: string; part: string; status: string; readable: boolean;
@@ -465,6 +467,8 @@ const data = {
   };
 
   const data: MapData = JSON.parse(document.getElementById("map-data")!.textContent!);
+  // Topics the signed-in reader has marked as read (filled in at the end, if signed in).
+  const readTopics = new Set<string>();
   const css = getComputedStyle(document.documentElement);
   const v = (name: string) => css.getPropertyValue(name).trim();
   const dark = matchMedia("(prefers-color-scheme: dark)").matches;
@@ -851,7 +855,7 @@ const data = {
 
     const d = node.data() as MapNode;
     const direct = { needs: needs.nodes(), unlocks: unlocks.nodes() };
-    $("panel-kind").textContent = `${kind[d.type] ?? d.type}${d.year ? ` · ${d.year}` : ""}${d.readable ? "" : " · Not ready yet"}`;
+    $("panel-kind").textContent = `${kind[d.type] ?? d.type}${d.year ? ` · ${d.year}` : ""}${d.readable ? "" : " · Not ready yet"}${readTopics.has(d.id) ? " · ✓ Read" : ""}`;
     $("panel-title").replaceChildren(goToButton(node)); // back to this topic after moving to another
     $("panel-summary").textContent = d.summary;
     if (direct.needs.length) listTopics($("panel-requires"), "Learn first", direct.needs);
@@ -961,4 +965,20 @@ const data = {
     hint.hidden = false;
     cy.on("zoom", watchHint);
   }
+
+  // Signed-in readers: a ✓ before the name of each topic they have marked as read.
+  loadProgress().then((progress) => {
+    if (!progress) return;
+    for (const [id, p] of Object.entries(progress.nodes)) if (p.status === "read") readTopics.add(id);
+    for (const l of labels) {
+      if (!readTopics.has(l.node.id())) continue;
+      const check = document.createElement("span");
+      check.className = "read-check";
+      check.textContent = "✓ ";
+      l.el.prepend(check);
+    }
+    measureLabels();
+    placeLabels();
+    if (selected) selectTopic(cy.getElementById(selected) as cytoscape.NodeSingular);
+  });
 </script>

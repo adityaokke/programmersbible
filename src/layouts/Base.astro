@@ -19,6 +19,10 @@ const fullTitle = title ? `${title} · Programmer's Bible` : "Programmer's Bible
 // Pages are built as files (node/dns.html) but served without the ending (node/dns).
 const canonical = new URL(Astro.url.pathname.replace(/(index)?\.html$/, "").replace(/(.)\/$/, "$1"), Astro.site);
 const shareImage = new URL("/og.png", Astro.site);
+// "Sign in" brings the reader back to this page afterwards.
+const signInHref = ["/signin", "/me", "/404"].includes(canonical.pathname)
+  ? "/signin"
+  : `/signin?return=${encodeURIComponent(canonical.pathname)}`;
 const REPO = "https://github.com/adityaokke/programmersbible";
 // Tells search engines the site's name, on the home page only, as Google asks.
 const siteData =
@@ -68,6 +72,8 @@ const siteData =
       <form action="/search" method="get" role="search" aria-label="Search the site">
         <input type="search" name="q" placeholder="Search a topic…" aria-label="Search" />
       </form>
+      {/* Becomes the reader's first name, linking to /me, once the page knows they are signed in. */}
+      <a class="account-link" id="account-link" href={signInHref}>Sign in</a>
     </header>
     <main class="container" id="content">
       <slot />
@@ -85,5 +91,18 @@ const siteData =
       </p>
       <p><a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
     </footer>
+    <script>
+      import { firstName, loadProgress } from "../scripts/account.ts";
+
+      // Signed in: the header shows the reader's first name and leads to their account page.
+      loadProgress().then((progress) => {
+        const link = document.getElementById("account-link") as HTMLAnchorElement | null;
+        if (!progress || !link) return;
+        const first = firstName(progress.user.name);
+        link.textContent = first;
+        link.href = "/me";
+        link.setAttribute("aria-label", `${first}: your account and reading progress`);
+      });
+    </script>
   </body>
 </html>

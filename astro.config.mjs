@@ -22,7 +22,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const path = new URL(page).pathname.replace(/\/$/, "");
-        return path !== "/404" && path !== "/search" && !unpublished.has(path);
+        return !["/404", "/search", "/signin", "/me"].includes(path) && !unpublished.has(path);
       },
     }),
   ],

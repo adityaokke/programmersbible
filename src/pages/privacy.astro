@@ -4,18 +4,23 @@ import Base from "../layouts/Base.astro";
 const REPO = "https://github.com/adityaokke/programmersbible";
 ---
 
-<Base title="Privacy" description="What Programmer's Bible knows about you: no accounts, no cookies of its own, and only anonymous visit counts.">
+<Base title="Privacy" description="What Programmer's Bible knows about you: nothing if you only read, and, if you choose to sign in with Google, your name, email address and reading progress.">
   <div class="narrow">
     <h1>Privacy</h1>
-    <p class="small muted">Last updated: 31 October 2026</p>
+    <p class="small muted">Last updated: 14 November 2026</p>
 
-    <p><strong>In short:</strong> you can read everything without an account. This site does not set cookies of its own, does not store anything in your browser, and does not show ads.</p>
+    <p>
+      <strong>In short:</strong> you can read everything without an account. If you do not sign in, this site stores
+      nothing about you: it sets no cookies of its own, stores nothing in your browser and shows no ads. If you choose
+      to sign in with Google, the site keeps a small account so it can remember what you have read. You can download
+      that data or delete it at any time.
+    </p>
 
     <h2>What the site collects</h2>
     <ul>
       <li>
-        <strong>No accounts.</strong> There is nothing to sign up for, so the site has no names, email addresses or
-        passwords.
+        <strong>If you do not sign in: nothing about you.</strong> No account, no cookies of the site's own, nothing
+        stored in your browser.
       </li>
       <li>
         <strong>Visit counts.</strong> The site uses{" "}
@@ -29,12 +34,78 @@ const REPO = "https://github.com/adityaokke/programmersbible";
       </li>
     </ul>
 
+    <h2>If you sign in</h2>
+    <p>
+      Signing in is optional. You sign in with your Google account; the site has no passwords. Your account holds:
+    </p>
+    <ul>
+      <li>
+        <strong>From your Google account:</strong> your name, your email address, the address of your profile picture
+        (the picture itself stays on Google's servers), whether Google says your email address is verified, and
+        Google's number for your account, so the site recognizes you the next time. The site asks Google for nothing
+        else, and it does not keep the keys ("tokens") Google gives it, so it cannot do anything in your Google
+        account.
+      </li>
+      <li>
+        <strong>Your reading progress:</strong> which topics you opened, which ones you marked as read, the last
+        section of each topic you reached, and when.
+      </li>
+      <li>
+        <strong>Your sign-ins:</strong> when you signed in and when that sign-in ends. The site does not keep your IP
+        address or the name of your browser with it.
+      </li>
+    </ul>
+    <p>This data is used only to show you your own progress. It is not used for ads, not sold and not shared.</p>
+
+    <h2>Cookies, only when you sign in</h2>
+    <p>The site's cookies are its own and are used for signing in only. Readers who do not sign in get none of them.</p>
+    <ul>
+      <li>
+        <strong>The session cookie</strong> (its name ends in <code>better-auth.session_token</code>) keeps you signed
+        in. It lasts until you sign out, or until about 30 days after you last used the site. Scripts on the page
+        cannot read it.
+      </li>
+      <li>
+        <strong>A sign-in check</strong> (its name ends in <code>better-auth.state</code>) lasts 5 minutes while you sign
+        in. It makes sure the answer that comes back from Google belongs to the sign-in you started. The database keeps a
+        copy of that check, which says nothing about who you are; it expires after 10 minutes.
+      </li>
+      <li>
+        <strong>A "signed in" note</strong> (<code>pb_signed_in</code>) holds only the number 1. It tells the site's
+        pages that someone is signed in on this browser, so they ask for your progress; without it, pages ask for
+        nothing.
+      </li>
+    </ul>
+
+    <h2>Download or delete your data</h2>
+    <ul>
+      <li>
+        <strong>Download:</strong> on <a href="/me">your account page</a>, <strong>Download my data</strong> gives you
+        everything the site keeps about you, as a file.
+      </li>
+      <li>
+        <strong>Delete:</strong> on the same page, <strong>Delete my account</strong> deletes your account, your
+        sign-ins and your reading progress from the site's database at once. For safety, this needs a sign-in from the
+        last day; the page asks you to sign in again if needed. The database's own backups, kept by Cloudflare so
+        mistakes can be undone, are erased after at most 30 days.
+      </li>
+      <li>
+        <strong>Sign out</strong> on the same page ends your sign-in on this browser.
+      </li>
+    </ul>
+
     <h2>Who else is involved</h2>
     <ul>
       <li>
-        <strong>Cloudflare</strong> delivers the site. Like any web host, it handles technical data such as your IP
-        address to send you the pages and to protect the site from attacks. See{" "}
+        <strong>Cloudflare</strong> delivers the site and stores the accounts database. Like any web host, it handles
+        technical data such as your IP address to send you the pages and to protect the site from attacks. See{" "}
         <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a>.
+      </li>
+      <li>
+        <strong>Google</strong>: if you sign in, you do so on Google's own page, so Google knows you signed in to this
+        site. See <a href="https://policies.google.com/privacy">Google's privacy policy</a>. You can remove the site's
+        access in your Google account, under{" "}
+        <a href="https://myaccount.google.com/connections">third-party apps and services</a>.
       </li>
       <li>
         <strong>GitHub</strong>: when you use <strong>Report a problem</strong>, you leave this site and write your
@@ -49,8 +120,9 @@ const REPO = "https://github.com/adityaokke/programmersbible";
 
     <h2>Changes</h2>
     <p>
-      If the site adds accounts or anything that stores your data, this page will say so first, with the date it
-      changed. The history of this page is public on <a href={`${REPO}/commits/main/src/pages/privacy.astro`}>GitHub</a>.
+      On 14 November 2026 the site added optional accounts (sign in with Google) and reading progress, described
+      above. If the site changes what it stores, this page will say so first, with the date it changed. The history of
+      this page is public on <a href={`${REPO}/commits/main/src/pages/privacy.astro`}>GitHub</a>.
     </p>
 
     <h2>Questions</h2>

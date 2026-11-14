@@ -1,0 +1,10 @@
+# Copy this file to .dev.vars (never committed) for `npx wrangler dev`.
+# In production these are secrets: npx wrangler secret put <NAME>   (see SETUP-ACCOUNTS.md)
+
+# From the Google Cloud console: APIs & Services > Credentials > OAuth client ID (Web application).
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+# A long random string, for example from: openssl rand -base64 32
+BETTER_AUTH_SECRET=
+# The address the Worker answers on: http://localhost:8787 locally, https://programmersbible.com in production.
+BETTER_AUTH_URL=http://localhost:8787
