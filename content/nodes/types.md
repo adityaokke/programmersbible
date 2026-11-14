@@ -351,21 +351,21 @@ These steps use JavaScript, the language the browser's console runs. In it, `typ
    typeof 42
    ```
 
-   **What you should see:** the word `number`. `typeof` gives a string. If a result has quote marks around it, here or in the next steps, they mark a string.
+   **What you should see:** the word number. `typeof` gives a string.
 4. Ask a string its type:
 
    ```
    typeof "42"
    ```
 
-   **What you should see:** `string`.
+   **What you should see:** the word string.
 5. Mix a string and a number:
 
    ```
    "5" + 1
    ```
 
-   **What you should see:** `51`. The `1` was turned into a string.
+   **What you should see:** the digits 51. The `1` was turned into a string.
 6. Convert first, then add:
 
    ```

@@ -41,8 +41,8 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-10-31
-updated: 2026-10-31
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** A counting system writes any number with a small set of digits, and the position of each digit tells you how much it is worth; we normally count in base 10, but other bases work the same way.
@@ -119,8 +119,8 @@ Your browser has a hidden tool for programmers called the **console**. You type 
    A panel opens. Ignore any messages already in it. Click at the bottom of the panel, where you can type.
 3. Type this yourself, exactly as shown, including the brackets and the dot, and press `Enter`: `(25).toString(5)`
 
-   This asks the browser to write 25 as text, in base 5. You will see `100`, maybe in quote marks (they show that the answer is text). It matches the base 5 table.
-4. Now type `(25).toString(2)` and press `Enter`. You will see `11001`: twenty-five written in base 2.
+   This asks the browser to write 25 as text, in base 5. You will see the digits 100. It matches the base 5 table.
+4. Now type `(25).toString(2)` and press `Enter`. You will see the digits 11001: twenty-five written in base 2.
 5. Go the other way. Type `parseInt("100", 5)` and press `Enter`. This instruction reads `100` as a base 5 number and shows its value in base 10. You will see `25`.
 6. Try your own numbers: change `25` and the base in steps 3 and 4. The base must be between 2 and 36.
 7. When you are done, close the tab.

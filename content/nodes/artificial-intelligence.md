@@ -59,8 +59,8 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** Artificial intelligence (AI) means programs that do tasks we connect with human thinking; in machine learning, a part of AI, a program called a model is trained on many examples, and chatbots use large language models that predict text one piece at a time.
@@ -155,7 +155,7 @@ You will build a tiny "next word" guesser in your browser's **console** (see [[b
    words.filter((w, i) => words[i - 1] === "the")
    ```
 
-   **What you should see:** a list of 4 words: `cat`, `mat`, `cat`, `fish`. It may look like `(4) ['cat', 'mat', 'cat', 'fish']` or `Array(4) [ "cat", "mat", "cat", "fish" ]`. Both are fine.
+   **What you should see:** a list of 4 words, in this order: cat, mat, cat, fish.
    If you see an error message, reload the page and start again from step 2.
 5. Count: "cat" comes 2 times, the others once. To guess the word after "the", you would pick "cat".
 6. Close the tab when you are done.

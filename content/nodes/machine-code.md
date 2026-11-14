@@ -49,8 +49,8 @@ sources:
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** Machine code is a program written as patterns of bits that a CPU can carry out directly: each pattern is one small instruction, such as "add two numbers".
@@ -152,14 +152,14 @@ You need a computer with a keyboard.
    (0xA9).toString(2)
    ```
 
-   It starts with a zero, then a small letter x. `0x` tells the browser that `A9` is written in base 16. `toString(2)` writes the number in base 2, as in [[binary]]. You should see `10101001`, maybe inside quote marks: the bits of the 6502's "load" opcode.
+   It starts with a zero, then a small letter x. `0x` tells the browser that `A9` is written in base 16. `toString(2)` writes the number in base 2, as in [[binary]]. You should see the digits 10101001: the bits of the 6502's "load" opcode.
 4. Now type this line and press `Enter`:
 
    ```
    (0x18).toString(2)
    ```
 
-   You should see `11000`. The table shows `00011000`. The browser leaves out 0s at the front, which change nothing.
+   You should see the digits 11000. The table shows `00011000`. The browser leaves out 0s at the front, which change nothing.
 5. Close the tab.
 
 **On a phone:** take the code `69`. Write 6 as four bits (`0110`) and 9 as four bits (`1001`). Put them together and compare with the table.

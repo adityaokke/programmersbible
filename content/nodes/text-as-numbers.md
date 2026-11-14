@@ -53,8 +53,8 @@ sources:
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** Computers store text by giving every character a number; ASCII was an early list of 128 characters, and Unicode is today's list for almost every writing system in the world.
@@ -158,8 +158,8 @@ You will use the browser **console**, the tool from [[counting-systems]] where y
    String.fromCodePoint(65, 90)
    ```
 
-7. You should see `"AZ"` or `'AZ'`: the characters with the numbers 65 and 90.
-8. Now a character outside ASCII. Type `String.fromCodePoint(9731)` and press `Enter`. You should see a snowman, maybe inside quote marks: `'☃'` or `"☃"`.
+7. You should see the letters AZ: the characters with the numbers 65 and 90.
+8. Now a character outside ASCII. Type `String.fromCodePoint(9731)` and press `Enter`. You should see a snowman: ☃.
 9. Close the tab when you are done.
 
 **On a phone:** use paper. Capital letters in ASCII go in order from `A` = 65 to `Z` = 90. Write your name in capital letters, then write the number under each letter.

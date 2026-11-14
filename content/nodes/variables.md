@@ -96,8 +96,8 @@ sources:
     url: https://pkg.go.dev/cmd/go
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-14
+updated: 2026-11-14
 ---
 
 > **In one sentence:** A variable is a name for a value, so your program can keep that value, use it later and sometimes replace it.
@@ -467,7 +467,7 @@ These steps use JavaScript, because your browser's console runs JavaScript. Ther
    "5" + 1
    ```
 
-   **What you should see:** `51`. JavaScript turns the `1` into a string and joins them. If it has quote marks around it, they mark a string.
+   **What you should see:** the digits 51. JavaScript turns the `1` into a string and joins them.
 10. Type this line and press `Enter`:
 
     ```

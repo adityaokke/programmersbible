@@ -414,7 +414,7 @@ These steps use JavaScript, because the browser's console runs JavaScript. In it
    makeNote()
    ```
 
-   **What you should see:** `inside`, the value the function gave back. If it has quote marks around it, they mark a string.
+   **What you should see:** the word inside, the value the function gave back.
 5. Try to use the local variable from outside the function:
 
    ```
