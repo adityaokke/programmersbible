@@ -229,7 +229,7 @@ You will find the first lesson of a tutorial for your language. You only read pa
 2. Read the text under **A Tour of Go**.
    **What you should see:** it says the tour is "An interactive introduction to Go in four sections".
 3. In that text, click the link **take the tour online**.
-   **What you should see:** the first page of A Tour of Go. The tour's own text says this first part explains "how to navigate the different lessons and how to run code". It also tells you to click its **Run** button. This is the first lesson.
+   **What you should see:** the first page of A Tour of Go, with the heading "Hello, 世界". Its text says you can move between pages with "previous" and "next". The page has a **Run** button, and the text tells you to click it. This is the first lesson.
 
 <!-- /tabs -->
 
