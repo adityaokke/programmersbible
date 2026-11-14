@@ -8,6 +8,9 @@ public/images/
 .env.*
 .dev.vars
 
+# The maintainer's local files that must never be committed (for example downloaded keys)
+ignore/
+
 # Private notes and plans: kept on the maintainer's computer, never committed
 private/
 
