@@ -337,7 +337,6 @@ const data = {
     transition: opacity 0.25s;
   }
   #map-labels :global(.map-label.key) { font-size: 0.875rem; }
-  #map-labels :global(.map-label .read-check) { color: var(--ok); font-weight: 700; }
   #map-labels:global(.detail) :global(.map-label) { max-width: 12rem; }
   #map-labels :global(.map-label.faded) { opacity: 0.15; }
   #map-labels :global(.map-label.off) { opacity: 0; }
@@ -580,7 +579,24 @@ const data = {
       { selector: "edge.before", style: { "line-color": v("--event"), "target-arrow-color": v("--event") } },
       { selector: "edge.after", style: { "line-color": v("--accent"), "target-arrow-color": v("--accent") } },
       // Topics the signed-in reader has marked as read: a ring in the "ok" color.
-      { selector: "node.is-read", style: { "border-width": 3, "border-style": "solid", "border-color": v("--ok") } },
+      {
+        selector: "node.is-read",
+        style: {
+          "border-width": 3,
+          "border-style": "solid",
+          "border-color": v("--ok"),
+          // A ✓ inside the dot, sized to it. Too small to read when zoomed far out, so it is not drawn
+          // there; the ring still shows.
+          label: "✓",
+          "text-valign": "center",
+          "text-halign": "center",
+          color: v("--bg"),
+          "font-weight": 700,
+          "font-size": (n: cytoscape.NodeSingular) => Math.max(4, n.data("size") * 0.7),
+          "min-zoomed-font-size": 7,
+          "text-events": "no",
+        },
+      },
       { selector: "node.focus", style: { "border-width": 3, "border-style": "solid", "border-color": v("--fg") } },
       // Topics not shown at this zoom fade away and are not drawn, unless they are part of a tapped topic's route.
       { selector: ".lod-hidden", style: { opacity: 0, events: "no" } },
@@ -989,7 +1005,7 @@ const data = {
     cy.on("zoom", watchHint);
   }
 
-  // Signed-in readers: a ✓ before the name of each topic they have marked as read.
+  // Signed-in readers: a ring on each topic they have marked as read, and the ✓ toggle.
   loadProgress().then((progress) => {
     if (!progress) return;
     for (const [id, p] of Object.entries(progress.nodes)) if (p.status === "read") readTopics.add(id);
@@ -1002,15 +1018,6 @@ const data = {
       ring();
       cy.on("zoom", ring);
     }
-    for (const l of labels) {
-      if (!readTopics.has(l.node.id())) continue;
-      const check = document.createElement("span");
-      check.className = "read-check";
-      check.textContent = "✓ ";
-      l.el.prepend(check);
-    }
-    measureLabels();
-    placeLabels();
     if (selected) selectTopic(cy.getElementById(selected) as cytoscape.NodeSingular);
   });
 </script>
