@@ -243,10 +243,12 @@ article pre code { background: none; padding: 0; font-size: inherit; }
 .toggle-read[aria-pressed="true"] { background: var(--ok); color: var(--bg); }
 .toggle-read[aria-pressed="true"] .check { color: var(--bg); }
 .toggle-read:disabled { opacity: 0.7; cursor: progress; }
-/* Floats at the bottom of the window, so showing it moves nothing on the page. */
+/* Floats at the bottom of the window, so showing it moves nothing on the page. Filled with the accent
+   color, like the site's main buttons, so it is easy to notice; it slides in once, unless the reader
+   asked for less motion. */
 .resume {
   position: fixed;
-  bottom: 1rem;
+  bottom: 1.25rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -254,16 +256,21 @@ article pre code { background: none; padding: 0; font-size: inherit; }
   align-items: center;
   gap: 0.25rem;
   max-width: calc(100% - 2rem);
-  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
-  border: 1px solid var(--line);
+  padding: 0.3rem 0.35rem 0.3rem 0.6rem;
   border-radius: 999px;
-  background: var(--bg);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.18);
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.3);
+  animation: resume-in 0.35s ease-out;
 }
-.resume button { border: 0; background: none; color: var(--fg); font: inherit; cursor: pointer; }
-.resume .go { padding: 0.35rem 0.6rem; color: var(--accent); font-weight: 600; text-align: left; }
-.resume .close { width: 2rem; height: 2rem; border-radius: 50%; color: var(--muted); font-size: 1.2rem; line-height: 1; }
-.resume .close:hover { background: var(--accent-soft); }
+@keyframes resume-in { from { opacity: 0; transform: translate(-50%, 1rem); } }
+@media (prefers-reduced-motion: reduce) { .resume { animation: none; } }
+.resume button { border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.resume .go { padding: 0.45rem 0.7rem; font-weight: 700; text-align: left; }
+.resume .go::before { content: "↓ "; }
+.resume .close { width: 2rem; height: 2rem; border-radius: 50%; font-size: 1.2rem; line-height: 1; opacity: 0.85; }
+.resume .close:hover, .resume .close:focus-visible { background: rgb(255 255 255 / 0.18); opacity: 1; }
+.resume button:focus-visible { outline: 2px solid var(--bg); outline-offset: 2px; border-radius: 999px; }
 
 .pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); }
 
