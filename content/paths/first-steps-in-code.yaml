@@ -8,3 +8,5 @@ sections:
     nodes: [asynchronous-code, event-loop, promises, processes, threads, race-conditions]
   - title: "Three Languages"
     nodes: [nodejs, python, python-asyncio, go-language, goroutines]
+  - title: "Keep Going"
+    nodes: [how-to-learn-programming, where-to-go-next]
