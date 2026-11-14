@@ -243,14 +243,14 @@ This exercise practises Habits 1 and 3, in JavaScript, because the browser's con
 
    This line is a value (the text `"alphabet"`), then a dot, then the method `toUpperCase()`.
 
-   **What you should see:** `ALPHABET`.
+   **What you should see:** the word ALPHABET, in capital letters.
 6. Make one small change: replace `alphabet` with `Hello`. Type the new line and press `Enter`.
 
    ```
    "Hello".toUpperCase()
    ```
 
-   **What you should see:** `HELLO`: a new string in capital letters, as the Return value section says.
+   **What you should see:** the word HELLO: a new string in capital letters, as the Return value section says.
 
 ## Common misunderstandings
 
