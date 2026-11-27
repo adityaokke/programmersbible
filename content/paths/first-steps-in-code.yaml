@@ -9,6 +9,12 @@ sections:
   - title: "Waiting and Doing Several Things"
     nodes: [asynchronous-code, event-loop, promises, processes, threads, race-conditions]
   - title: "Three Languages"
-    nodes: [nodejs, python, python-asyncio, go-language, goroutines]
+    choose_one:
+      - title: "JavaScript"
+        nodes: [nodejs]
+      - title: "Python"
+        nodes: [python, python-asyncio]
+      - title: "Go"
+        nodes: [go-language, goroutines]
   - title: "Keep Going"
     nodes: [how-to-learn-programming, where-to-go-next]

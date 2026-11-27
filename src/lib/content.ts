@@ -8,7 +8,9 @@ import { Marked, type Tokens } from "marked";
 import { createMermaidRenderer } from "mermaid-isomorphic";
 import { createHighlighter } from "shiki";
 import { IMAGES_DIR, loadNodes, loadPaths, type Issue, type LoadedNode } from "../../scripts/lib/content.ts";
-import type { NodeFrontmatter, PathFile } from "../../schema/node.ts";
+import { sectionTopics, type NodeFrontmatter, type PathFile, type PathSection } from "../../schema/node.ts";
+
+export { sectionTopics };
 
 // Drafts are visible in `astro dev` and in preview builds (SHOW_DRAFTS=true).
 // Production only shows published nodes.
@@ -42,24 +44,71 @@ export function byIds(ids: string[]): Node[] {
   return ids.map((id) => nodeById.get(id)).filter((n): n is Node => !!n);
 }
 
-/** Where a node sits in a path, with its neighbours. */
-export function pathPosition(id: string) {
-  for (const path of allPaths) {
-    const order = path.sections.flatMap((s) => s.nodes);
-    const index = order.indexOf(id);
-    if (index === -1) continue;
-    const section = path.sections.find((s) => s.nodes.includes(id))!;
-    return {
-      path,
-      section,
-      index,
-      total: order.length,
-      prev: index > 0 ? nodeById.get(order[index - 1]!) : undefined,
-      next: index < order.length - 1 ? nodeById.get(order[index + 1]!) : undefined,
-    };
+/** A link at the bottom of a topic: the topic, and the choice it starts or ends ("Python"), if any. */
+export type PathLink = { node: Node; choice?: string };
+
+/** Where a topic sits in one learning path, and the links to the topics before and after it. */
+export type PathPlace = {
+  path: PathFile;
+  /** "First Chapter: From Zero to Your Own Website" is shown as "First Chapter". */
+  name: string;
+  section: PathSection;
+  /** The choice of a "choose one" part this topic is in ("Python"), if any. */
+  choice?: string;
+  /** "3" of "3 of 60", for a topic of an in-order part. */
+  number?: number;
+  total: number;
+  prev: PathLink[];
+  next: PathLink[];
+};
+
+/** The numbers of a path's in-order topics (1, 2, 3 …). Topics of "any order" and "choose one" parts have none. */
+export function pathNumbers(path: PathFile): Map<string, number> {
+  const numbers = new Map<string, number>();
+  for (const section of path.sections) {
+    if ("nodes" in section && !section.any_order) for (const id of section.nodes) numbers.set(id, numbers.size + 1);
   }
-  return undefined;
+  return numbers;
 }
+
+// The topics a part starts and ends with: one, or one per choice of a "choose one" part.
+function ends(section: PathSection, end: "first" | "last"): PathLink[] {
+  const pick = (ids: string[]) => nodeById.get(end === "first" ? ids[0]! : ids[ids.length - 1]!)!;
+  return "choose_one" in section
+    ? section.choose_one.map((c) => ({ node: pick(c.nodes), choice: c.title }))
+    : [{ node: pick(section.nodes) }];
+}
+
+/** Every learning path a topic is in, with its neighbours in each. Most topics are in one. */
+export function pathPlaces(id: string): PathPlace[] {
+  const places: PathPlace[] = [];
+  for (const path of allPaths) {
+    const numbers = pathNumbers(path);
+    path.sections.forEach((section, k) => {
+      const runs = "choose_one" in section ? section.choose_one.map((c) => ({ ids: c.nodes, choice: c.title })) : [{ ids: section.nodes, choice: undefined }];
+      for (const { ids, choice } of runs) {
+        const i = ids.indexOf(id);
+        if (i === -1) continue;
+        const before = path.sections[k - 1];
+        const after = path.sections[k + 1];
+        places.push({
+          path,
+          name: path.title.split(":")[0]!,
+          section,
+          choice,
+          number: numbers.get(id),
+          total: numbers.size,
+          prev: i > 0 ? [{ node: nodeById.get(ids[i - 1]!)! }] : before ? ends(before, "last") : [],
+          next: i < ids.length - 1 ? [{ node: nodeById.get(ids[i + 1]!)! }] : after ? ends(after, "first") : [],
+        });
+      }
+    });
+  }
+  return places;
+}
+
+/** A topic's address when read as part of a learning path: the path's links keep the reader on it. */
+export const pathUrl = (id: string, pathId: string) => `/node/${id}?path=${pathId}`;
 
 export const nodeUrl = (id: string) => `/node/${id}`;
 

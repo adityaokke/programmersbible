@@ -7,7 +7,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { imageSize } from "image-size";
 import { MAX_BYTES, MAX_WIDTH, MAX_WIDTH_ZOOM } from "./lib/images.ts";
 import { join } from "node:path";
-import { BANNED_WORDS, PROJECT_WORD_RANGE, REQUIRED_HEADINGS, WORD_RANGE } from "../schema/node.ts";
+import { BANNED_WORDS, PROJECT_WORD_RANGE, REQUIRED_HEADINGS, sectionTopics, WORD_RANGE } from "../schema/node.ts";
 import {
   IMAGES_DIR,
   ROOT,
@@ -174,7 +174,8 @@ nodes.forEach(checkMedia);
 // --- Paths -------------------------------------------------------------------
 
 for (const path of paths) {
-  const order = path.data.sections.flatMap((s) => s.nodes);
+  const sections = path.data.sections;
+  const order = sections.flatMap(sectionTopics);
   const position = new Map<string, number>();
   order.forEach((id, i) => {
     if (position.has(id)) {
@@ -183,17 +184,60 @@ for (const path of paths) {
     position.set(id, i);
     if (!byId.has(id)) issues.push({ level: "error", file: path.file, message: `unknown node "${id}"` });
   });
+  const requires = (id: string) => byId.get(id)?.data.requires ?? [];
 
   // A path may only use a node after everything it requires (when the
   // requirement is also on the path).
   for (const [id, i] of position) {
-    for (const dep of byId.get(id)?.data.requires ?? []) {
+    for (const dep of requires(id)) {
       const j = position.get(dep);
       if (j !== undefined && j > i) {
         issues.push({ level: "error", file: path.file, message: `"${id}" comes before its requirement "${dep}"` });
       }
     }
   }
+
+  sections.forEach((section, k) => {
+    // "Any order": no topic of the part may need another one of the same part.
+    if ("nodes" in section && section.any_order) {
+      for (const id of section.nodes) {
+        for (const dep of requires(id)) {
+          if (section.nodes.includes(dep)) {
+            issues.push({
+              level: "error",
+              file: path.file,
+              message: `"${section.title}" is any_order, but "${id}" requires "${dep}" from the same part`,
+            });
+          }
+        }
+      }
+    }
+    if (!("choose_one" in section)) return;
+    // "Choose one": a reader reads only one choice, so nothing may need a topic from another
+    // choice, and nothing after the part may need a topic from any choice.
+    section.choose_one.forEach((choice, c) => {
+      const others = new Set(section.choose_one.filter((_, d) => d !== c).flatMap((o) => o.nodes));
+      for (const id of choice.nodes) {
+        for (const dep of requires(id)) {
+          if (others.has(dep)) {
+            issues.push({ level: "error", file: path.file, message: `"${id}" (choice "${choice.title}") requires "${dep}" from another choice` });
+          }
+        }
+      }
+    });
+    const inChoices = new Set(sectionTopics(section));
+    for (const later of sections.slice(k + 1).flatMap(sectionTopics)) {
+      for (const dep of requires(later)) {
+        if (inChoices.has(dep)) {
+          issues.push({
+            level: "error",
+            file: path.file,
+            message: `"${later}" requires "${dep}", but "${dep}" is in a choose_one part that a reader may skip`,
+          });
+        }
+      }
+    }
+  });
 }
 
 // --- Report ------------------------------------------------------------------

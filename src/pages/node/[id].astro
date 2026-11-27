@@ -1,7 +1,7 @@
 ---
 import MiniMap from "../../components/MiniMap.astro";
 import Base from "../../layouts/Base.astro";
-import { byIds, isReadable, leadsTo, nodeUrl, nodes, pathPosition, renderBody, sectionsOf, type Node } from "../../lib/content.ts";
+import { byIds, isReadable, leadsTo, nodeUrl, nodes, pathPlaces, pathUrl, renderBody, sectionsOf, type Node, type PathLink } from "../../lib/content.ts";
 
 export function getStaticPaths() {
   return nodes.map((node) => ({ params: { id: node.id }, props: { node } }));
@@ -11,9 +11,10 @@ const { node } = Astro.props as { node: Node };
 const readable = isReadable(node);
 const html = readable ? await renderBody(node) : "";
 const sections = readable ? sectionsOf(node) : [];
-const position = pathPosition(node.id);
-// "First Chapter: From Zero to Your Own Website" is shown as "First Chapter" next to the links.
-const pathName = position?.path.title.split(":")[0];
+// The learning paths this topic is in. Their "Previous" and "Next" links show only to a reader who
+// came here from that path (the address ends in ?path=<id>); see the script below.
+const places = pathPlaces(node.id);
+const linkTitle = (l: PathLink) => (l.choice ? `${l.choice}: ${l.node.title}` : l.node.title);
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
 // A topic already under "Learn first" or "Leads to" is not listed again under "Related".
@@ -40,13 +41,18 @@ const byline =
 ---
 
 <Base title={node.title} description={node.summary} noindex={node.status !== "published"}>
+  {/* Where the topic sits in the path the reader is following; filled in by the script, like the links at the end. */}
+  <div class="breadcrumb-slot"></div>
   {
-    position && (
-      <div class="breadcrumb">
-        <a href={`/path/${position.path.id}`}>{pathName}</a> › {position.section.title} › {position.index + 1} of{" "}
-        {position.total}
-      </div>
-    )
+    places.map((place) => (
+      <template data-path-crumb={place.path.id}>
+        <div class="breadcrumb">
+          <a href={`/path/${place.path.id}`}>{place.name}</a> › {place.section.title}
+          {place.choice && ` › ${place.choice}`}
+          {place.number ? ` › ${place.number} of ${place.total}` : ""}
+        </div>
+      </template>
+    ))
   }
 
   <div class="node-layout">
@@ -133,17 +139,36 @@ const byline =
         )
       }
 
+      {/* Filled in by the script from one of the templates, when the reader is following a path. */}
+      <div class="pager-slot"></div>
       {
-        position && (
-          <nav class="pager" aria-label={`Previous and next topic in ${pathName}`}>
-            {/* These follow the path's reading order, which can differ from "Leads to" on the map. */}
-            <p class="pager-where small muted">
-              Learning path: <a href={`/path/${position.path.id}`}>{pathName}</a>, topic {position.index + 1} of {position.total}
-            </p>
-            <span>{position.prev && <a href={nodeUrl(position.prev.id)}><span class="small muted">Previous</span><br />← {position.prev.title}</a>}</span>
-            <span class="pager-next">{position.next && <a href={nodeUrl(position.next.id)}><span class="small muted">Next in {pathName}</span><br />{position.next.title} →</a>}</span>
-          </nav>
-        )
+        places.map((place) => (
+          <template data-path={place.path.id}>
+            <nav class="pager" aria-label={`Previous and next topic in ${place.name}`}>
+              <p class="pager-where small muted">
+                Learning path: <a href={`/path/${place.path.id}`}>{place.name}</a> · {place.section.title}
+                {place.choice && ` · ${place.choice}`}
+                {"nodes" in place.section && place.section.any_order && " (read in any order)"}
+              </p>
+              <span>
+                {place.prev.length > 0 && (
+                  <span class="small muted">{place.prev.length > 1 ? "Previous, depending on your choice" : "Previous"}</span>
+                )}
+                {place.prev.map((l) => (
+                  <a class="pager-link" href={pathUrl(l.node.id, place.path.id)}>← {linkTitle(l)}</a>
+                ))}
+              </span>
+              <span class="pager-next">
+                {place.next.length > 0 && (
+                  <span class="small muted">{place.next.length > 1 ? "Next: choose one" : `Next in ${place.name}`}</span>
+                )}
+                {place.next.map((l) => (
+                  <a class="pager-link" href={pathUrl(l.node.id, place.path.id)}>{linkTitle(l)} →</a>
+                ))}
+              </span>
+            </nav>
+          </template>
+        ))
       }
     </article>
 
@@ -182,6 +207,16 @@ const byline =
 
 <script>
   import { isLanguage, loadProgress, saveLanguage, saveProgress, signedInHere, type Language, type Progress } from "../../scripts/account.ts";
+
+  // A reader who came from a learning path (?path=<id>) sees that path's "Previous" and "Next" links.
+  // Anyone else, from the map, search or a link, sees none: "Leads to" shows where the map goes next.
+  {
+    const pathId = new URLSearchParams(location.search).get("path");
+    const template = [...document.querySelectorAll<HTMLTemplateElement>("template[data-path]")].find((t) => t.dataset.path === pathId);
+    if (template) document.querySelector(".pager-slot")?.replaceChildren(template.content.cloneNode(true));
+    const crumb = [...document.querySelectorAll<HTMLTemplateElement>("template[data-path-crumb]")].find((t) => t.dataset.pathCrumb === pathId);
+    if (crumb) document.querySelector(".breadcrumb-slot")?.replaceChildren(crumb.content.cloneNode(true));
+  }
 
   // A Copy button on each code block. Without scripts the code still reads the same, with no button.
   for (const block of document.querySelectorAll<HTMLElement>(".code-block")) {
@@ -373,7 +408,7 @@ const byline =
     });
     show();
     box.append(button, note);
-    const pager = article.querySelector(".pager");
+    const pager = article.querySelector(".pager-slot");
     if (pager) pager.before(box);
     else article.append(box);
   }

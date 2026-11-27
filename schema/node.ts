@@ -137,23 +137,43 @@ export const nodeFrontmatter = z
 
 export type NodeFrontmatter = z.infer<typeof nodeFrontmatter>;
 
+// A part of a path. Three kinds:
+//   nodes: [...]                  read in this order (the usual kind)
+//   nodes: [...], any_order: true  read in any order: the topics do not need each other
+//   choose_one: [{ title, nodes }]  pick one choice (for example one programming language),
+//                                   then go on with the next part
+const orderedSection = z
+  .object({
+    title: z.string().min(1),
+    nodes: z.array(nodeId).min(1),
+    any_order: z.boolean().optional(),
+  })
+  .strict();
+const choiceSection = z
+  .object({
+    title: z.string().min(1),
+    choose_one: z
+      .array(z.object({ title: z.string().min(1), nodes: z.array(nodeId).min(1) }).strict())
+      .min(2),
+  })
+  .strict();
+
 export const pathFile = z
   .object({
     id: nodeId,
     title: z.string().min(1),
     description: z.string().optional(),
-    sections: z
-      .array(
-        z.object({
-          title: z.string().min(1),
-          nodes: z.array(nodeId).min(1),
-        }),
-      )
-      .min(1),
+    sections: z.array(z.union([orderedSection, choiceSection])).min(1),
   })
   .strict();
 
 export type PathFile = z.infer<typeof pathFile>;
+export type PathSection = PathFile["sections"][number];
+
+/** Every topic in a part of a path, in the order the file lists them (all choices of a "choose one" part). */
+export function sectionTopics(section: PathSection): string[] {
+  return "choose_one" in section ? section.choose_one.flatMap((c) => c.nodes) : section.nodes;
+}
 
 // Words that make a confused reader feel stupid. See docs/WRITING_GUIDE.md.
 export const BANNED_WORDS = [

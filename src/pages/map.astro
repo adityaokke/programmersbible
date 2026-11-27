@@ -2,7 +2,7 @@
 import cytoscape from "cytoscape";
 import fcose from "cytoscape-fcose";
 import Base from "../layouts/Base.astro";
-import { allPaths, isReadable, nodes, nodeUrl } from "../lib/content.ts";
+import { allPaths, isReadable, nodes, nodeUrl, sectionTopics } from "../lib/content.ts";
 
 cytoscape.use(fcose);
 
@@ -21,14 +21,14 @@ function reach(id: string, seen = new Set<string>()): Set<string> {
 const SPLIT_BY_SECTION = new Set(["more-to-explore"]);
 const slug = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 const firstChapter = allPaths.find((p) => p.id === "first-chapter");
-const inFirstChapter = new Set(firstChapter?.sections.flatMap((s) => s.nodes) ?? []);
+const inFirstChapter = new Set(firstChapter?.sections.flatMap(sectionTopics) ?? []);
 const otherGroup = new Map(
   allPaths
     .filter((p) => p !== firstChapter)
     .flatMap((p) =>
       p.sections.flatMap((s) => {
         const group = SPLIT_BY_SECTION.has(p.id) ? { id: slug(s.title), title: s.title } : { id: p.id, title: p.title };
-        return s.nodes.map((id) => [id, group] as const);
+        return sectionTopics(s).map((id) => [id, group] as const);
       }),
     ),
 );
@@ -36,7 +36,7 @@ const groupOf = (n: (typeof nodes)[number]) =>
   inFirstChapter.has(n.id) ? n.part : (otherGroup.get(n.id)?.id ?? n.part);
 const partTitles: Record<string, string> = {};
 for (const section of firstChapter?.sections ?? []) {
-  const first = nodes.find((n) => n.id === section.nodes[0]);
+  const first = nodes.find((n) => n.id === sectionTopics(section)[0]);
   if (first) partTitles[first.part] ??= section.title;
 }
 for (const [id, group] of otherGroup) {

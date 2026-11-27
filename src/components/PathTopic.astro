@@ -1,0 +1,17 @@
+---
+// One topic in a learning path's list: its number (or a dot when the order does not matter) and link.
+import { isReadable, nodeById, pathUrl } from "../lib/content.ts";
+
+const { id, pathId, number } = Astro.props as { id: string; pathId: string; number?: number };
+const node = nodeById.get(id)!;
+---
+
+<li data-node={isReadable(node) ? id : undefined}>
+  <span class="num">{number ?? "•"}</span>
+  <span>
+    {node.type === "event" && <span class="event-mark">🕰 </span>}
+    {node.type === "project" && "🏁 "}
+    <a href={pathUrl(id, pathId)}>{node.title}</a>{" "}
+    {!isReadable(node) && <span class="small muted">· not ready yet</span>}
+  </span>
+</li>
