@@ -16,7 +16,7 @@ import { ROOT } from "./lib/content.ts";
 // One page of each kind, plus topics with pictures, diagrams and code.
 const PAGES = [
   "/", "/about", "/privacy", "/signin", "/me", "/search?q=dns", "/timeline", "/map", "/404",
-  "/path/first-chapter", "/path/more-to-explore",
+  "/paths", "/path/first-chapter", "/path/more-to-explore",
   "/node/request-coalescing", "/node/html",
   "/node/variables", "/node/dns", "/node/cpu", "/node/grace-hopper-and-compilers", "/node/javascript", "/node/byte",
 ];
