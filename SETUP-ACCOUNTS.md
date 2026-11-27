@@ -61,6 +61,16 @@ npm run deploy
 This validates the content, builds the site into `dist/` and runs `wrangler deploy`, which uploads the
 Worker (`api/index.ts`) and the site together.
 
+**After a deploy that adds a migration**, apply it to the remote database (it applies only the new ones):
+
+```
+npx wrangler d1 migrations apply programmersbible --remote
+```
+
+- `0001_preferences` (27 November 2026): the `user_preference` table, which remembers the language a
+  signed-in reader last chose in the code tabs. Until it is applied, `GET /api/progress` fails, so
+  signed-in readers see the site as if signed out. Apply it right after deploying.
+
 ## 6. Test
 
 On https://programmersbible.com:
@@ -74,7 +84,10 @@ On https://programmersbible.com:
 4. Click **Mark as read** at the end of a topic. The First Chapter page shows a ✓ beside it, the map
    shows a ✓ before its name, and the home page shows **Continue reading**.
 5. On **/me**: the topic is listed; **Download my data** downloads a JSON file; **Sign out** works.
-6. Sign in again, then **Delete my account → Yes, delete my account**. Then check the database is empty
+6. On a topic with code tabs (for example `/node/variables`), choose **Python**, then open another topic
+   with tabs: it opens in Python. **/me** shows **Code language** (Python) with **Forget my language**.
+   A path page (for example `/path/first-chapter`) shows "· 1 of … read" after the title and the part's heading.
+7. Sign in again, then **Delete my account → Yes, delete my account**. Then check the database is empty
    for that account:
 
    ```

@@ -175,7 +175,7 @@ const byline =
 </Base>
 
 <script>
-  import { loadProgress, saveProgress, type Progress } from "../../scripts/account.ts";
+  import { isLanguage, loadProgress, saveLanguage, saveProgress, signedInHere, type Language, type Progress } from "../../scripts/account.ts";
 
   // A Copy button on each code block. Without scripts the code still reads the same, with no button.
   for (const block of document.querySelectorAll<HTMLElement>(".code-block")) {
@@ -201,8 +201,13 @@ const byline =
   // Tabs for the same idea in several languages. The script makes them: without it, each panel
   // shows under its own heading. A closed panel can still be found with the browser's search.
   const tabGroups: { show: (label: string) => void }[] = [];
-  // Choosing a language switches every group on this page. Nothing is stored: see the privacy page.
+  // Choosing a language switches every group on this page. Signed-in readers' choice is also saved
+  // to their account (below); for everyone else nothing is stored: see the privacy page.
   const choose = (label: string) => tabGroups.forEach((g) => g.show(label));
+  const chosenByReader = (label: string) => {
+    choose(label);
+    rememberLanguage(label);
+  };
   document.querySelectorAll<HTMLElement>(".code-tabs").forEach((group, g) => {
     const panels = [...group.querySelectorAll<HTMLElement>(":scope > .tab-panel")];
     const list = document.createElement("div");
@@ -220,7 +225,7 @@ const byline =
       panel.setAttribute("role", "tabpanel");
       panel.setAttribute("aria-labelledby", tab.id);
       heading.hidden = true;
-      tab.addEventListener("click", () => choose(tab.textContent ?? ""));
+      tab.addEventListener("click", () => chosenByReader(tab.textContent ?? ""));
       panel.addEventListener("beforematch", () => show(i));
       return tab;
     });
@@ -238,7 +243,7 @@ const byline =
       const next = ({ ArrowRight: now + 1, ArrowLeft: now - 1 + tabs.length, Home: 0, End: tabs.length - 1 } as Record<string, number>)[e.key];
       if (next === undefined) return;
       e.preventDefault();
-      choose(tabs[next % tabs.length]!.textContent ?? "");
+      chosenByReader(tabs[next % tabs.length]!.textContent ?? "");
       tabs[next % tabs.length]!.focus();
     });
     list.append(...tabs);
@@ -251,6 +256,54 @@ const byline =
       },
     });
   });
+
+  // ---- Signed-in readers only: the language of the tabs follows them from page to page. ----
+  // Saved to their account when they choose one; on load, every group switches to it (a group
+  // without that language stays as it is). Signed out, nothing is saved or asked for.
+
+  let savedLanguage: Language | null = null;
+  let readerChose = false;
+  let pendingLanguage: Language | null = null;
+  let languageTimer = 0;
+  function rememberLanguage(label: string) {
+    readerChose = true;
+    if (!signedInHere() || !isLanguage(label)) return;
+    // Arrow keys can pass several tabs quickly: save only where the reader stops.
+    pendingLanguage = label;
+    clearTimeout(languageTimer);
+    languageTimer = window.setTimeout(saveChosenLanguage, 1000);
+  }
+  function saveChosenLanguage(closing = false) {
+    clearTimeout(languageTimer);
+    const language = pendingLanguage;
+    pendingLanguage = null;
+    if (!language || language === savedLanguage) return;
+    savedLanguage = language;
+    saveLanguage(language, closing);
+  }
+  if (tabGroups.length) {
+    addEventListener("pagehide", () => saveChosenLanguage(true));
+    loadProgress().then((progress) => {
+      savedLanguage = progress?.preferences?.language ?? null;
+      // A choice the reader made while the page was loading wins.
+      if (savedLanguage && !readerChose) keepScrollPosition(() => choose(savedLanguage!));
+    });
+  }
+
+  // Run a change without moving what the reader sees: the first text at the top of the window stays
+  // at the same place, even when a tab panel above it gets taller or shorter.
+  function keepScrollPosition(change: () => void) {
+    const anchor = [...document.querySelectorAll<HTMLElement>("main h2, main h3, main p, main li, main pre, main figure")].find((el) => {
+      const box = el.getBoundingClientRect();
+      return box.height > 0 && box.top >= 0;
+    });
+    const before = anchor?.getBoundingClientRect().top;
+    change();
+    if (anchor && before !== undefined) {
+      const moved = anchor.getBoundingClientRect().top - before;
+      if (moved) scrollBy({ top: moved, behavior: "instant" });
+    }
+  }
 
   // Mark the section being read in "On this page": the last heading that has scrolled past the top third.
   const links = [...document.querySelectorAll<HTMLAnchorElement>(".toc-side a")];

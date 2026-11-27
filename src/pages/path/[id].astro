@@ -13,12 +13,12 @@ let number = 0;
 
 <Base title={path.title} description={path.description}>
   <div class="narrow">
-    <h1>{path.title}</h1>
+    <h1 id="path-title">{path.title}</h1>
     {path.description && <p class="muted">{path.description}</p>}
 
     {
       path.sections.map((section) => (
-        <section>
+        <section class="path-section">
           <h2>{section.title}</h2>
           <ol class="node-list">
             {section.nodes.map((id) => {
@@ -44,8 +44,31 @@ let number = 0;
 </Base>
 
 <script>
-  import { loadProgress, markReadTopics } from "../../scripts/account.ts";
+  import { loadProgress, markReadTopics, type Progress } from "../../scripts/account.ts";
 
-  // Signed-in readers: a ✓ beside each topic they have marked as read.
-  loadProgress().then((progress) => progress && markReadTopics(progress));
+  // Signed-in readers: a ✓ beside each topic they have marked as read, and how many of each part's
+  // topics they have read. Signed out, nothing is added.
+  loadProgress().then((progress) => {
+    if (!progress) return;
+    markReadTopics(progress);
+    showReadCounts(progress);
+  });
+
+  // "12 of 31 read" after each part's heading and the path's title. Only topics that can be read
+  // count: the ones that get a ✓ (data-node), not the ones "not ready yet".
+  function showReadCounts(progress: Progress) {
+    const count = (root: ParentNode) => {
+      const topics = [...new Set([...root.querySelectorAll<HTMLElement>("[data-node]")].map((el) => el.dataset.node!))];
+      return { all: topics.length, read: topics.filter((id) => progress.nodes[id]?.status === "read").length };
+    };
+    const add = (heading: Element | null, { all, read }: { all: number; read: number }) => {
+      if (!heading || !all) return;
+      const note = document.createElement("span");
+      note.className = "read-count muted";
+      note.textContent = `· ${read} of ${all} read`;
+      heading.append(" ", note);
+    };
+    for (const section of document.querySelectorAll(".path-section")) add(section.querySelector("h2"), count(section));
+    add(document.getElementById("path-title"), count(document));
+  }
 </script>

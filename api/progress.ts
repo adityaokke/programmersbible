@@ -1,17 +1,17 @@
 // Reading progress for signed-in readers. Every route needs a session and answers 401 without one.
 //
-//   GET /api/progress          every topic's status and last heading, the last topic, and who is signed in
+//   GET /api/progress          every topic's status and last heading, the last topic, who is signed in,
+//                              and their settings (api/preferences.ts)
 //   PUT /api/progress/:nodeId  { status?: "visited" | "read", lastHeading?: string | null }
 //   GET /api/progress/export   all of the reader's data, as a JSON file
 
 import { desc, eq } from "drizzle-orm";
 import { Hono, type Context } from "hono";
-import { account, nodeProgress, PROGRESS_STATUSES, session, user } from "../db/schema.ts";
-import { createAuth, database } from "./auth.ts";
-import { clearSignedInHint, setSignedInHint } from "./cookies.ts";
-import type { Env } from "./env.ts";
-
-type Signed = { Bindings: Env; Variables: { userId: string; user: { name: string; email: string; image?: string | null } } };
+import { account, nodeProgress, PROGRESS_STATUSES, session, user, userPreference } from "../db/schema.ts";
+import { database } from "./auth.ts";
+import { setSignedInHint } from "./cookies.ts";
+import { preferencesOf } from "./preferences.ts";
+import { fromOtherSite, readObject, requireSession, type Signed } from "./session.ts";
 
 // The topic ids readers can open (published topics), from the built site: dist/topics.json.
 // Kept for a few minutes, so a deploy with new topics is picked up without a restart.
@@ -28,28 +28,21 @@ async function publishedTopics(c: Context<Signed>): Promise<Set<string>> {
 /** A heading id as the site makes them ("how-it-actually-works"); short, letters, digits and dashes. */
 const HEADING = /^[\p{L}\p{N}]+(-[\p{L}\p{N}]+)*$/u;
 const NODE_ID = /^[a-z0-9]+(-[a-z0-9]+)*$/; // as in schema/node.ts
-const MAX_BODY = 512;
 
 export const progress = new Hono<Signed>();
 
-// Who is asking. Also keeps the small "signed in" cookie in step with the session (see cookies.ts).
-progress.use("*", async (c, next) => {
-  const found = await createAuth(c.env).api.getSession({ headers: c.req.raw.headers });
-  if (!found) {
-    clearSignedInHint(c);
-    return c.json({ error: "Not signed in" }, 401);
-  }
-  c.set("userId", found.user.id);
-  c.set("user", { name: found.user.name, email: found.user.email, image: found.user.image });
-  await next();
-});
+progress.use("*", requireSession);
 
 progress.get("/", async (c) => {
-  const rows = await database(c.env)
-    .select({ nodeId: nodeProgress.nodeId, status: nodeProgress.status, lastHeading: nodeProgress.lastHeading, updatedAt: nodeProgress.updatedAt })
-    .from(nodeProgress)
-    .where(eq(nodeProgress.userId, c.get("userId")))
-    .orderBy(desc(nodeProgress.updatedAt));
+  const userId = c.get("userId");
+  const [rows, preferences] = await Promise.all([
+    database(c.env)
+      .select({ nodeId: nodeProgress.nodeId, status: nodeProgress.status, lastHeading: nodeProgress.lastHeading, updatedAt: nodeProgress.updatedAt })
+      .from(nodeProgress)
+      .where(eq(nodeProgress.userId, userId))
+      .orderBy(desc(nodeProgress.updatedAt)),
+    preferencesOf(c.env, userId),
+  ]);
   setSignedInHint(c);
   c.header("Cache-Control", "no-store");
   const { name, email, image } = c.get("user");
@@ -57,6 +50,7 @@ progress.get("/", async (c) => {
     user: { name, email, image: image ?? null },
     lastTopic: rows[0]?.nodeId ?? null,
     nodes: Object.fromEntries(rows.map((r) => [r.nodeId, { status: r.status, lastHeading: r.lastHeading }])),
+    preferences,
   });
 });
 
@@ -77,6 +71,12 @@ progress.get("/export", async (c) => {
     .from(nodeProgress)
     .where(eq(nodeProgress.userId, userId))
     .orderBy(desc(nodeProgress.updatedAt));
+  // Empty if the preferences table is not there yet (deployed before its migration ran).
+  const [settings] = await db
+    .select({ language: userPreference.preferredLanguage, updatedAt: userPreference.updatedAt })
+    .from(userPreference)
+    .where(eq(userPreference.userId, userId))
+    .catch(() => []);
   c.header("Cache-Control", "no-store");
   c.header("Content-Disposition", 'attachment; filename="programmers-bible-my-data.json"');
   return c.json({
@@ -93,29 +93,21 @@ progress.get("/export", async (c) => {
     signInWith: accounts,
     sessions,
     progress: rows,
+    preferences: settings ?? { language: null },
   });
 });
 
 progress.put("/:nodeId", async (c) => {
-  // Same-site requests only (the session cookie is SameSite=Lax too).
-  const origin = c.req.header("Origin");
-  if (origin && origin !== new URL(c.req.url).origin && !isTrustedOrigin(origin)) return c.json({ error: "Wrong origin" }, 403);
+  if (fromOtherSite(c)) return c.json({ error: "Wrong origin" }, 403);
 
   const nodeId = c.req.param("nodeId");
   if (nodeId.length > 100 || !NODE_ID.test(nodeId) || !(await publishedTopics(c)).has(nodeId)) {
     return c.json({ error: "Unknown topic" }, 404);
   }
 
-  const text = await c.req.text();
-  if (text.length > MAX_BODY) return c.json({ error: "Request too large" }, 413);
-  let body: unknown;
-  try {
-    body = text ? JSON.parse(text) : {};
-  } catch {
-    return c.json({ error: "Not JSON" }, 400);
-  }
-  if (typeof body !== "object" || body === null || Array.isArray(body)) return c.json({ error: "Expected an object" }, 400);
-  const { status, lastHeading } = body as Record<string, unknown>;
+  const read = await readObject(c);
+  if ("error" in read) return read.error;
+  const { status, lastHeading } = read.body;
   if (status !== undefined && !PROGRESS_STATUSES.includes(status as never)) return c.json({ error: "Bad status" }, 400);
   if (lastHeading !== undefined && lastHeading !== null && (typeof lastHeading !== "string" || lastHeading.length > 120 || !HEADING.test(lastHeading))) {
     return c.json({ error: "Bad lastHeading" }, 400);
@@ -135,5 +127,3 @@ progress.put("/:nodeId", async (c) => {
   return c.json({ nodeId, ...row });
 });
 
-const isTrustedOrigin = (origin: string) =>
-  origin === "https://programmersbible.com" || origin === "https://www.programmersbible.com";

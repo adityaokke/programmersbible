@@ -3,17 +3,20 @@
 //
 //   /api/auth/*      sign-in with Google, sign-out, delete account (Better Auth)
 //   /api/progress*   reading progress (api/progress.ts)
+//   /api/preferences settings, such as the language of the code tabs (api/preferences.ts)
 
 import { Hono } from "hono";
 import { createAuth } from "./auth.ts";
 import { followSessionCookie } from "./cookies.ts";
 import type { Env } from "./env.ts";
+import { preferences } from "./preferences.ts";
 import { progress } from "./progress.ts";
 
 const app = new Hono<{ Bindings: Env }>();
 
 app.on(["GET", "POST"], "/api/auth/*", async (c) => followSessionCookie(c.req.raw, await createAuth(c.env).handler(c.req.raw)));
 app.route("/api/progress", progress);
+app.route("/api/preferences", preferences);
 app.all("/api/*", (c) => c.json({ error: "Not found" }, 404));
 app.onError((err, c) => {
   console.error(err);

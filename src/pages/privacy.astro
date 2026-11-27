@@ -7,7 +7,7 @@ const REPO = "https://github.com/adityaokke/programmersbible";
 <Base title="Privacy" description="What Programmer's Bible knows about you: nothing if you only read, and, if you choose to sign in with Google, your name, email address and reading progress.">
   <div class="narrow">
     <h1>Privacy</h1>
-    <p class="small muted">Last updated: 14 November 2026</p>
+    <p class="small muted">Last updated: 27 November 2026</p>
 
     <p>
       <strong>In short:</strong> you can read everything without an account. If you do not sign in, this site stores
@@ -51,6 +51,11 @@ const REPO = "https://github.com/adityaokke/programmersbible";
         section of each topic you reached, and when.
       </li>
       <li>
+        <strong>Your code language:</strong> the programming language you last chose in the tabs (JavaScript,
+        Python or Go), so examples open in it on every topic, and when you chose it. You can make the site forget
+        it on <a href="/me">your account page</a>.
+      </li>
+      <li>
         <strong>Your sign-ins:</strong> when you signed in and when that sign-in ends. The site does not keep your IP
         address or the name of your browser with it.
       </li>
@@ -85,8 +90,8 @@ const REPO = "https://github.com/adityaokke/programmersbible";
       </li>
       <li>
         <strong>Delete:</strong> on the same page, <strong>Delete my account</strong> deletes your account, your
-        sign-ins and your reading progress from the site's database at once. For safety, this needs a sign-in from the
-        last day; the page asks you to sign in again if needed. The database's own backups, kept by Cloudflare so
+        sign-ins, your reading progress and your code language from the site's database at once. For safety,
+        this needs a sign-in from the last day; the page asks you to sign in again if needed. The database's own backups, kept by Cloudflare so
         mistakes can be undone, are erased after at most 30 days.
       </li>
       <li>
@@ -121,7 +126,8 @@ const REPO = "https://github.com/adityaokke/programmersbible";
     <h2>Changes</h2>
     <p>
       On 14 November 2026 the site added optional accounts (sign in with Google) and reading progress, described
-      above. If the site changes what it stores, this page will say so first, with the date it changed. The history of
+      above. On 27 November 2026 it started remembering, for signed-in readers only, the programming language last
+      chosen in the code tabs. If the site changes what it stores, this page will say so first, with the date it changed. The history of
       this page is public on <a href={`${REPO}/commits/main/src/pages/privacy.astro`}>GitHub</a>.
     </p>
 
