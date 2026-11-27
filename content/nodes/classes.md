@@ -95,8 +95,8 @@ sources:
     url: https://developer.chrome.com/blog/self-xss
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-27
+updated: 2026-11-27
 ---
 
 > **In one sentence:** A class is a blueprint for making many objects of the same kind, each with its own values and the same methods.
@@ -302,7 +302,7 @@ In JavaScript and Python, a class can also be built on another class and reuse i
 
 ## How it came to be
 
-Simula is a programming language developed in the 1960s at the Norwegian Computing Center in Oslo, by Ole-Johan Dahl and Kristen Nygaard. A version called Simula 67 introduced objects, classes and inheritance, along with other ideas.
+Simula is the name of two programming languages, Simula I and Simula 67, developed in the 1960s at the Norwegian Computing Center in Oslo, by Ole-Johan Dahl and Kristen Nygaard. Simula 67 introduced objects, classes and inheritance, along with other ideas.
 
 Simula is considered the first **object-oriented** programming language. MDN describes object-oriented programming as "an approach in programming in which data is encapsulated within objects". Encapsulated means kept inside.
 

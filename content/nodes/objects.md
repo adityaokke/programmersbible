@@ -81,8 +81,8 @@ sources:
     url: https://example.com
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-14
-updated: 2026-11-14
+reviewed_at: 2026-11-27
+updated: 2026-11-27
 ---
 
 > **In one sentence:** An object keeps related values and the functions that work on them together, as one thing.
@@ -118,7 +118,7 @@ Many objects can have the same method. Two phones can both have a "louder" butto
 
 Each language gives that object a name inside the method. JavaScript calls it `this`. In Python, it is the method's first parameter, usually named `self`. Go calls it the **receiver**.
 
-This page does not teach classes. Some languages use a class to make many objects of the same kind. That is the topic of a later page, Classes. The Python example uses a small class, and explains only what it needs.
+This page does not teach classes. Some languages use a class to make many objects of the same kind. That is the topic of a later page, [[classes|Classes]]. The Python example uses a small class, and explains only what it needs.
 
 The examples are in [[javascript|JavaScript]], [[python|Python]] and [[go-language|Go]]. You only need to read one tab.
 
@@ -165,7 +165,7 @@ So `phone["owner"]`, with square brackets, also gives `"Ana"`. JavaScript also h
 
 Python's documentation says: "All data in a Python program is represented by objects". So every value you have met is an object: a number, a string, a list, a dictionary. An **attribute** is any name that follows a dot. Some attributes are named values, and some are methods.
 
-To make your own kind of object in Python, you write a class. The Classes topic explains classes. For now, read `class Phone:` as "a new kind of object, called Phone".
+To make your own kind of object in Python, you write a class. The [[classes|Classes]] topic explains classes. For now, read `class Phone:` as "a new kind of object, called Phone".
 
 ```python
 # class makes a new kind of object, called Phone.
@@ -343,6 +343,8 @@ These steps use JavaScript, because the browser's console runs JavaScript. You n
    **What you should see:** the name Ana again.
 
 If you see an error message at any step, reload the page, delete anything left on the typing line, and start again from step 3.
+
+**On a phone:** after step 3, say what `phone.owner` and `phone.volume` show, then `phone.volume` after `phone.louder()`. Answers: Ana, `5`, `6`.
 
 ## Common misunderstandings
 
