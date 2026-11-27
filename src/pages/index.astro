@@ -1,9 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
-import { allPaths, nodeById } from "../lib/content.ts";
+import { allPaths, nodeById, sectionTopics } from "../lib/content.ts";
 
 const firstChapter = allPaths.find((p) => p.id === "first-chapter");
-const firstNode = firstChapter ? nodeById.get(firstChapter.sections[0]!.nodes[0]!) : undefined;
+const firstNode = firstChapter ? nodeById.get(sectionTopics(firstChapter.sections[0]!)[0]!) : undefined;
 
 const examples = [
   "How does a computer work?",

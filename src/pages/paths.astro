@@ -1,11 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
-import { allPaths, isReadable, nodeById } from "../lib/content.ts";
+import { allPaths, isReadable, nodeById, sectionTopics } from "../lib/content.ts";
 
 // The First Chapter is where a new reader starts, so it comes first; the others keep their order.
 const ordered = [...allPaths].sort((a, b) => Number(b.id === "first-chapter") - Number(a.id === "first-chapter"));
 const cards = ordered.map((path) => {
-  const ids = [...new Set(path.sections.flatMap((s) => s.nodes))];
+  const ids = [...new Set(path.sections.flatMap(sectionTopics))];
   const readable = ids.filter((id) => isReadable(nodeById.get(id)!));
   return { path, total: ids.length, readable, parts: path.sections.map((s) => s.title) };
 });

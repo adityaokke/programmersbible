@@ -2,7 +2,7 @@
 //   npm run status
 
 import { loadNodes, loadPaths, type Issue } from "./lib/content.ts";
-import { AI_REVIEWER, STATUSES, type NodeFrontmatter } from "../schema/node.ts";
+import { AI_REVIEWER, sectionTopics, STATUSES, type NodeFrontmatter } from "../schema/node.ts";
 
 const issues: Issue[] = [];
 const nodes = new Map(loadNodes(issues).map((n) => [n.data.id, n.data]));
@@ -30,11 +30,11 @@ function tally(ids: string[]): string {
 }
 
 for (const { data: path } of paths) {
-  const all = path.sections.flatMap((s) => s.nodes);
+  const all = path.sections.flatMap(sectionTopics);
   console.log(`${path.title}\n${tally(all)}\n`);
   for (const section of path.sections) {
-    console.log(`  ${section.title}  (${tally(section.nodes)})`);
-    for (const id of section.nodes) {
+    console.log(`  ${section.title}  (${tally(sectionTopics(section))})`);
+    for (const id of sectionTopics(section)) {
       const node = nodes.get(id);
       console.log(`    ${node ? icon(node) : "?"} ${id}${node ? `  ${node.title}` : "  (missing)"}`);
     }

@@ -42,7 +42,7 @@ Rules:
 ```
 content/nodes/<id>.md         one file per node (frontmatter + markdown body)
 content/images/<id>/         photos used by a node (credited in its frontmatter `images`)
-content/paths/<id>.yaml       guided paths (ordered node ids, grouped in sections)
+content/paths/<id>.yaml       learning paths: parts of node ids, in order, any_order or choose_one (see schema/node.ts)
 schema/node.ts                the content contract (zod); site and scripts both import it
 scripts/build-graph.ts        validate content, write generated/graph.json
 scripts/node-status.ts        progress dashboard

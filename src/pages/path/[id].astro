@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { allPaths, isReadable, nodeById, nodeUrl } from "../../lib/content.ts";
+import PathTopic from "../../components/PathTopic.astro";
+import { allPaths, pathNumbers } from "../../lib/content.ts";
 import type { PathFile } from "../../../schema/node.ts";
 
 export function getStaticPaths() {
@@ -8,7 +9,9 @@ export function getStaticPaths() {
 }
 
 const { path } = Astro.props as { path: PathFile };
-let number = 0;
+// In-order topics are numbered through the whole path. Topics of "any order" and "choose one" parts
+// get a dot instead: their order does not matter.
+const numbers = pathNumbers(path);
 ---
 
 <Base title={path.title} description={path.description}>
@@ -21,28 +24,41 @@ let number = 0;
       path.sections.map((section) => (
         <section class="path-section">
           <h2>{section.title}</h2>
-          <ol class="node-list">
-            {section.nodes.map((id) => {
-              const node = nodeById.get(id)!;
-              number++;
-              return (
-                <li data-node={isReadable(node) ? id : undefined}>
-                  <span class="num">{number}</span>
-                  <span>
-                    {node.type === "event" && <span class="event-mark">🕰 </span>}
-                    {node.type === "project" && "🏁 "}
-                    <a href={nodeUrl(id)}>{node.title}</a>{" "}
-                    {!isReadable(node) && <span class="small muted">· not ready yet</span>}
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
+          {"choose_one" in section ? (
+            <>
+              <p class="muted">Choose one to read next. You can come back for the others at any time.</p>
+              <div class="choices">
+                {section.choose_one.map((choice) => (
+                  <div class="choice">
+                    <h3>{choice.title}</h3>
+                    <ul class="node-list">{choice.nodes.map((id) => <PathTopic id={id} pathId={path.id} />)}</ul>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              {section.any_order && <p class="muted">Read these in any order: they do not depend on each other.</p>}
+              {section.any_order ? (
+                <ul class="node-list">{section.nodes.map((id) => <PathTopic id={id} pathId={path.id} />)}</ul>
+              ) : (
+                <ol class="node-list">{section.nodes.map((id) => <PathTopic id={id} pathId={path.id} number={numbers.get(id)} />)}</ol>
+              )}
+            </>
+          )}
         </section>
       ))
     }
   </div>
 </Base>
+
+<style>
+  /* The choices of a "choose one" part side by side; one above the other on a phone. */
+  .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1rem; }
+  .choice { padding: 0.25rem 1rem 0.75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+  .choice h3 { margin: 0.5rem 0; font-size: 1.05rem; }
+  .choice :global(.node-list li:last-child) { border-bottom: 0; }
+</style>
 
 <script>
   import { loadProgress, markReadTopics, type Progress } from "../../scripts/account.ts";
