@@ -1,0 +1,61 @@
+---
+import Base from "../layouts/Base.astro";
+import { allPaths, isReadable, nodeById } from "../lib/content.ts";
+
+// The First Chapter is where a new reader starts, so it comes first; the others keep their order.
+const ordered = [...allPaths].sort((a, b) => Number(b.id === "first-chapter") - Number(a.id === "first-chapter"));
+const cards = ordered.map((path) => {
+  const ids = [...new Set(path.sections.flatMap((s) => s.nodes))];
+  const readable = ids.filter((id) => isReadable(nodeById.get(id)!));
+  return { path, total: ids.length, readable, parts: path.sections.map((s) => s.title) };
+});
+---
+
+<Base title="Learning paths" description="Topics put in order, so you can learn one subject step by step.">
+  <div class="narrow">
+    <h1>Learning paths</h1>
+    <p class="muted">
+      A learning path is a list of topics picked to teach you one subject. Most paths are in order: each topic builds on
+      the ones before it. Each path says how to read it. You can also explore every topic on the <a href="/map">map</a>.
+    </p>
+
+    <ul class="path-cards">
+      {
+        cards.map(({ path, total, readable, parts }) => (
+          <li class="path-card" data-topics={readable.join(" ")}>
+            <h2>
+              <a href={`/path/${path.id}`}>{path.title}</a>
+            </h2>
+            {path.description && <p>{path.description}</p>}
+            <p class="small muted">
+              {total} topics · {parts.join(" · ")}
+              <span class="read-count"></span>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .path-cards { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 1rem; }
+  .path-card { padding: 1rem 1.25rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+  .path-card h2 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+  .path-card p { margin: 0.5rem 0 0; }
+</style>
+
+<script>
+  import { loadProgress } from "../scripts/account.ts";
+
+  // Signed-in readers: how many of each path's topics they have read.
+  loadProgress().then((progress) => {
+    if (!progress) return;
+    for (const card of document.querySelectorAll<HTMLElement>(".path-card")) {
+      const topics = (card.dataset.topics ?? "").split(" ").filter(Boolean);
+      const read = topics.filter((id) => progress.nodes[id]?.status === "read").length;
+      const note = card.querySelector(".read-count");
+      if (note) note.textContent = ` · ${read} of ${topics.length} read`;
+    }
+  });
+</script>

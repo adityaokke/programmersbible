@@ -138,7 +138,7 @@ const byline =
           <nav class="pager" aria-label={`Previous and next topic in ${pathName}`}>
             {/* These follow the path's reading order, which can differ from "Leads to" on the map. */}
             <p class="pager-where small muted">
-              Reading in order: <a href={`/path/${position.path.id}`}>{pathName}</a>, topic {position.index + 1} of {position.total}
+              Learning path: <a href={`/path/${position.path.id}`}>{pathName}</a>, topic {position.index + 1} of {position.total}
             </p>
             <span>{position.prev && <a href={nodeUrl(position.prev.id)}><span class="small muted">Previous</span><br />← {position.prev.title}</a>}</span>
             <span class="pager-next">{position.next && <a href={nodeUrl(position.next.id)}><span class="small muted">Next in {pathName}</span><br />{position.next.title} →</a>}</span>
