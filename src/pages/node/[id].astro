@@ -12,6 +12,8 @@ const readable = isReadable(node);
 const html = readable ? await renderBody(node) : "";
 const sections = readable ? sectionsOf(node) : [];
 const position = pathPosition(node.id);
+// "First Chapter: From Zero to Your Own Website" is shown as "First Chapter" next to the links.
+const pathName = position?.path.title.split(":")[0];
 const learnFirst = byIds(node.requires);
 const next = leadsTo(node.id);
 // A topic already under "Learn first" or "Leads to" is not listed again under "Related".
@@ -41,7 +43,7 @@ const byline =
   {
     position && (
       <div class="breadcrumb">
-        <a href={`/path/${position.path.id}`}>{position.path.title}</a> › {position.section.title} › {position.index + 1} of{" "}
+        <a href={`/path/${position.path.id}`}>{pathName}</a> › {position.section.title} › {position.index + 1} of{" "}
         {position.total}
       </div>
     )
@@ -133,9 +135,13 @@ const byline =
 
       {
         position && (
-          <nav class="pager" aria-label="Previous and next topic">
-            <span>{position.prev && <a href={nodeUrl(position.prev.id)}>← {position.prev.title}</a>}</span>
-            <span>{position.next && <a href={nodeUrl(position.next.id)}>{position.next.title} →</a>}</span>
+          <nav class="pager" aria-label={`Previous and next topic in ${pathName}`}>
+            {/* These follow the path's reading order, which can differ from "Leads to" on the map. */}
+            <p class="pager-where small muted">
+              Reading in order: <a href={`/path/${position.path.id}`}>{pathName}</a>, topic {position.index + 1} of {position.total}
+            </p>
+            <span>{position.prev && <a href={nodeUrl(position.prev.id)}><span class="small muted">Previous</span><br />← {position.prev.title}</a>}</span>
+            <span class="pager-next">{position.next && <a href={nodeUrl(position.next.id)}><span class="small muted">Next in {pathName}</span><br />{position.next.title} →</a>}</span>
           </nav>
         )
       }
