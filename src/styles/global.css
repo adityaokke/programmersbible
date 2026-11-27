@@ -272,7 +272,10 @@ article pre code { background: none; padding: 0; font-size: inherit; }
 .resume .close:hover, .resume .close:focus-visible { background: rgb(255 255 255 / 0.18); opacity: 1; }
 .resume button:focus-visible { outline: 2px solid var(--bg); outline-offset: 2px; border-radius: 999px; }
 
-.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.pager .pager-where { flex-basis: 100%; margin: 0; }
+.pager > span { flex: 1 1 14rem; }
+.pager .pager-next { text-align: right; }
 
 .notice {
   border: 1px dashed var(--line);
