@@ -1,13 +1,13 @@
 // The database (Cloudflare D1, SQLite), described with Drizzle.
 //
 // The first four tables belong to Better Auth (sign-in with Google); their columns follow Better
-// Auth's core schema. The last one is ours: what each signed-in reader has read.
+// Auth's core schema. The last two are ours: what each signed-in reader has read, and their settings.
 //
 // After changing this file: npx drizzle-kit generate   (writes a new file in db/migrations/)
 // then apply it:            npx wrangler d1 migrations apply programmersbible --local   (or --remote)
 
 import { sql } from "drizzle-orm";
-import { index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { check, index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // Times are stored as milliseconds since 1970 (Better Auth's own choice for SQLite).
 const now = sql`(cast(unixepoch('subsecond') * 1000 as integer))`;
@@ -97,4 +97,24 @@ export const nodeProgress = sqliteTable(
   (t) => [primaryKey({ columns: [t.userId, t.nodeId] }), index("node_progress_user_updated_idx").on(t.userId, t.updatedAt)],
 );
 
-export const schema = { user, session, account, verification, nodeProgress };
+// The languages of the code tabs on concept pages (src/lib/content.ts, CODE_LANGUAGES) a reader can
+// choose for every page. HTML tabs show markup, not a language to follow, so they are not remembered.
+export const LANGUAGES = ["JavaScript", "Python", "Go"] as const;
+
+// One row per reader, made the first time they save a setting. preferred_language: the language
+// they last chose in the code tabs, or null after they cleared it.
+export const userPreference = sqliteTable(
+  "user_preference",
+  {
+    userId: text("user_id")
+      .primaryKey()
+      .references(() => user.id, { onDelete: "cascade" }),
+    preferredLanguage: text("preferred_language", { enum: LANGUAGES }),
+    updatedAt: timestamp("updated_at").notNull().default(now),
+  },
+  () => [
+    check("user_preference_language_check", sql`preferred_language is null or preferred_language in ('JavaScript', 'Python', 'Go')`),
+  ],
+);
+
+export const schema = { user, session, account, verification, nodeProgress, userPreference };

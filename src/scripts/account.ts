@@ -3,10 +3,16 @@
 // any failure leaves the page as it was, with nothing logged.
 
 export type Status = "visited" | "read";
+/** The code-tab languages a reader's choice is remembered for (as in db/schema.ts, LANGUAGES). */
+export const LANGUAGES = ["JavaScript", "Python", "Go"] as const;
+export type Language = (typeof LANGUAGES)[number];
+export const isLanguage = (label: string): label is Language => (LANGUAGES as readonly string[]).includes(label);
 export type Progress = {
   user: { name: string; email: string; image: string | null };
   lastTopic: string | null;
   nodes: Record<string, { status: Status; lastHeading: string | null }>;
+  /** Missing from a Worker deployed before settings existed. */
+  preferences?: { language: Language | null };
 };
 
 /** Set by the Worker next to the session cookie (api/cookies.ts). Holds only "1". */
@@ -31,6 +37,19 @@ export function saveProgress(nodeId: string, change: { status?: Status; lastHead
     credentials: "same-origin",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(change),
+    keepalive,
+  })
+    .then((r) => r.ok)
+    .catch(() => false);
+}
+
+/** Save the language chosen in the code tabs (null forgets it). */
+export function saveLanguage(language: Language | null, keepalive = false) {
+  return fetch("/api/preferences", {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ language }),
     keepalive,
   })
     .then((r) => r.ok)

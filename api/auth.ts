@@ -5,7 +5,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { nodeProgress, schema } from "../db/schema.ts";
+import { nodeProgress, schema, userPreference } from "../db/schema.ts";
 import type { Env } from "./env.ts";
 
 /** How long a reader stays signed in without visiting; each visit (at most once a day) extends it. */
@@ -45,10 +45,12 @@ export function createAuth(env: Env) {
     user: {
       deleteUser: {
         enabled: true,
-        // Reading progress also goes when the user row is deleted (ON DELETE CASCADE); this makes
-        // sure of it even if foreign keys were ever switched off.
+        // Reading progress and settings also go when the user row is deleted (ON DELETE CASCADE);
+        // this makes sure of it even if foreign keys were ever switched off.
         beforeDelete: async (user) => {
           await db.delete(nodeProgress).where(eq(nodeProgress.userId, user.id));
+          // Ignored if the preferences table is not there yet (its migration has not run).
+          await db.delete(userPreference).where(eq(userPreference.userId, user.id)).catch(() => undefined);
         },
       },
     },

@@ -37,10 +37,21 @@ import Base from "../layouts/Base.astro";
       <p id="read-count" class="small muted" hidden></p>
       <ul id="read-list" class="node-list"></ul>
 
+      <div id="language-box" hidden>
+        <h2>Code language</h2>
+        <p>
+          Examples in code open in <strong id="language-name"></strong>, the language you last chose in the tabs.
+          Choosing another tab on any topic changes it.
+        </p>
+        <p><button type="button" class="plain" id="language-forget">Forget my language</button></p>
+        <p id="language-status" class="small muted" role="status"></p>
+      </div>
+
       <h2>Your data</h2>
       <p>
-        The site keeps your name, email address and profile picture from Google, and which topics you have opened or
-        marked as read. See the <a href="/privacy">privacy page</a>.
+        The site keeps your name, email address and profile picture from Google, which topics you have opened or
+        marked as read, and the programming language you last chose in the tabs. See the
+        <a href="/privacy">privacy page</a>.
       </p>
       <p class="actions">
         <a class="button" href="/api/progress/export" download>Download my data</a>
@@ -49,7 +60,7 @@ import Base from "../layouts/Base.astro";
       <p id="sign-out-status" class="small muted" role="status"></p>
 
       <h2>Delete your account</h2>
-      <p>This deletes your account and all your reading progress from the site. It cannot be undone.</p>
+      <p>This deletes your account, all your reading progress and your code language from the site. It cannot be undone.</p>
       <p><button type="button" class="plain danger" id="delete-start" aria-expanded="false" aria-controls="delete-confirm">Delete my account…</button></p>
       <div id="delete-confirm" class="notice" hidden>
         <p><strong>Are you sure?</strong> Your account and the list of topics you have read will be gone for good.</p>
@@ -89,7 +100,7 @@ import Base from "../layouts/Base.astro";
 </style>
 
 <script>
-  import { loadProgress, loadTopics, signedInHere, signInWithGoogle, type Progress } from "../scripts/account.ts";
+  import { loadProgress, loadTopics, saveLanguage, signedInHere, signInWithGoogle, type Language, type Progress } from "../scripts/account.ts";
 
   const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
   const show = (id: string, on: boolean) => ($(id).hidden = !on);
@@ -108,6 +119,7 @@ import Base from "../layouts/Base.astro";
     $("me-name").textContent = progress.user.name;
     $("me-email").textContent = progress.user.email;
     show("me-in", true);
+    showLanguage(progress.preferences?.language ?? null);
 
     const titles = await loadTopics();
     // Newest first, as the server sends them; topics no longer on the site are left out.
@@ -133,6 +145,24 @@ import Base from "../layouts/Base.astro";
       }),
     );
   }
+
+  // The language of the code tabs, if one is saved, with a button to forget it.
+  function showLanguage(language: Language | null) {
+    if (!language) return;
+    $("language-name").textContent = language;
+    show("language-box", true);
+  }
+  $("language-forget").addEventListener("click", async () => {
+    const button = $<HTMLButtonElement>("language-forget");
+    button.disabled = true;
+    const ok = await saveLanguage(null);
+    button.disabled = false;
+    if (ok) {
+      $("language-name").closest("p")!.textContent = "Forgotten. Examples in code open in the first tab again.";
+      button.hidden = true;
+    }
+    $("language-status").textContent = ok ? "" : "Could not save. Please try again.";
+  });
 
   const post = (path: string) =>
     fetch(path, { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: "{}" });
