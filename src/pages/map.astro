@@ -83,16 +83,20 @@ function crowdedDots(graph: cytoscape.Core) {
   return found;
 }
 
-// The layout mixes the boxes together. Keep the arrangement inside each box, and place the boxes in
-// rows, in reading order: First Chapter first, then the rest. This way boxes can never overlap.
+// The layout mixes the boxes together. Keep the arrangement inside each box, and place the boxes
+// side by side, in reading order: First Chapter first, then the rest. This way boxes can never overlap.
 // Each box gets at least the width of its title, and the gaps leave room for titles, which keep
 // their size when the map is zoomed out.
 const COLUMN_GAP = 120;
 const ROW_GAP = 440;
 const TITLE_CHAR_WIDTH = 44;
-const MAP_SHAPE = 1.5; // width / height
-function placeBoxes(graph: cytoscape.Core) {
-  const groups = Object.entries(partTitles).map(([id, title]) => {
+// The same boxes are arranged twice: wide for computer screens and tall for phones. The page picks
+// the one that shows bigger in the reader's map box. Shapes are width / height.
+const SHAPES = [2.2, 0.6];
+type Point = { x: number; y: number };
+type Box = { id: string; x1: number; y1: number; inner: number; width: number; height: number };
+function measureBoxes(graph: cytoscape.Core): Box[] {
+  return Object.entries(partTitles).map(([id, title]) => {
     const dots = graph.getElementById(`part-${id}`).children();
     const sides = (pick: (n: cytoscape.NodeSingular) => number) => dots.map(pick);
     const x1 = Math.min(...sides((n) => n.position("x") - n.data("size") / 2));
@@ -100,31 +104,65 @@ function placeBoxes(graph: cytoscape.Core) {
     const y1 = Math.min(...sides((n) => n.position("y") - n.data("size") / 2));
     const y2 = Math.max(...sides((n) => n.position("y") + n.data("size") / 2));
     const inner = x2 - x1;
-    return { dots, x1, y1, inner, width: Math.max(inner, title.length * TITLE_CHAR_WIDTH), height: y2 - y1 };
+    return { id, x1, y1, inner, width: Math.max(inner, title.length * TITLE_CHAR_WIDTH), height: y2 - y1 };
   });
-  const area = groups.reduce((sum, g) => sum + (g.width + COLUMN_GAP) * (g.height + ROW_GAP), 0);
-  const rowWidth = Math.max(Math.sqrt(area * MAP_SHAPE), ...groups.map((g) => g.width));
-  const rows: (typeof groups)[] = [[]];
-  let used = 0;
-  for (const g of groups) {
-    if (used + g.width > rowWidth && rows.at(-1)!.length > 0) {
-      rows.push([]);
-      used = 0;
+}
+
+// Like stacking boxes on a shelf, seen from the front (a "skyline"): each box, in reading order, goes
+// in the highest free spot, and the leftmost of those. A short box can sit under another short one,
+// next to a tall one. Try many shelf widths and keep the one that shows biggest in a box of this shape.
+// Returns how far each part moves, and the size of the whole map.
+function pack(boxes: Box[], shape: number) {
+  const widest = Math.max(...boxes.map((b) => b.width));
+  const total = boxes.reduce((sum, b) => sum + b.width + COLUMN_GAP, 0);
+  let best: { scale: number; spots: Point[]; width: number; height: number } | null = null;
+  for (let limit = widest; limit <= total + 50; limit += 50) {
+    // The skyline: from x1 to x2, the next box can start at y.
+    let skyline = [{ x1: 0, x2: limit + COLUMN_GAP, y: 0 }];
+    const spots: Point[] = [];
+    let [width, height] = [0, 0];
+    for (const b of boxes) {
+      const need = b.width + COLUMN_GAP;
+      let spot: Point | null = null;
+      for (const s of skyline) {
+        if (s.x1 + need > limit + COLUMN_GAP) break;
+        const y = Math.max(...skyline.filter((t) => t.x2 > s.x1 && t.x1 < s.x1 + need).map((t) => t.y));
+        if (!spot || y < spot.y) spot = { x: s.x1, y };
+      }
+      spot ??= { x: 0, y: Math.max(...skyline.map((t) => t.y)) };
+      spots.push(spot);
+      const [x1, x2] = [spot.x, spot.x + need];
+      skyline = [
+        ...skyline.flatMap((t) => [
+          ...(t.x1 < x1 ? [{ ...t, x2: Math.min(t.x2, x1) }] : []),
+          ...(t.x2 > x2 ? [{ ...t, x1: Math.max(t.x1, x2) }] : []),
+        ]),
+        { x1, x2, y: spot.y + b.height + ROW_GAP },
+      ].sort((p, q) => p.x1 - q.x1);
+      width = Math.max(width, spot.x + b.width);
+      height = Math.max(height, spot.y + b.height);
     }
-    rows.at(-1)!.push(g);
-    used += g.width + COLUMN_GAP;
+    const scale = Math.min(shape / width, 1 / height);
+    if (!best || scale > best.scale * 1.0001) best = { scale, spots, width, height };
   }
-  let top = 0;
-  for (const row of rows) {
-    const width = row.reduce((sum, g) => sum + g.width + COLUMN_GAP, -COLUMN_GAP);
-    const height = Math.max(...row.map((g) => g.height));
-    let left = -width / 2;
-    for (const g of row) {
-      // Center the box in its slot.
-      g.dots.shift({ x: left + (g.width - g.inner) / 2 - g.x1, y: top + (height - g.height) / 2 - g.y1 });
-      left += g.width + COLUMN_GAP;
-    }
-    top += height + ROW_GAP;
+  const { spots, width, height } = best!;
+  // Center the map on 0, 0; each box sits in the middle of its slot (titles can be wider than the dots).
+  const shift: Record<string, Point> = {};
+  boxes.forEach((b, i) => {
+    shift[b.id] = {
+      x: Math.round(spots[i]!.x + (b.width - b.inner) / 2 - b.x1 - width / 2),
+      y: Math.round(spots[i]!.y - b.y1 - height / 2),
+    };
+  });
+  return { shift, width: Math.round(width), height: Math.round(height) };
+}
+
+// Put every dot where its part's shift moves it, starting from the layout's own positions.
+function place(graph: cytoscape.Core, base: Map<string, Point>, shift: Record<string, Point>) {
+  for (const n of nodes) {
+    const p = base.get(n.id)!;
+    const s = shift[groupOf(n)]!;
+    graph.getElementById(n.id).position({ x: p.x + s.x, y: p.y + s.y });
   }
 }
 
@@ -156,14 +194,22 @@ function runLayout(seed: number) {
     } as cytoscape.LayoutOptions)
     .run();
   Math.random = random;
-  placeBoxes(graph);
-  return graph;
+  const base = new Map(nodes.map((n) => [n.id, { ...graph.getElementById(n.id).position() }]));
+  const boxes = measureBoxes(graph);
+  const arrangements = SHAPES.map((shape) => pack(boxes, shape));
+  let crowding = 0;
+  for (const a of arrangements) {
+    place(graph, base, a.shift);
+    crowding += crowdedDots(graph).length;
+  }
+  return { graph, base, arrangements, crowding };
 }
-let layout = runLayout(1);
+let chosen = runLayout(1);
 for (let seed = 2; seed <= 20; seed++) {
   const candidate = runLayout(seed);
-  if (crowdedDots(candidate).length < crowdedDots(layout).length) layout = candidate;
+  if (candidate.crowding < chosen.crowding) chosen = candidate;
 }
+const layout = chosen.graph;
 // The arrows that would still pass through a dot bend around it, like a road around a building.
 // A bend is a list of control points: how far along the arrow (weight, 0 to 1) and how far to the
 // side (distance; positive is the same side as a positive offset above).
@@ -202,29 +248,38 @@ const touchesADot = (edge: cytoscape.EdgeSingular, bend: Bend) =>
     }),
   );
 
-const crowded = new Map<cytoscape.EdgeSingular, ReturnType<typeof crowdedDots>>();
-for (const c of crowdedDots(layout)) crowded.set(c.edge, [...(crowded.get(c.edge) ?? []), c]);
-const bends = new Map<string, Bend>();
-for (const [edge, dots] of crowded) {
-  dots.sort((p, q) => p.t - q.t);
-  // Pass each dot on the side away from its center. A curve reaches about half its control
-  // distance, so aim for twice the needed offset. If that still touches a dot, try the other
-  // side and wider bends, and keep the first one that is clear.
-  const tries: Bend[] = [];
-  for (const flip of [1, -1])
-    for (const widen of [1, 1.5, 2.2, 3, 4])
-      tries.push({
-        weights: dots.map((d) => Math.round(d.t * 100) / 100),
-        distances: dots.map((d) => {
-          const side = (d.offset >= 0 ? -1 : 1) * flip;
-          return Math.round((d.offset + side * d.need) * 2 * widen);
-        }),
-      });
-  const best = tries.find((bend) => !touchesADot(edge, bend)) ?? tries[0]!;
-  bends.set(`${edge.source().id()}->${edge.target().id()}`, best);
+// Bends for the arrangement the dots are in now. Arrows between parts differ from one
+// arrangement to the other, so each arrangement has its own.
+function findBends() {
+  const crowded = new Map<cytoscape.EdgeSingular, ReturnType<typeof crowdedDots>>();
+  for (const c of crowdedDots(layout)) crowded.set(c.edge, [...(crowded.get(c.edge) ?? []), c]);
+  const bends: Record<string, Bend> = {};
+  for (const [edge, dots] of crowded) {
+    dots.sort((p, q) => p.t - q.t);
+    // Pass each dot on the side away from its center. A curve reaches about half its control
+    // distance, so aim for twice the needed offset. If that still touches a dot, try the other
+    // side and wider bends, and keep the first one that is clear.
+    const tries: Bend[] = [];
+    for (const flip of [1, -1])
+      for (const widen of [1, 1.5, 2.2, 3, 4])
+        tries.push({
+          weights: dots.map((d) => Math.round(d.t * 100) / 100),
+          distances: dots.map((d) => {
+            const side = (d.offset >= 0 ? -1 : 1) * flip;
+            return Math.round((d.offset + side * d.need) * 2 * widen);
+          }),
+        });
+    bends[`${edge.source().id()}->${edge.target().id()}`] = tries.find((bend) => !touchesADot(edge, bend)) ?? tries[0]!;
+  }
+  const stillTouching = [...crowded.keys()].filter((e) => touchesADot(e, bends[`${e.source().id()}->${e.target().id()}`]!));
+  console.log(`[map] ${Object.keys(bends).length} of ${edges.length} arrows bend around a dot; ${stillTouching.length} still touch one`);
+  return bends;
 }
-const stillTouching = [...crowded.keys()].filter((e) => touchesADot(e, bends.get(`${e.source().id()}->${e.target().id()}`)!));
-console.log(`[map] ${bends.size} of ${edges.length} arrows bend around a dot; ${stillTouching.length} still touch one`);
+const arrangements = chosen.arrangements.map((a) => {
+  place(layout, chosen.base, a.shift);
+  console.log(`[map] arrangement ${a.width} × ${a.height} (shape ${(a.width / a.height).toFixed(2)})`);
+  return { ...a, bends: findBends() };
+});
 
 const data = {
   parts: Object.entries(partTitles).map(([id, title]) => ({ id, title })),
@@ -239,10 +294,12 @@ const data = {
     year: n.year ?? null,
     weight: weights.get(n.id)!,
     size: size(n.id),
-    position: layout.getElementById(n.id).position(),
+    // Before its part is moved into place: each arrangement adds its own shift per part.
+    position: { x: Math.round(chosen.base.get(n.id)!.x), y: Math.round(chosen.base.get(n.id)!.y) },
     url: nodeUrl(n.id),
   })),
-  edges: edges.map((e) => ({ ...e, bend: bends.get(`${e.from}->${e.to}`) ?? null })),
+  edges,
+  arrangements,
 };
 ---
 
@@ -461,13 +518,39 @@ const data = {
     id: string; title: string; type: string; part: string; status: string; readable: boolean;
     summary: string; year: number | null; weight: number; size: number; position: { x: number; y: number }; url: string;
   };
+  type Point = { x: number; y: number };
+  type Arrangement = {
+    width: number;
+    height: number;
+    shift: Record<string, Point>;
+    bends: Record<string, { weights: number[]; distances: number[] }>;
+  };
   type MapData = {
     parts: { id: string; title: string }[];
     nodes: MapNode[];
-    edges: { from: string; to: string; bend: { weights: number[]; distances: number[] } | null }[];
+    edges: { from: string; to: string }[];
+    arrangements: Arrangement[]; // the first is wide, for computer screens; the second tall, for phones
   };
 
   const data: MapData = JSON.parse(document.getElementById("map-data")!.textContent!);
+  // The parts are arranged twice at build time. Use the one that shows biggest in this map box,
+  // chosen once when the page opens so things do not move around while reading.
+  const mapBox = document.getElementById("map")!.getBoundingClientRect();
+  const fitScale = (a: Arrangement) => Math.min((mapBox.width - 80) / (a.width + 48), (mapBox.height - 80) / (a.height + 48));
+  const arrangement = data.arrangements.reduce((a, b) => (fitScale(b) > fitScale(a) ? b : a));
+  const at = (n: MapNode, a: Arrangement) => ({ x: n.position.x + a.shift[n.part]!.x, y: n.position.y + a.shift[n.part]!.y });
+  // A map point in one arrangement, in another: moved with the part it is in, or the nearest part.
+  // Addresses always use the first arrangement, so a shared link opens at the same place on any screen.
+  function convert(p: Point, from: Arrangement, to: Arrangement) {
+    let nearest = { part: data.nodes[0]!.part, distance: Infinity };
+    for (const n of data.nodes) {
+      const q = at(n, from);
+      const distance = Math.hypot(p.x - q.x, p.y - q.y);
+      if (distance < nearest.distance) nearest = { part: n.part, distance };
+    }
+    const [a, b] = [from.shift[nearest.part]!, to.shift[nearest.part]!];
+    return { x: p.x - a.x + b.x, y: p.y - a.y + b.y };
+  }
   // Topics the signed-in reader has marked as read (filled in at the end, if signed in).
   const readTopics = new Set<string>();
   const css = getComputedStyle(document.documentElement);
@@ -521,7 +604,7 @@ const data = {
     elements: [
       ...data.parts.map((p) => ({ data: { id: `part-${p.id}`, color: partColor[p.id] ?? v("--accent") }, classes: "part" })),
       ...data.nodes.map((n) => ({
-        position: n.position,
+        position: at(n, arrangement),
         data: { ...n, parent: `part-${n.part}`, color: partColor[n.part] ?? v("--accent") },
         classes: [n.type, n.status, n.readable ? "readable" : "unread"].join(" "),
       })),
@@ -606,12 +689,11 @@ const data = {
   });
 
   // Arrows that would pass through another topic's dot bend around it (worked out at build time).
-  for (const e of data.edges) {
-    if (!e.bend) continue;
-    cy.getElementById(`${e.from}->${e.to}`).style({
+  for (const [id, bend] of Object.entries(arrangement.bends)) {
+    cy.getElementById(id).style({
       "curve-style": "unbundled-bezier",
-      "control-point-weights": e.bend.weights,
-      "control-point-distances": e.bend.distances,
+      "control-point-weights": bend.weights,
+      "control-point-distances": bend.distances,
     });
   }
 
@@ -983,11 +1065,12 @@ const data = {
     clearTimeout(saveTimer);
     saveTimer = window.setTimeout(() => {
       const v = view();
+      const p = convert(v, arrangement, data.arrangements[0]!);
       const q = new URLSearchParams();
       if (selected) q.set("topic", selected);
       q.set("zoom", v.zoom.toFixed(3));
-      q.set("x", String(Math.round(v.x)));
-      q.set("y", String(Math.round(v.y)));
+      q.set("x", String(Math.round(p.x)));
+      q.set("y", String(Math.round(p.y)));
       history.replaceState(history.state, "", `?${q}`);
     }, 250);
   }
@@ -997,7 +1080,8 @@ const data = {
   const q = new URLSearchParams(location.search);
   const start = q.get("topic") ? cy.getElementById(q.get("topic")!).filter(":childless") : cy.collection();
   const saved = ["zoom", "x", "y"].map((k) => Number(q.get(k)));
-  if (q.has("zoom") && saved.every(Number.isFinite)) setView({ zoom: saved[0]!, x: saved[1]!, y: saved[2]! });
+  if (q.has("zoom") && saved.every(Number.isFinite))
+    setView({ zoom: saved[0]!, ...convert({ x: saved[1]!, y: saved[2]! }, data.arrangements[0]!, arrangement) });
   else if (start.nonempty()) setView({ zoom: 2, ...start.position() });
   if (start.nonempty()) selectTopic(start as cytoscape.NodeSingular);
   if (cy.zoom() / fitZoom < 1.3) {
