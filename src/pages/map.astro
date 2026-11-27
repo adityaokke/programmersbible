@@ -456,6 +456,11 @@ const data = {
   }
   #map-hint[hidden] { display: none; }
   #map-hint .hint-how { font-weight: 400; font-size: 0.85rem; }
+  /* On a phone the map is narrow: keep the hint to one short line, so it does not cover the map. */
+  @media (max-width: 520px) {
+    #map-hint { flex-wrap: nowrap; padding: 0.4rem 0.9rem; font-size: 0.9rem; white-space: nowrap; }
+    #map-hint .hint-how { display: none; }
+  }
   #map-panel {
     position: absolute;
     top: 0.75rem;
