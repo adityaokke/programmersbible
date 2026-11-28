@@ -4,8 +4,8 @@ title: "Request Coalescing: One Job for Many Requests"
 type: concept
 part: code
 status: published
-requires: [caching, nodejs, python-asyncio, goroutines, race-conditions]
-related: [server, programming-languages]
+requires: [caching, race-conditions]
+related: [server, programming-languages, nodejs, python-asyncio, goroutines]
 summary: "Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer."
 read_minutes: 7
 questions:
@@ -90,10 +90,20 @@ sources:
     url: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
   - title: "Firefox DevTools User Docs: The JavaScript input interpreter"
     url: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
+  - title: "Python documentation: Futures"
+    url: https://docs.python.org/3/library/asyncio-future.html
+  - title: "Python tutorial: More Control Flow Tools (Lambda Expressions)"
+    url: https://docs.python.org/3/tutorial/controlflow.html
+  - title: "Python documentation: Glossary"
+    url: https://docs.python.org/3/glossary.html
+  - title: "MDN Web Docs: Logical NOT (!)"
+    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT
+  - title: "MDN Web Docs: null"
+    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null
 author: ai
 reviewed_by: ai
-reviewed_at: 2026-11-08
-updated: 2026-11-08
+reviewed_at: 2026-11-28
+updated: 2026-11-28
 ---
 
 > **In one sentence:** Request coalescing means that when many requests for the same thing arrive before the first answer is back, the slow job runs only once, and all of them share its answer.
@@ -140,7 +150,7 @@ sequenceDiagram
   F-->>C: Same answer to A, B, C
 ```
 
-There is a danger between steps 1 and 3: two callers might both find nothing in the list, and both start the job.
+There is a danger between steps 1 and 3. It is the check-then-act problem from [[race-conditions|Race conditions]]: two callers might both find nothing in the list, and both start the job.
 
 Here is the idea in three languages. You only need to read one. Each program asks for product 7 three times at once, counts the jobs, and prints (shows on the screen) `3 answers from 1 job`. You do not need to run them. Follow the comments (after `//` or `#`), and look for the four steps. The "slow job" only waits, to imitate slow work.
 
@@ -188,12 +198,12 @@ Some Node.js programs also use several threads, which this page does not cover.
 
 ### Python
 
-Python has a part called `asyncio` for **asynchronous** code: code that starts a slow job, and can still respond to other things while that job runs. A **task** is its name for a job that has been handed over to run. This program follows the same four steps, with `in_flight` as the list.
+Python has a part called `asyncio` for **asynchronous** code: code that starts a slow job, and can still respond to other things while that job runs. A **task** is its name for a job that has been handed over to run. Several callers can wait for one task, and all get its answer. `async def` makes a function that may contain `await`. This program follows the same four steps, with `in_flight` as the list.
 
 ```python
 import asyncio
 
-in_flight = {}  # the list of jobs in flight
+in_flight = {}  # the list of jobs in flight (a dictionary)
 jobs = 0
 
 # The slow job. "await" means: pause here, and let other tasks run.
@@ -216,8 +226,6 @@ def get_product(product_id):
     return job
 
 # Three callers at once. "gather" waits until all the answers have arrived.
-# (A real program needs more: here, cancelling one waiting caller cancels
-# the job for all of them. Python's asyncio.shield can prevent that.)
 async def main():
     answers = await asyncio.gather(
         get_product(7), get_product(7), get_product(7)
@@ -227,7 +235,9 @@ async def main():
 asyncio.run(main())
 ```
 
-**Why this is safe from that danger:** an `await` pauses only the task it is in. `get_product` has no `await`, so it finishes steps 1 to 3 before any other caller can run. Python's event loop, the part of `asyncio` that runs the tasks, "runs one Task at a time". If you put an `await` that really waits between steps 1 and 3, the danger comes back.
+`lambda _: ...` makes a small function with no name. Python calls it with the finished task, here named `_`, which this function does not use.
+
+**Why this is safe from that danger:** an `await` pauses only the task it is in. `get_product` has no `await`, so it finishes steps 1 to 3 before any other caller can run. Python's event loop, the part of `asyncio` that runs the tasks, "runs one Task at a time". If you put an `await` between steps 1 and 3, the danger can come back.
 
 Some Python programs also use threads (a thread is a sequence of instructions that a program follows), which this page does not cover.
 
@@ -266,7 +276,7 @@ func getProduct(id string) (any, error) {
 	return answer, err
 }
 
-// Three callers at once, each in its own goroutine.
+// Three callers at once. The word "go" runs each one in its own goroutine.
 // "wg.Wait" waits until all the answers have arrived.
 func main() {
 	answers := make([]any, 3)
@@ -282,6 +292,8 @@ func main() {
 	fmt.Printf("%d answers from %d job\n", len(answers), jobs.Load())
 }
 ```
+
+`group.Do` is given the key (`id`) and a function to run, written in place after `func`. Do runs that function only when no call for that key is in flight. Otherwise, the caller "waits for the original to complete and receives the same results".
 
 **Why a package helps with that danger:** goroutines can run on several threads (a thread is a sequence of instructions that a program follows), so two can reach the list at the same moment. The `singleflight` package makes sure "only one execution is in-flight for a given key at a time". (Here, the key is the `id`.)
 
@@ -326,6 +338,8 @@ function ask() { if (!job) { jobs++; job = fetch(location.href).finally(() => jo
 ```
 Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers from " + jobs + " job"))
 ```
+
+**How the lines match the steps:** `job` holds the job in flight. `null` stands for no value: no job yet. `!` means "not", so `!job` is true while `job` is `null`. Only then does `ask` start a job and keep it (steps 1 and 3). Otherwise, it gives back the job in flight (step 2). `fetch` asks for this page and gives back a promise. `.finally` runs its function when that promise is settled: fulfilled (completed successfully) or rejected (failed). Here it sets `job` back to `null` (step 4). In the last line, `Promise.all` makes one promise from the three. It fulfills (completes successfully) with a list of all three answers, and then `.then` shows the count.
 
 **What you should see:** after the last line, the message `3 answers from 1 job`. You can ignore other lines, such as `undefined`. If you see an error message, check your typing and try again.
 
@@ -380,3 +394,8 @@ Promise.all([ask(), ask(), ask()]).then(a => console.log(a.length + " answers fr
 - Hex, httpower package: https://hex.pm/packages/httpower
 - Microsoft Edge DevTools, Run JavaScript in the Console: https://learn.microsoft.com/en-us/microsoft-edge/devtools/console/console-javascript
 - Firefox DevTools User Docs, The JavaScript input interpreter: https://firefox-source-docs.mozilla.org/devtools-user/web_console/the_command_line_interpreter/index.html
+- Python documentation, Futures: https://docs.python.org/3/library/asyncio-future.html
+- Python tutorial, More Control Flow Tools (Lambda Expressions): https://docs.python.org/3/tutorial/controlflow.html
+- Python documentation, Glossary: https://docs.python.org/3/glossary.html
+- MDN Web Docs, Logical NOT (!): https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT
+- MDN Web Docs, null: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null
