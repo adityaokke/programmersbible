@@ -1,0 +1,11 @@
+id: how-data-becomes-numbers
+title: "How Data Becomes Numbers"
+description: "How a computer keeps words, pictures, sound and video as numbers, and how it makes them smaller. You can start here: no other topic is needed first."
+sections:
+  - title: "From Information to Bytes"
+    nodes: [what-is-information, counting-systems, binary, bit, byte, data-size-units]
+  - title: "Text, Pictures and Sound"
+    nodes: [text-as-numbers, images-as-numbers, sound-as-numbers]
+    any_order: true
+  - title: "Smaller Files and Moving Pictures"
+    nodes: [compression, video-as-numbers]

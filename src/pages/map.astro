@@ -19,12 +19,15 @@ function reach(id: string, seen = new Set<string>()): Set<string> {
 // per other path ("First Steps in Code"). More to Explore mixes many subjects, so its name says
 // little on a map: it gets one box per section ("Staying Safe Online") instead.
 const SPLIT_BY_SECTION = new Set(["more-to-explore"]);
+// Only these paths make boxes. Other paths (How Data Becomes Numbers) reuse topics that already have
+// a box, and a topic stays in its box whatever other paths it is in.
+const BOX_PATHS = new Set(["first-chapter", "first-steps-in-code", "more-to-explore"]);
 const slug = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 const firstChapter = allPaths.find((p) => p.id === "first-chapter");
 const inFirstChapter = new Set(firstChapter?.sections.flatMap(sectionTopics) ?? []);
 const otherGroup = new Map(
   allPaths
-    .filter((p) => p !== firstChapter)
+    .filter((p) => p !== firstChapter && BOX_PATHS.has(p.id))
     .flatMap((p) =>
       p.sections.flatMap((s) => {
         const group = SPLIT_BY_SECTION.has(p.id) ? { id: slug(s.title), title: s.title } : { id: p.id, title: p.title };
