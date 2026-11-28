@@ -1,8 +1,10 @@
 id: cloud-infrastructure
 title: "Cloud Infrastructure"
-description: "What the cloud is made of and how to use it safely: virtual machines, regions, storage, accounts and costs, with Amazon Web Services (AWS) as the example. Read it after the First Chapter; some pages also build on topics from More to Explore."
+description: "What the cloud is made of, how to use it safely, and what you can build on it, with Amazon Web Services (AWS) as the example. Read it after the First Chapter; some pages also build on topics from More to Explore and First Steps in Code."
 sections:
   - title: "What the Cloud Is Made Of"
     nodes: [virtual-machines, regions-and-availability-zones, object-storage]
   - title: "Using the Cloud Safely"
     nodes: [cloud-accounts-and-permissions, cloud-costs]
+  - title: "Building on the Cloud"
+    nodes: [content-delivery-networks, databases, managed-databases, containers, serverless-functions]
