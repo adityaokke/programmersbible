@@ -8,3 +8,5 @@ sections:
     nodes: [cloud-accounts-and-permissions, cloud-costs]
   - title: "Building on the Cloud"
     nodes: [content-delivery-networks, databases, managed-databases, containers, serverless-functions]
+  - title: "Working With Docker"
+    nodes: [running-containers, dockerfiles, docker-volumes, docker-compose]
