@@ -21,7 +21,7 @@ function reach(id: string, seen = new Set<string>()): Set<string> {
 const SPLIT_BY_SECTION = new Set(["more-to-explore"]);
 // Only these paths make boxes. Other paths (How Data Becomes Numbers) reuse topics that already have
 // a box, and a topic stays in its box whatever other paths it is in.
-const BOX_PATHS = new Set(["first-chapter", "first-steps-in-code", "more-to-explore"]);
+const BOX_PATHS = new Set(["first-chapter", "first-steps-in-code", "more-to-explore", "cloud-infrastructure"]);
 const slug = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 const firstChapter = allPaths.find((p) => p.id === "first-chapter");
 const inFirstChapter = new Set(firstChapter?.sections.flatMap(sectionTopics) ?? []);
