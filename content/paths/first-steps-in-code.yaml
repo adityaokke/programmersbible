@@ -1,6 +1,6 @@
 id: first-steps-in-code
 title: "First Steps in Code"
-description: "From your first variable to asynchronous code and threads, in JavaScript, Python and Go."
+description: "From your first variable to asynchronous code and threads, in JavaScript, Python and Go. It builds on the First Chapter: read that first, at least up to JavaScript."
 sections:
   - title: "Programming Concepts"
     nodes: [what-is-programming, variables, conditions, loops, functions, recursion, scope, strings, errors, callbacks, lists-and-dictionaries, types, objects, classes, command-line, packages]
