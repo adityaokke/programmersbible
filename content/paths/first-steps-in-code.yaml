@@ -5,7 +5,7 @@ sections:
   - title: "Programming Concepts"
     nodes: [what-is-programming, variables, conditions, loops, functions, recursion, scope, strings, errors, callbacks, lists-and-dictionaries, types, objects, classes, command-line, packages]
   - title: "Bigger Ideas"
-    nodes: [object-oriented-programming, functional-programming, data-structures, algorithms, testing]
+    nodes: [object-oriented-programming, functional-programming, data-structures, algorithms, big-o, sorting-algorithms, hash-tables, testing]
   - title: "Waiting and Doing Several Things"
     nodes: [asynchronous-code, event-loop, promises, processes, threads, race-conditions]
   - title: "Three Languages"
