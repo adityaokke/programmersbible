@@ -64,8 +64,6 @@ sources:
     url: https://go.dev/doc/effective_go
   - title: "Wikipedia: Powersort"
     url: https://en.wikipedia.org/wiki/Powersort
-  - title: "Python documentation: Glossary"
-    url: https://docs.python.org/3/glossary.html
   - title: "V8 source code: third_party/v8/builtins/array-sort.tq"
     url: https://raw.githubusercontent.com/v8/v8/main/third_party/v8/builtins/array-sort.tq
   - title: "Go source code: slices/zsortordered.go"
@@ -106,6 +104,8 @@ sources:
     url: https://developer.chrome.com/blog/self-xss
   - title: "Example Domain"
     url: https://example.com
+  - title: "Python documentation: Changelog (Python 3.11.0 alpha 1)"
+    url: https://docs.python.org/3/whatsnew/changelog.html
 author: ai
 reviewed_by: ai
 reviewed_at: 2026-11-28
@@ -306,7 +306,7 @@ So there are about log n rounds, the number of halvings, and each takes about n 
 
 ### What the built-in sorts use
 
-- **Python:** its documentation names "The Timsort algorithm used in Python". Wikipedia says that since version 3.11, CPython (the Python from python.org) uses Powersort, which "belongs to the family of merge sort algorithms".
+- **Python:** its documentation names "The Timsort algorithm used in Python". Since version 3.11, its changelog says, list sorting "uses the merge-ordering strategy" of Powersort, which Wikipedia says "builds on Timsort" and "belongs to the family of merge sort algorithms".
 - **JavaScript in Chrome:** V8 is the program in Chrome that runs JavaScript. In 2018, with V8 v7.0 and Chrome 70, it switched to Timsort, which its blog calls a "Mergesort variant": a changed version of merge sort. V8's source code now names a "merge sort variant called PowerSort".
 - **Go:** the Go 1.19 release notes say the `sort` package's algorithm "has been rewritten to use pattern-defeating quicksort", another sorting algorithm. In Go's source code, `slices.Sort` calls `pdqsortOrdered`, which a comment says is "based on pattern-defeating quicksort".
 
@@ -380,7 +380,7 @@ If you see an error message, look for a typo. Then click your browser's reload b
 - The Go Programming Language Specification: https://go.dev/ref/spec
 - Effective Go: https://go.dev/doc/effective_go
 - Wikipedia, Powersort: https://en.wikipedia.org/wiki/Powersort
-- Python documentation, Glossary: https://docs.python.org/3/glossary.html
+- Python documentation, Changelog (Python 3.11.0 alpha 1): https://docs.python.org/3/whatsnew/changelog.html
 - V8 source code, third_party/v8/builtins/array-sort.tq: https://raw.githubusercontent.com/v8/v8/main/third_party/v8/builtins/array-sort.tq
 - Go source code, slices/zsortordered.go: https://go.dev/src/slices/zsortordered.go
 - MDN Web Docs, function: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function

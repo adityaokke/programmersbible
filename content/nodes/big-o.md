@@ -102,7 +102,7 @@ Big O is the letter O with brackets. Inside the brackets is how the steps grow w
 - **O(n), linear:** the steps grow at the same rate as n, as in linear search.
 - **O(n²), quadratic:** n² ("n squared") means n times n, as in a loop inside a loop.
 
-The table shows the **worst case**: the most steps each can need. For linear search, that is when the target is not in the list. Halve 10, rounding down: 5, 2, 1. That is 3 halvings. Wikipedia's formula for binary search's worst case gives one more than the halvings: 4.
+The table shows the **worst case**: the most steps each can need. For linear search, that is when the target is the last item or is not in the list at all. Halve 10, rounding down: 5, 2, 1. That is 3 halvings. Wikipedia's formula for binary search's worst case gives one more than the halvings: 4.
 
 | Items (n) | O(1): read one item | O(log n): binary search (halvings + 1) | O(n): linear search | O(n²): every item with every item |
 |---|---|---|---|---|

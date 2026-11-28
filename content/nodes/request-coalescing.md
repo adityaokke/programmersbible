@@ -239,6 +239,8 @@ asyncio.run(main())
 
 **Why this is safe from that danger:** an `await` pauses only the task it is in. `get_product` has no `await`, so it finishes steps 1 to 3 before any other caller can run. Python's event loop, the part of `asyncio` that runs the tasks, "runs one Task at a time". If you put an `await` between steps 1 and 3, the danger can come back.
 
+**One more trap: cancelling.** A program can **cancel** a task: tell it to stop early. Suppose each caller runs as its own task, and all of them wait for the same job task. Python's documentation says that if a task is cancelled while it is waiting for another task, "the awaited object will be cancelled". So if one of those callers is cancelled, the shared job stops, and the other callers lose their answer too. `asyncio.shield` protects a task "from being cancelled": if each caller task waits for `asyncio.shield(job)` instead of `job`, cancelling one caller does not stop the job.
+
 Some Python programs also use threads (a thread is a sequence of instructions that a program follows), which this page does not cover.
 
 ### Go

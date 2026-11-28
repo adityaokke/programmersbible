@@ -23,6 +23,8 @@ sources:
     url: https://docs.docker.com/learn/content/what-is-a-container/
   - title: "Docker Learn: Write your first Dockerfile"
     url: https://docs.docker.com/learn/content/write-your-first-dockerfile/
+  - title: "Docker documentation: Storage"
+    url: https://docs.docker.com/engine/storage/
   - title: "Docker Hub: node (Docker Official Image)"
     url: https://hub.docker.com/_/node
   - title: "AWS: What is containerization?"
@@ -69,7 +71,7 @@ A program rarely runs alone. It needs **libraries** (ready-made code that progra
 
 ## Analogy
 
-Think of a **packed suitcase**. With it, you can stay in any hotel, because you do not depend on what the room has. But every guest shares the same hotel building.
+Think of a **packed suitcase**. With it, you can stay in any hotel without depending on what the room has. But every guest shares the same hotel building.
 
 A container is like the suitcase. The shared building is the computer's **kernel**, explained below.
 
@@ -87,7 +89,7 @@ Docker says: "Once built, an image never changes."
 
 Docker defines a container as "an ordinary process on your computer" that "runs in isolation". You met [[processes|processes]]: a process is a running program, with its own memory. A container adds more separation:
 
-- **Its own files.** It sees only the files it started with, which come from the image. "It can't see your files, and your other projects can't see its files."
+- **Its own files.** By default, it sees only the files it started with, which come from the image. "It can't see your files, and your other projects can't see its files." Docker has ways to connect outside storage to a container that change this.
 - **Its own view.** It sees its own processes, network settings and computer name (hostname), "not the rest of your machine's".
 
 ### Sharing the kernel
@@ -143,7 +145,7 @@ EXPOSE 3000
 CMD ["node", "src/index.js"]
 ```
 
-1. `FROM` picks a **base image** to build on top of: an image can start from another image. `node:22` already has [[nodejs|Node.js]] 22 installed, a program that runs JavaScript code outside the browser.
+1. `FROM` picks a **base image** to build on top of: an image can start from another image. `node:22` already has [[nodejs|Node.js]] 22 installed, a program that runs JavaScript outside the browser.
 2. `WORKDIR` chooses a folder inside the image, `/usr/local/app`, to work in.
 3. `COPY` copies the project's `backend` folder into that folder (`./`) in the image.
 4. `RUN` runs a command while the image is built. `npm` is "the standard package manager for Node.js": a tool that installs [[packages|packages]] (shared code). `npm ci` installs exactly the versions listed in the project's lock file, `package-lock.json`.
@@ -195,6 +197,7 @@ You will look at a real image in a real registry. You need no account, and you i
 
 - Docker Learn, What is a container?: https://docs.docker.com/learn/content/what-is-a-container/
 - Docker Learn, Write your first Dockerfile: https://docs.docker.com/learn/content/write-your-first-dockerfile/
+- Docker documentation, Storage: https://docs.docker.com/engine/storage/
 - Docker Hub, node (Docker Official Image): https://hub.docker.com/_/node
 - AWS, What is containerization?: https://aws.amazon.com/what-is/containerization/
 - AWS, What's the difference between containers and virtual machines?: https://aws.amazon.com/compare/the-difference-between-containers-and-virtual-machines/

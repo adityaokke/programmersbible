@@ -146,9 +146,9 @@ Wikipedia says CDNs "arose in the late 1990s to alleviate the performance bottle
 
 You need a computer. These steps only look, and they change no settings.
 
-1. Open a new tab in Chrome, Edge or Firefox.
+1. Open a new tab in a web browser: Chrome, Microsoft Edge or Firefox.
 2. Open the developer tools: `F12` or `Ctrl` + `Shift` + `I` on Windows, `Cmd` + `Option` + `I` on Mac. If `F12` does nothing, try the other keys.
-3. Click the **Network** tab. In Edge, if you do not see it, click the **More tools** button and choose **Network**.
+3. Click the **Network** tab. In the Microsoft Edge browser, if you do not see it, click the **More tools** button and choose **Network**.
 4. Click the address bar, type `https://developers.cloudflare.com/cache/concepts/cache-responses/` and press `Enter`. You will read this page in a moment. It explains the `cf-cache-status` header, which "indicates whether a resource is cached or not". First, look at the headers of the page itself.
 5. Click the first row in the list. A details area opens. Click its **Headers** tab.
 6. Under **Response Headers** (Firefox: **Response headers**), look for the line named `cf-cache-status`. It may have small or capital letters.

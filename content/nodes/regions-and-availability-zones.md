@@ -54,8 +54,8 @@ sources:
     url: https://support.microsoft.com/en-us/help/4531783/microsoft-edge-keyboard-shortcuts
   - title: "Wikipedia: Pacific Time Zone (general background reference)"
     url: https://en.wikipedia.org/wiki/Pacific_Time_Zone
-  - title: "AWS Well-Architected, Cost Optimization Pillar: COST07-BP02 Choose Regions based on cost"
-    url: https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/cost_pricing_model_region_cost.html
+  - title: "AWS Well-Architected Framework: COST07-BP02 Choose Regions based on cost"
+    url: https://docs.aws.amazon.com/wellarchitected/latest/framework/cost07-bp02.html
   - title: "AWS documentation: What is the AWS Management Console?"
     url: https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html
   - title: "Wiktionary: discrete (general background reference)"
@@ -143,7 +143,7 @@ AWS's pages point to four things to think about:
 
 1. **Distance and speed.** AWS's documentation says you can lower latency "when you select a Region that is close to the majority of your users".
 2. **Laws.** AWS's documentation mentions choosing a place "to meet legal requirements". AWS's privacy page says: "You choose the AWS Region(s) in which your content is stored."
-3. **Price.** AWS's cost guide says "resource pricing is different in each Region".
+3. **Price.** AWS's cost guide says: "Resource prices vary by Region."
 4. **Services.** AWS says to "select a Region that has the AWS services and features that you need".
 
 ### A whole region can have trouble
@@ -202,7 +202,7 @@ This only reads a public AWS page, on a computer or a phone. The page may look d
 - Google Chrome Help, Search within a webpage: https://support.google.com/chrome/answer/95440
 - Microsoft Support, Microsoft Edge keyboard shortcuts: https://support.microsoft.com/en-us/help/4531783/microsoft-edge-keyboard-shortcuts
 - Wikipedia, Pacific Time Zone (general background reference): https://en.wikipedia.org/wiki/Pacific_Time_Zone
-- AWS Well-Architected, COST07-BP02 Choose Regions based on cost: https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/cost_pricing_model_region_cost.html
+- AWS Well-Architected Framework, COST07-BP02 Choose Regions based on cost: https://docs.aws.amazon.com/wellarchitected/latest/framework/cost07-bp02.html
 - AWS documentation, What is the AWS Management Console?: https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html
 - Wiktionary, discrete (general background reference): https://en.wiktionary.org/wiki/discrete
 - Wikipedia, Physical security (general background reference): https://en.wikipedia.org/wiki/Physical_security
