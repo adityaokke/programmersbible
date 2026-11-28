@@ -67,12 +67,17 @@ const { node, learnFirst, next } = Astro.props;
   .mini-map-row { display: flex; align-items: center; gap: 0.6rem; }
   .group { flex: 1 1 0; min-width: 0; padding-left: 0.6rem; border-left: 3px solid; }
   .group p { margin: 0 0 0.2rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  /* A bullet per topic, and wrapped lines indented under the text, so long titles stay apart. */
   .group ul { list-style: none; margin: 0; padding: 0; }
-  .group li + li { margin-top: 0.2rem; }
+  .group li { position: relative; padding-left: 0.9rem; }
+  .group li::before { content: "•"; position: absolute; left: 0; font-weight: 700; }
+  .group li + li { margin-top: 0.35rem; }
   .before { border-color: var(--event); }
   .before p { color: var(--event); }
+  .before li::before { color: var(--event); }
   .after { border-color: var(--accent); }
   .after p { color: var(--accent); }
+  .after li::before { color: var(--accent); }
   .here {
     flex: none;
     padding: 0.5rem 0.6rem;
