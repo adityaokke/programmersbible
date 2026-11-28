@@ -151,7 +151,8 @@ This reads one public AWS page, with no account. On a phone, scroll the table si
 
 ## Common misunderstandings
 
-- **"Managed means the cloud company does everything."** No. You still look after your data, your queries and who may connect.
+- **"Managed means no work."** No. Query tuning and connection rules are yours.
+- **"Automated backups last forever."** No. You choose how long, up to 35 days.
 
 ## Recap
 

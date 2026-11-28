@@ -214,7 +214,7 @@ On November 13, 2014, AWS announced Lambda as "a compute service that runs your 
 You will look at a public AWS page, with no account. On a phone, scroll the tables sideways. The page may look different.
 
 1. In Chrome, Edge or Firefox, open `https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html`. The heading is "Lambda quotas" (quotas: limits).
-2. Scroll down to the first table under **Function configuration, deployment, and execution**. Find the row **Function timeout**.
+2. Scroll past the first table, **Compute and storage**. Under the next heading, **Function configuration, deployment, and execution**, find the row **Function timeout**.
 
    **What you should see:** in November 2026, the row started with "1,800 seconds (30 minutes)". This is the highest timeout for most functions. Close the tab when you are done.
 

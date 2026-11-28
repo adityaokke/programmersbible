@@ -136,7 +136,7 @@ On August 24, 2006, Amazon announced the first, test ("beta") version of Amazon 
 You will look at a real table of virtual machine sizes. You need no account. This only looks. A computer is best, because the tables are wide. On a phone, scroll the tables sideways.
 
 1. In Chrome, Edge or Firefox, open `https://docs.aws.amazon.com/ec2/latest/instancetypes/gp.html`. The page heading is "Specifications for Amazon EC2 general purpose instances". AWS says general purpose instances "provide a balance of compute, memory, and networking resources": of CPU power, memory and network. The page may look different.
-2. Scroll down to the table under **Instance family summary**. Find the row that starts with `M5`. Look at the **Hypervisor** column. In November 2026, it said `Nitro v2`: version 2 of the Nitro System. The `T2` row said `Xen`.
+2. Scroll down to the table under **Instance family summary**. Find the row that says exactly `M5`, not `M5a`, `M5n` or the other rows below it. Look at the **Hypervisor** column. In November 2026, it said `Nitro v2`: version 2 of the Nitro System. The `T2` row said `Xen`.
 3. Near the top, under **Contents**, click **Performance specifications**. Or scroll down to that heading.
 4. Find the rows `m5.large`, `m5.xlarge` and `m5.2xlarge`. AWS explains these names: the part before the dot is the **instance family** (`m` for general purpose, `5` for the generation). The part after the dot is the size. Look at the **Memory (GiB)** and **vCPUs** columns.
 
