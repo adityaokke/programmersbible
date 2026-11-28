@@ -38,6 +38,8 @@ Write the body using the section template for the node's `type`. Fill in the fro
 
 Link other nodes with `[[id]]` on first mention only.
 
+**Commands the reader types.** The reader learns Windows PowerShell 5.1 ([[command-line]]). Every command on the page must work there as shown, or the page must say which shell it is for. Show each command exactly as it was run in the recorded output (for example `curl.exe`, not `curl`). Avoid quotes nested inside a command's argument: Windows PowerShell 5.1 drops inner double quotes when it passes an argument to a program.
+
 ## 2b. Illustrate
 
 Read the guide's "Diagrams and pictures" section. For each idea the node explains, ask: would a beginner understand it faster with a picture or a diagram? Most nodes need one or two; some need none.
